@@ -1,0 +1,1 @@
+flutter_subtitle_wrapper
