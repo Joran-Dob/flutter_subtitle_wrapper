@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:subtitle_wrapper_package/models/style/subtitle_style.dart';
 import 'package:subtitle_wrapper_package/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
@@ -7,9 +8,13 @@ import 'package:video_player/video_player.dart';
 class SubtitleTextView extends StatefulWidget {
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
+  final SubtitleStyle subtitleStyle;
 
   const SubtitleTextView(
-      {Key key, @required this.subtitleController, this.videoPlayerController})
+      {Key key,
+      @required this.subtitleController,
+      this.videoPlayerController,
+      this.subtitleStyle})
       : super(key: key);
 
   @override
@@ -57,28 +62,31 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
         ? Container(
             child: Stack(
               children: <Widget>[
-                // Stroked text as border.
+                widget.subtitleStyle.hasBorder
+                    ? Center(
+                        child: Text(
+                          subtitle.text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: widget.subtitleStyle.fontSize,
+                            foreground: Paint()
+                              ..style = widget.subtitleStyle.borderStyle.style
+                              ..strokeWidth =
+                                  widget.subtitleStyle.borderStyle.strokeWidth
+                              ..color = widget.subtitleStyle.borderStyle.color,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        child: null,
+                      ),
                 Center(
                   child: Text(
                     subtitle.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 2
-                        ..color = Colors.black,
-                    ),
-                  ),
-                ),
-                // Solid text as fill.
-                Center(
-                  child: Text(
-                    subtitle.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
+                      fontSize: widget.subtitleStyle.fontSize,
+                      color: widget.subtitleStyle.textColor,
                     ),
                   ),
                 ),

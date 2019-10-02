@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
+import 'package:subtitle_wrapper_package/models/style/subtitle_style.dart';
 import 'package:video_player/video_player.dart';
 
 void main() => runApp(MyApp());
@@ -44,7 +45,9 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState("", "");
+  _MyHomePageState createState() => _MyHomePageState(
+      "https://d11b76aq44vj33.cloudfront.net/media/0/video/01_WhatAreMindmarkers.mp4",
+      "https://d11b76aq44vj33.cloudfront.net/media/0/subtitles/591c294fabb2a.vtt");
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -84,7 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
           elevation: 2.0,
           child: SubTitleWrapper(
               videoPlayerController: chewieController.videoPlayerController,
-              subtitleController: SubtitleController(subtitleUrl: subtitleUrl),
+              subtitleController: SubtitleController(
+                subtitleUrl: subtitleUrl,
+                showSubtitles: true,
+              ),
+              subtitleStyle:
+                  SubtitleStyle(textColor: Colors.white, hasBorder: true),
               videoChild: Chewie(
                 controller: chewieController,
               ))),

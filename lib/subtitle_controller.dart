@@ -7,8 +7,13 @@ import 'package:http/http.dart' as http;
 class SubtitleController {
   String subtitlesContent;
   String subtitleUrl;
+  final bool showSubtitles;
 
-  SubtitleController({this.subtitleUrl, this.subtitlesContent});
+  SubtitleController({
+    this.subtitleUrl,
+    this.subtitlesContent,
+    this.showSubtitles,
+  });
 
   Future<Subtitles> getSubtitles() async {
     RegExp regExp = new RegExp(
