@@ -1,3 +1,7 @@
+## [0.0.5] - 02 oct 2019.
+
+* Updated readme 
+
 ## [0.0.4] - 02 oct 2019.
 
 * Fix for empty lines
