@@ -1,6 +1,6 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v0.0.4-brightgreen.svg)](https://pub.dartlang.org/packages/spotify_playback)
+[![](https://img.shields.io/badge/pub-v0.0.5-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
 
 Subtitle Wrapper Plugin.
