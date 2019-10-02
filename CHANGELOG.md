@@ -1,3 +1,7 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.2] - 02 oct 2019.
 
-* TODO: Describe initial release.
+* Fixed regex problem for vtt
+
+## [0.0.1] - 01 oct 2019.
+
+* initial release.

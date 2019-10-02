@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:subtitle_wrapper_package/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/models/subtitles.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +12,7 @@ class SubtitleController {
 
   Future<Subtitles> getSubtitles() async {
     RegExp regExp = new RegExp(
-      r"(\d{2}):(\d{2}):(\d{2})\.(\d+) --> (\d{2}):(\d{2}):(\d{2})\.(\d+)\n((.+\n{0,1})+)",
+      r"(\d{2}):(\d{2}):(\d{2})\.(\d+) --> (\d{2}):(\d{2}):(\d{2})\.(\d+)((\D+\d{0,0})+)",
       caseSensitive: false,
       multiLine: true,
     );
@@ -18,10 +20,10 @@ class SubtitleController {
     if (subtitlesContent == null && subtitleUrl != null) {
       http.Response response = await http.get(subtitleUrl);
       if (response.statusCode == 200) {
-        subtitlesContent = response.body;
-        print(subtitlesContent);
+        subtitlesContent = utf8.decode(response.bodyBytes);
       }
     }
+    print(subtitlesContent);
 
     List<RegExpMatch> matches = regExp.allMatches(subtitlesContent).toList();
     List<Subtitle> subtitleList = List();
@@ -53,6 +55,7 @@ class SubtitleController {
           .add(Subtitle(startTime: startTime, endTime: endTime, text: text));
     });
     print(subtitleList);
+
     Subtitles subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
   }
