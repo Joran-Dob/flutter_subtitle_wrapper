@@ -1,3 +1,8 @@
+## [0.0.4] - 02 oct 2019.
+
+* Fix for empty lines
+* No default bool for show subs
+
 ## [0.0.3] - 02 oct 2019.
 
 * Added styling options for subtitles 

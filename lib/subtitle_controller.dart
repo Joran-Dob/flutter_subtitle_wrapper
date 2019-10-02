@@ -12,7 +12,7 @@ class SubtitleController {
   SubtitleController({
     this.subtitleUrl,
     this.subtitlesContent,
-    this.showSubtitles,
+    this.showSubtitles = true,
   });
 
   Future<Subtitles> getSubtitles() async {
@@ -56,8 +56,8 @@ class SubtitleController {
           seconds: endTimeSeconds,
           milliseconds: endTimeMilliseconds);
 
-      subtitleList
-          .add(Subtitle(startTime: startTime, endTime: endTime, text: text));
+      subtitleList.add(
+          Subtitle(startTime: startTime, endTime: endTime, text: text.trim()));
     });
     print(subtitleList);
 
