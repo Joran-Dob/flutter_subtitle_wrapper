@@ -16,8 +16,8 @@ class SubtitleController {
   });
 
   Future<Subtitles> getSubtitles() async {
-    RegExp regExp = RegExp(
-      r"(\d{2}):(\d{2}):(\d{2})\.(\d+) --> (\d{2}):(\d{2}):(\d{2})\.(\d+)\r\n(.*)",
+    RegExp regExp = new RegExp(
+      r"(\d{1,2}):(\d{2}):(\d{2})\.(\d+) --> (\d{1,2}):(\d{2}):(\d{2})\.(\d+)(\D*)",
       caseSensitive: false,
       multiLine: true,
     );
