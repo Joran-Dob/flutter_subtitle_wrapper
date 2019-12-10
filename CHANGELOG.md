@@ -1,3 +1,7 @@
+## [0.0.7] - 10 dec 2019.
+
+* Fixed issue with regex
+
 ## [0.0.6] - 10 dec 2019.
 
 * Fixed issue with regex
