@@ -5,7 +5,7 @@ author: Joran Dob <joran998@gmail.com>
 homepage: https://github.com/Joran-Dob/flutter_subtitle_wrapper
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:

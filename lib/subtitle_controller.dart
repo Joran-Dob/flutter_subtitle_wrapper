@@ -68,8 +68,16 @@ class SubtitleController {
   }
 
   String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
-
-    return htmlText.replaceAll(exp, '');
+    RegExp exp = RegExp(r"(<[^>]*>)", multiLine: true, caseSensitive: true);
+    String newHtmlText = htmlText;
+    exp.allMatches(htmlText).toList().forEach((RegExpMatch regExpMathc) {
+      print(regExpMathc.group(0));
+      if (regExpMathc.group(0) == "<br>") {
+        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '\n');
+      } else {
+        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '');
+      }
+    });
+    return newHtmlText;
   }
 }
