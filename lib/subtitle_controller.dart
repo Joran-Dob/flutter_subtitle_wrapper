@@ -17,7 +17,7 @@ class SubtitleController {
 
   Future<Subtitles> getSubtitles() async {
     RegExp regExp = new RegExp(
-      r"(\d{1,2}):(\d{2}):(\d{2,3})(,|.)(\d+) --> (\d{1,2}):(\d{1,2}):(\d{2})(,|.)(\d+)(?:.*)(\D*)"
+      r"^((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*)",
       caseSensitive: false,
       multiLine: true,
     );
@@ -34,16 +34,18 @@ class SubtitleController {
     List<Subtitle> subtitleList = List();
 
     matches.forEach((RegExpMatch regExpMatch) {
-      int startTimeHours = int.parse(regExpMatch.group(1));
-      int startTimeMinutes = int.parse(regExpMatch.group(2));
-      int startTimeSeconds = int.parse(regExpMatch.group(3));
+      int startTimeHours = int.parse(regExpMatch.group(2));
+      int startTimeMinutes = int.parse(regExpMatch.group(3));
+      int startTimeSeconds = int.parse(regExpMatch.group(4));
       int startTimeMilliseconds = int.parse(regExpMatch.group(5));
 
-      int endTimeHours = int.parse(regExpMatch.group(6));
-      int endTimeMinutes = int.parse(regExpMatch.group(7));
-      int endTimeSeconds = int.parse(regExpMatch.group(8));
+      int endTimeHours = int.parse(regExpMatch.group(7));
+      int endTimeMinutes = int.parse(regExpMatch.group(8));
+      int endTimeSeconds = int.parse(regExpMatch.group(9));
       int endTimeMilliseconds = int.parse(regExpMatch.group(10));
-      String text = regExpMatch.group(11);
+      String text = removeAllHtmlTags(regExpMatch.group(11));
+
+      print(text);
 
       Duration startTime = Duration(
           hours: startTimeHours,
@@ -63,5 +65,11 @@ class SubtitleController {
 
     Subtitles subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
+  }
+
+  String removeAllHtmlTags(String htmlText) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    return htmlText.replaceAll(exp, '');
   }
 }

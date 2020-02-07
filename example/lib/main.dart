@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState(
       "https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4",
-      "https://duoidi6ujfbv.cloudfront.net/media/115/subtitles/5ccb556be8e7f.vtt");
+      "https://pastebin.com/raw/L9mRcuNw");
 }
 
 class _MyHomePageState extends State<MyHomePage> {
