@@ -1,3 +1,16 @@
+## [0.0.10] - 14 feb 2020.
+
+* Added stripping for most tags
+* Fixed numbers not showing in subtitles.
+
+## [0.0.9] - Feb 7, 2020.
+
+* Fixed issue with regex
+
+## [0.0.8] - Feb 7, 2020.
+
+* Fixed issue with regex
+
 ## [0.0.7] - 10 dec 2019.
 
 * Fixed issue with regex
