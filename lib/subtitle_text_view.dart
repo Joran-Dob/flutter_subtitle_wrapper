@@ -25,7 +25,7 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
   final VideoPlayerController videoPlayerController;
   Subtitle subtitle;
   Function listener;
-
+  Subtitles subtitles;
   _SubtitleTextViewState(this.videoPlayerController);
 
   @override
@@ -38,9 +38,10 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
   }
 
   _subtitleWatcher(VideoPlayerController videoPlayerController) async {
-    Subtitles subtitles = await widget.subtitleController.getSubtitles();
+    if (subtitles == null) {
+      subtitles = await widget.subtitleController.getSubtitles();
+    }
     VideoPlayerValue latestValue = videoPlayerController.value;
-
     Duration videoPlayerPosition = latestValue.position;
     if (videoPlayerPosition != null) {
       subtitles.subtitles.forEach((Subtitle subtitleItem) {

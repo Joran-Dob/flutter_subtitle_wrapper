@@ -28,7 +28,6 @@ class SubtitleController {
         subtitlesContent = utf8.decode(response.bodyBytes);
       }
     }
-    print(subtitlesContent);
 
     List<RegExpMatch> matches = regExp.allMatches(subtitlesContent).toList();
     List<Subtitle> subtitleList = List();
@@ -45,8 +44,6 @@ class SubtitleController {
       int endTimeMilliseconds = int.parse(regExpMatch.group(10));
       String text = removeAllHtmlTags(regExpMatch.group(11));
 
-      print(text);
-
       Duration startTime = Duration(
           hours: startTimeHours,
           minutes: startTimeMinutes,
@@ -61,7 +58,6 @@ class SubtitleController {
       subtitleList.add(
           Subtitle(startTime: startTime, endTime: endTime, text: text.trim()));
     });
-    print(subtitleList);
 
     Subtitles subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
@@ -71,7 +67,6 @@ class SubtitleController {
     RegExp exp = RegExp(r"(<[^>]*>)", multiLine: true, caseSensitive: true);
     String newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach((RegExpMatch regExpMathc) {
-      print(regExpMathc.group(0));
       if (regExpMathc.group(0) == "<br>") {
         newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '\n');
       } else {
