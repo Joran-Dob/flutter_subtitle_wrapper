@@ -8,16 +8,18 @@ class SubtitleController {
   String subtitlesContent;
   String subtitleUrl;
   final bool showSubtitles;
+  SubtitleDecoder subtitleDecoder;
 
   SubtitleController({
     this.subtitleUrl,
     this.subtitlesContent,
     this.showSubtitles = true,
+    this.subtitleDecoder = SubtitleDecoder.utf8,
   });
 
   Future<Subtitles> getSubtitles() async {
     RegExp regExp = new RegExp(
-      r"^((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*)",
+      r"((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
       caseSensitive: false,
       multiLine: true,
     );
@@ -25,7 +27,12 @@ class SubtitleController {
     if (subtitlesContent == null && subtitleUrl != null) {
       http.Response response = await http.get(subtitleUrl);
       if (response.statusCode == 200) {
-        subtitlesContent = utf8.decode(response.bodyBytes);
+        subtitlesContent = subtitleDecoder == SubtitleDecoder.utf8
+            ? utf8.decode(
+                response.bodyBytes,
+                allowMalformed: true,
+              )
+            : latin1.decode(response.bodyBytes, allowInvalid: true);
       }
     }
 
@@ -75,4 +82,9 @@ class SubtitleController {
     });
     return newHtmlText;
   }
+}
+
+enum SubtitleDecoder {
+  utf8,
+  latin1,
 }

@@ -10,10 +10,11 @@ class SubtitleTextView extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
 
-  const SubtitleTextView({Key key,
-    @required this.subtitleController,
-    this.videoPlayerController,
-    this.subtitleStyle})
+  const SubtitleTextView(
+      {Key key,
+      @required this.subtitleController,
+      this.videoPlayerController,
+      this.subtitleStyle})
       : super(key: key);
 
   @override
@@ -26,6 +27,7 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
   Subtitle subtitle;
   Function listener;
   Subtitles subtitles;
+  
   _SubtitleTextViewState(this.videoPlayerController);
 
   @override
@@ -46,7 +48,7 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
     if (videoPlayerPosition != null) {
       subtitles.subtitles.forEach((Subtitle subtitleItem) {
         if (videoPlayerPosition.inMilliseconds >
-            subtitleItem.startTime.inMilliseconds &&
+                subtitleItem.startTime.inMilliseconds &&
             videoPlayerPosition.inMilliseconds <
                 subtitleItem.endTime.inMilliseconds) {
           if (this.mounted) {
@@ -69,41 +71,41 @@ class _SubtitleTextViewState extends State<SubtitleTextView> {
   Widget build(BuildContext context) {
     return subtitle != null
         ? Container(
-      child: Stack(
-        children: <Widget>[
-          widget.subtitleStyle.hasBorder
-              ? Center(
-            child: Text(
-              subtitle.text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: widget.subtitleStyle.fontSize,
-                foreground: Paint()
-                  ..style = widget.subtitleStyle.borderStyle.style
-                  ..strokeWidth =
-                      widget.subtitleStyle.borderStyle.strokeWidth
-                  ..color = widget.subtitleStyle.borderStyle.color,
-              ),
+            child: Stack(
+              children: <Widget>[
+                widget.subtitleStyle.hasBorder
+                    ? Center(
+                        child: Text(
+                          subtitle.text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: widget.subtitleStyle.fontSize,
+                            foreground: Paint()
+                              ..style = widget.subtitleStyle.borderStyle.style
+                              ..strokeWidth =
+                                  widget.subtitleStyle.borderStyle.strokeWidth
+                              ..color = widget.subtitleStyle.borderStyle.color,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        child: null,
+                      ),
+                Center(
+                  child: Text(
+                    subtitle.text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: widget.subtitleStyle.fontSize,
+                      color: widget.subtitleStyle.textColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
           )
-              : Container(
-            child: null,
-          ),
-          Center(
-            child: Text(
-              subtitle.text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: widget.subtitleStyle.fontSize,
-                color: widget.subtitleStyle.textColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-    )
         : Container(
-      child: null,
-    );
+            child: null,
+          );
   }
 }

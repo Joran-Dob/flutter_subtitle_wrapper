@@ -6,7 +6,7 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_text_view.dart';
 import 'package:video_player/video_player.dart';
 
-class SubTitleWrapper extends StatefulWidget {
+class SubTitleWrapper extends StatelessWidget {
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
@@ -21,35 +21,20 @@ class SubTitleWrapper extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SubTitleWrapperState createState() =>
-      _SubTitleWrapperState(videoPlayerController);
-}
-
-class _SubTitleWrapperState extends State<SubTitleWrapper> {
-  final VideoPlayerController videoPlayerController;
-
-  _SubTitleWrapperState(this.videoPlayerController);
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        widget.videoChild,
-        widget.subtitleController.showSubtitles
+        videoChild,
+        subtitleController.showSubtitles
             ? Positioned(
-                top: widget.subtitleStyle.position.top,
-                bottom: widget.subtitleStyle.position.bottom,
-                left: widget.subtitleStyle.position.left,
-                right: widget.subtitleStyle.position.right,
+                top: subtitleStyle.position.top,
+                bottom: subtitleStyle.position.bottom,
+                left: subtitleStyle.position.left,
+                right: subtitleStyle.position.right,
                 child: SubtitleTextView(
-                  subtitleController: widget.subtitleController,
+                  subtitleController: subtitleController,
                   videoPlayerController: videoPlayerController,
-                  subtitleStyle: widget.subtitleStyle,
+                  subtitleStyle: subtitleStyle,
                 ),
               )
             : Container(
@@ -58,12 +43,4 @@ class _SubTitleWrapperState extends State<SubTitleWrapper> {
       ],
     );
   }
-
-  @override
-  void dispose() {
-    _dispose();
-    super.dispose();
-  }
-
-  void _dispose() {}
 }

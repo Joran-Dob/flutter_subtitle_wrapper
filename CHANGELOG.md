@@ -1,3 +1,23 @@
+## [0.1.4] - 25 june 2020.
+
+* Added support to select an specific decoder. Defaults to utf8
+
+## [0.1.3] - 24 june 2020.
+
+* Fixed issue with special text items
+
+## [0.1.2] - 23 june 2020.
+
+* Fixed issue with special text items
+
+## [0.1.1] - 24 april 2020.
+
+* Fixed issue with special text items
+
+## [0.1.0] - 24 april 2020.
+
+* Fixed issue with multiple lines
+
 ## [0.0.10] - 14 feb 2020.
 
 * Added stripping for most tags
