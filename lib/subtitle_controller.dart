@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:subtitle_wrapper_package/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/models/subtitles.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'package:http_parser/http_parser.dart';
 
 class SubtitleController {
   String subtitlesContent;
@@ -14,8 +16,31 @@ class SubtitleController {
     this.subtitleUrl,
     this.subtitlesContent,
     this.showSubtitles = true,
-    this.subtitleDecoder = SubtitleDecoder.utf8,
+    this.subtitleDecoder,
   });
+
+  SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
+    Encoding encoding = _encodingForHeaders(headers);
+    if (encoding == latin1) {
+      return SubtitleDecoder.latin1;
+    } else {
+      return SubtitleDecoder.utf8;
+    }
+  }
+
+  Encoding _encodingForHeaders(Map<String, String> headers) =>
+      encodingForCharset(_contentTypeForHeaders(headers).parameters['charset']);
+
+  MediaType _contentTypeForHeaders(Map<String, String> headers) {
+    var contentType = headers['content-type'];
+    if (contentType != null) return MediaType.parse(contentType);
+    return MediaType('application', 'octet-stream');
+  }
+
+  Encoding encodingForCharset(String charset, [Encoding fallback = utf8]) {
+    if (charset == null) return fallback;
+    return Encoding.getByName(charset) ?? fallback;
+  }
 
   Future<Subtitles> getSubtitles() async {
     RegExp regExp = new RegExp(
@@ -27,12 +52,27 @@ class SubtitleController {
     if (subtitlesContent == null && subtitleUrl != null) {
       http.Response response = await http.get(subtitleUrl);
       if (response.statusCode == 200) {
-        subtitlesContent = subtitleDecoder == SubtitleDecoder.utf8
-            ? utf8.decode(
-                response.bodyBytes,
-                allowMalformed: true,
-              )
-            : latin1.decode(response.bodyBytes, allowInvalid: true);
+        if (subtitleDecoder == SubtitleDecoder.utf8) {
+          subtitlesContent = utf8.decode(
+            response.bodyBytes,
+            allowMalformed: true,
+          );
+        } else if (subtitleDecoder == SubtitleDecoder.latin1) {
+          subtitlesContent =
+              latin1.decode(response.bodyBytes, allowInvalid: true);
+        } else {
+          SubtitleDecoder subtitleServerDecoder =
+              requestContentType(response.headers);
+          if (subtitleServerDecoder == SubtitleDecoder.utf8) {
+            subtitlesContent = utf8.decode(
+              response.bodyBytes,
+              allowMalformed: true,
+            );
+          } else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
+            subtitlesContent =
+                latin1.decode(response.bodyBytes, allowInvalid: true);
+          }
+        }
       }
     }
 

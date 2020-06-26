@@ -1,3 +1,14 @@
+## [0.1.6] - 26 june 2020.
+
+* Added support to select an specific decoder. Defaults to utf8
+* Added support for dynamic setting of decoder depending on server site charset, Defaults to utf8
+* Fixed issue related to fallback to utf8
+
+## [0.1.5] - 26 june 2020.
+
+* Added support to select an specific decoder. Defaults to utf8
+* Added support for dynamic setting of decoder depending on server site charset, Defaults to utf8
+
 ## [0.1.4] - 25 june 2020.
 
 * Added support to select an specific decoder. Defaults to utf8
