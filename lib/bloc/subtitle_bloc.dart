@@ -34,29 +34,31 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
       yield* loadSubtitle();
     } else if (event is InitSubtitles) {
       yield* initSubtitles();
+    } else if (event is UpdateLoadedSubtitle) {
+      yield LoadedSubtitle(event.subtitle);
     }
   }
 
   Stream<SubtitleState> initSubtitles() async* {
     yield SubtitleInitializating();
+    subtitles = await subtitleRepository.getSubtitles();
     yield SubtitleInitialized();
   }
 
   Stream<SubtitleState> loadSubtitle() async* {
     yield LoadingSubtitle();
-    VideoPlayerValue latestValue = videoPlayerController.value;
-    Duration videoPlayerPosition = latestValue.position;
-    if (videoPlayerPosition != null) {
-      Subtitle subtitle;
-      subtitles.subtitles.forEach((subtitleItem) {
-        if (videoPlayerPosition.inMilliseconds >
-                subtitleItem.startTime.inMilliseconds &&
-            videoPlayerPosition.inMilliseconds <
-                subtitleItem.endTime.inMilliseconds) {
-          subtitle = subtitleItem;
+    videoPlayerController.addListener(() {
+      Duration videoPlayerPosition = videoPlayerController.value.position;
+      if (videoPlayerPosition != null) {
+        for (Subtitle subtitleItem in subtitles.subtitles) {
+          if (videoPlayerPosition.inMilliseconds >
+                  subtitleItem.startTime.inMilliseconds &&
+              videoPlayerPosition.inMilliseconds <
+                  subtitleItem.endTime.inMilliseconds) {
+            add(UpdateLoadedSubtitle(subtitle: subtitleItem));
+          }
         }
-      });
-      yield LoadedSubtitle(subtitle);
-    }
+      }
+    });
   }
 }

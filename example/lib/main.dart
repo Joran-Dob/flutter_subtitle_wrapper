@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState(
       "https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4",
-      "https://duoidi6ujfbv.cloudfront.net/media/1337/subtitles/5e0f5802cb870.vtt");
+      "https://pastebin.com/raw/ZWWAL7fK");
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -88,9 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SubTitleWrapper(
           videoPlayerController: chewieController.videoPlayerController,
           subtitleController: SubtitleController(
-              subtitleUrl: subtitleUrl,
-              showSubtitles: true,
-              subtitleDecoder: SubtitleDecoder.latin1),
+            subtitleUrl: subtitleUrl,
+            showSubtitles: true,
+            subtitleDecoder: SubtitleDecoder.utf8,
+          ),
           subtitleStyle:
               SubtitleStyle(textColor: Colors.white, hasBorder: true),
           videoChild: Chewie(

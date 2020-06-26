@@ -17,3 +17,11 @@ class LoadSubtitle extends SubtitleEvent {
   @override
   List<Object> get props => [];
 }
+
+class UpdateLoadedSubtitle extends SubtitleEvent {
+  final Subtitle subtitle;
+
+  UpdateLoadedSubtitle({this.subtitle});
+  @override
+  List<Object> get props => [];
+}
