@@ -8,7 +8,7 @@ class SubtitleController {
     this.subtitleUrl,
     this.subtitlesContent,
     this.showSubtitles = true,
-    this.subtitleDecoder = SubtitleDecoder.utf8,
+    this.subtitleDecoder,
   });
 }
 
