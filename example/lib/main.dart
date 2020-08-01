@@ -81,23 +81,32 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     ChewieController chewieController = getChewieController();
 
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 2.0,
-        child: SubTitleWrapper(
-          videoPlayerController: chewieController.videoPlayerController,
-          subtitleController: SubtitleController(
-            subtitleUrl: subtitleUrl,
-            showSubtitles: true,
-            subtitleDecoder: SubtitleDecoder.utf8,
+    return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Card(
+              elevation: 2.0,
+              child: SubTitleWrapper(
+                videoPlayerController: chewieController.videoPlayerController,
+                subtitleController: SubtitleController(
+                  subtitleUrl: subtitleUrl,
+                  showSubtitles: true,
+                  subtitleDecoder: SubtitleDecoder.utf8,
+                  subtitleType: SubtitleType.webvtt,
+                ),
+                subtitleStyle: SubtitleStyle(
+                  textColor: Colors.white,
+                  hasBorder: true,
+                ),
+                videoChild: Chewie(
+                  controller: chewieController,
+                ),
+              ),
+            ),
           ),
-          subtitleStyle:
-              SubtitleStyle(textColor: Colors.white, hasBorder: true),
-          videoChild: Chewie(
-            controller: chewieController,
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -105,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     super.dispose();
-//    if (videoPlayerController != null && chewieController != null) {
-//      videoPlayerController?.dispose();
-//      chewieController?.dispose();
-//    }
+    if (videoPlayerController != null && chewieController != null) {
+      videoPlayerController?.dispose();
+      chewieController?.dispose();
+    }
     debugPrint('videoPlayerController - dispose()');
   }
 }

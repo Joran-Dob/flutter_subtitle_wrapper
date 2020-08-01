@@ -46,12 +46,6 @@ class SubtitleDataRepository extends SubtitleRepository {
     String subtitleUrl = subtitleController.subtitleUrl;
     SubtitleDecoder subtitleDecoder = subtitleController.subtitleDecoder;
 
-    RegExp regExp = new RegExp(
-      r"((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
-      caseSensitive: false,
-      multiLine: true,
-    );
-
     if (subtitlesContent == null && subtitleUrl != null) {
       http.Response response = await http.get(subtitleUrl);
       if (response.statusCode == 200) {
@@ -77,6 +71,37 @@ class SubtitleDataRepository extends SubtitleRepository {
           }
         }
       }
+    }
+    try {
+      if (subtitleController.subtitleType == SubtitleType.webvtt) {
+        return getSubtitlesData(
+            subtitlesContent, subtitleController.subtitleType);
+      } else if (subtitleController.subtitleType == SubtitleType.srt) {
+        return getSubtitlesData(
+            subtitlesContent, subtitleController.subtitleType);
+      }
+    } catch (e) {
+      throw "Error parsing subtitles $e";
+    }
+  }
+
+  Subtitles getSubtitlesData(
+      String subtitlesContent, SubtitleType subtitleType) {
+    RegExp regExp;
+    if (subtitleType == SubtitleType.webvtt) {
+      regExp = new RegExp(
+        r"((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
+        caseSensitive: false,
+        multiLine: true,
+      );
+    } else if (subtitleType == SubtitleType.srt) {
+      regExp = new RegExp(
+        r"((\d{2}):(\d{2}):(\d{2})\,(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\,(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
+        caseSensitive: false,
+        multiLine: true,
+      );
+    } else {
+      throw ("Incorrect subtitle type");
     }
 
     List<RegExpMatch> matches = regExp.allMatches(subtitlesContent).toList();

@@ -14,7 +14,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "6.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -89,7 +89,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "6.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -202,7 +202,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.6"
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:

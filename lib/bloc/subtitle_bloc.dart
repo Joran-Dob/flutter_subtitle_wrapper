@@ -21,10 +21,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   SubtitleBloc({
     this.videoPlayerController,
     this.subtitleRepository,
-  });
-
-  @override
-  SubtitleState get initialState => SubtitleInitial();
+  }) : super(SubtitleInitial());
 
   @override
   Stream<SubtitleState> mapEventToState(

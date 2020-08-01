@@ -1,3 +1,9 @@
+## [1.0.0] - 1 august 2020.
+
+* Implemented BLoC pattern for handling subtitles and state changes.
+* Added support for loading local subtitles by using subtitle content on the controller.
+* Added support for srt.
+
 ## [0.1.6] - 26 june 2020.
 
 * Added support to select an specific decoder. Defaults to utf8

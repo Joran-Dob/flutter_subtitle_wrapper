@@ -1,22 +1,23 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v0.0.5-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
-
+[![](https://img.shields.io/badge/pub-v1.0.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
 Subtitle Wrapper Plugin.
 
 ## Features
-* Displaying of vtt subtitles 
-* Loading of vtt subtitles from network
+
+* Displaying of webvtt/srt subtitles 
+* Loading of webvtt/srt subtitles from network
 * Subtitle styling 
 
 ## Installation
 
 This widget wraps the video player and displays the vtt subtitles on top. 
 
-```dart
+``` dart
 @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Card(
@@ -31,11 +32,14 @@ This widget wraps the video player and displays the vtt subtitles on top.
                   SubtitleStyle(textColor: Colors.white, hasBorder: true),
               videoChild: Chewie(
                 controller: chewieController,
-              ))),
+              ),
+            ),
+          ),
     );
+
   }
 
-``` 
+```
 
 ## Example
 
