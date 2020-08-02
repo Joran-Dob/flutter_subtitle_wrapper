@@ -44,9 +44,27 @@ class SubtitleDataRepository extends SubtitleRepository {
   Future<Subtitles> getSubtitles() async {
     String subtitlesContent = subtitleController.subtitlesContent;
     String subtitleUrl = subtitleController.subtitleUrl;
-    SubtitleDecoder subtitleDecoder = subtitleController.subtitleDecoder;
 
     if (subtitlesContent == null && subtitleUrl != null) {
+      subtitlesContent = await loadRemoteSubtitleContent(subtitleUrl);
+    }
+    try {
+      if (subtitleController.subtitleType == SubtitleType.webvtt) {
+        return getSubtitlesData(
+            subtitlesContent, subtitleController.subtitleType);
+      } else if (subtitleController.subtitleType == SubtitleType.srt) {
+        return getSubtitlesData(
+            subtitlesContent, subtitleController.subtitleType);
+      }
+    } catch (e) {
+      throw "Error parsing subtitles $e";
+    }
+  }
+
+  Future<String> loadRemoteSubtitleContent(subtitleUrl) async {
+    SubtitleDecoder subtitleDecoder = subtitleController.subtitleDecoder;
+    String subtitlesContent;
+    try {
       http.Response response = await http.get(subtitleUrl);
       if (response.statusCode == 200) {
         if (subtitleDecoder == SubtitleDecoder.utf8) {
@@ -71,17 +89,9 @@ class SubtitleDataRepository extends SubtitleRepository {
           }
         }
       }
-    }
-    try {
-      if (subtitleController.subtitleType == SubtitleType.webvtt) {
-        return getSubtitlesData(
-            subtitlesContent, subtitleController.subtitleType);
-      } else if (subtitleController.subtitleType == SubtitleType.srt) {
-        return getSubtitlesData(
-            subtitlesContent, subtitleController.subtitleType);
-      }
+      return subtitlesContent;
     } catch (e) {
-      throw "Error parsing subtitles $e";
+      throw ("Failed loading subtitle content $e");
     }
   }
 
