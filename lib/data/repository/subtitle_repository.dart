@@ -46,15 +46,23 @@ class SubtitleDataRepository extends SubtitleRepository {
     String subtitleUrl = subtitleController.subtitleUrl;
 
     if (subtitlesContent == null && subtitleUrl != null) {
-      subtitlesContent = await loadRemoteSubtitleContent(subtitleUrl);
+      subtitlesContent = await loadRemoteSubtitleContent(
+        subtitleUrl,
+      );
     }
     try {
       if (subtitleController.subtitleType == SubtitleType.webvtt) {
         return getSubtitlesData(
-            subtitlesContent, subtitleController.subtitleType);
+          subtitlesContent,
+          subtitleController.subtitleType,
+        );
       } else if (subtitleController.subtitleType == SubtitleType.srt) {
         return getSubtitlesData(
-            subtitlesContent, subtitleController.subtitleType);
+          subtitlesContent,
+          subtitleController.subtitleType,
+        );
+      } else {
+        throw "Incorrect subtitle type";
       }
     } catch (e) {
       throw "Error parsing subtitles $e";
@@ -73,8 +81,10 @@ class SubtitleDataRepository extends SubtitleRepository {
             allowMalformed: true,
           );
         } else if (subtitleDecoder == SubtitleDecoder.latin1) {
-          subtitlesContent =
-              latin1.decode(response.bodyBytes, allowInvalid: true);
+          subtitlesContent = latin1.decode(
+            response.bodyBytes,
+            allowInvalid: true,
+          );
         } else {
           SubtitleDecoder subtitleServerDecoder =
               requestContentType(response.headers);
@@ -84,8 +94,10 @@ class SubtitleDataRepository extends SubtitleRepository {
               allowMalformed: true,
             );
           } else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
-            subtitlesContent =
-                latin1.decode(response.bodyBytes, allowInvalid: true);
+            subtitlesContent = latin1.decode(
+              response.bodyBytes,
+              allowInvalid: true,
+            );
           }
         }
       }
