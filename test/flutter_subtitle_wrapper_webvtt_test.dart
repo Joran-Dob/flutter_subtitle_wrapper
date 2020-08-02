@@ -40,9 +40,7 @@ void main() {
   });
   test('Parsing remote of WebVtt subtitle file', () async {
     Subtitles subtitles = await subtitleDataRepository.getSubtitles();
-    print(subtitles.subtitles[0].text);
-    expect(
-      subtitles.subtitles[0],
+    expect(subtitles.subtitles, [
       Subtitle(
         startTime: Duration(
           hours: 0,
@@ -54,6 +52,70 @@ void main() {
         text:
             'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
       ),
-    );
+      Subtitle(
+        startTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 3,
+          milliseconds: 510,
+        ),
+        endTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 7,
+          milliseconds: 531,
+        ),
+        text:
+            'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
+      ),
+      Subtitle(
+        startTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 7,
+          milliseconds: 531,
+        ),
+        endTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 11,
+          milliseconds: 440,
+        ),
+        text:
+            'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
+      ),
+      Subtitle(
+        startTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 11,
+          milliseconds: 440,
+        ),
+        endTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 14,
+          milliseconds: 930,
+        ),
+        text:
+            'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
+      ),
+      Subtitle(
+        startTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 14,
+          milliseconds: 930,
+        ),
+        endTime: Duration(
+          hours: 0,
+          minutes: 0,
+          seconds: 16,
+          milliseconds: 570,
+        ),
+        text:
+            'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
+      ),
+    ]);
   });
 }
