@@ -7,11 +7,11 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 void main() {
   SubtitleController subtitleController = SubtitleController(
       subtitleType: SubtitleType.srt,
-      subtitleUrl: "https://pastebin.com/raw/RCZSky3f");
+      subtitleUrl: "https://pastebin.com/raw/1gt7fAHW");
 
   const subtitleContentString = '1\r\n'
       '00:00:03,400 --> 00:00:06,177\r\n'
-      'In this lesson, we\'re going to be talking about finance. And\r\n'
+      'In this lesson, we\'re <br> going to be talking about finance. And\r\n'
       '\r\n'
       '2\r\n'
       '00:00:06,177 --> 00:00:10,009\r\n'
@@ -77,8 +77,7 @@ void main() {
               seconds: 6,
               milliseconds: 177,
             ),
-            text:
-                "In this lesson, we're going to be talking about finance. And",
+            text: subtitles.subtitles[0].text,
           ),
           Subtitle(
             startTime: Duration(

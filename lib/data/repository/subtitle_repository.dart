@@ -37,8 +37,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Gets the content type from the headers and returns it as a media type
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
     var contentType = headers['content-type'];
-    if (contentType != null) return MediaType.parse(contentType);
-    return MediaType('application', 'octet-stream');
+    return MediaType.parse(contentType);
   }
 
   // Gets the encoding type for the charset string with a fall back to utf8
