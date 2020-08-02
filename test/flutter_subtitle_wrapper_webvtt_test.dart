@@ -6,39 +6,95 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 void main() {
   SubtitleController subtitleController = SubtitleController(
-      subtitleType: SubtitleType.webvtt,
-      subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK");
-  SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
-    subtitleController: subtitleController,
+    subtitleType: SubtitleType.webvtt,
+    subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK",
   );
+
+  const subtitleContentString = 'WEBVTT\r\n'
+      '\r\n'
+      '1\r\n'
+      '00:00:00.420 --> 00:00:03.510\r\n'
+      '<v ->Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma</v>\r\n'
+      '\r\n'
+      '2\r\n'
+      '00:00:03.510 --> 00:00:07.531\r\n'
+      'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela\r\n'
+      '\r\n'
+      '3\r\n'
+      '00:00:07.531 --> 00:00:11.440\r\n'
+      'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner\r\n'
+      '\r\n'
+      '4\r\n'
+      '00:00:11.440 --> 00:00:14.930\r\n'
+      'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera\r\n'
+      '\r\n'
+      '5\r\n'
+      '00:00:14.930 --> 00:00:16.570\r\n'
+      'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik';
+
+  const latin1SubtitleContentString = 'WEBVTT\r\n'
+      '\r\n'
+      '1\r\n'
+      '00:00:00.420 --> 00:00:03.510\r\n'
+      '<v ->LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma</v>\r\n'
+      '\r\n'
+      '2\r\n'
+      '00:00:03.510 --> 00:00:07.531\r\n'
+      'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela\r\n'
+      '\r\n'
+      '3\r\n'
+      '00:00:07.531 --> 00:00:11.440\r\n'
+      'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner\r\n'
+      '\r\n'
+      '4\r\n'
+      '00:00:11.440 --> 00:00:14.930\r\n'
+      'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera\r\n'
+      '\r\n'
+      '5\r\n'
+      '00:00:14.930 --> 00:00:16.570\r\n'
+      'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik';
+
   test('Loading remote of WebVtt subtitle file', () async {
+    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      subtitleController: subtitleController,
+    );
     String subtitleContent = await subtitleDataRepository
         .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
     expect(
-        subtitleContent,
-        'WEBVTT\r\n'
-        '\r\n'
-        '1\r\n'
-        '00:00:00.420 --> 00:00:03.510\r\n'
-        '<v ->Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma</v>\r\n'
-        '\r\n'
-        '2\r\n'
-        '00:00:03.510 --> 00:00:07.531\r\n'
-        'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela\r\n'
-        '\r\n'
-        '3\r\n'
-        '00:00:07.531 --> 00:00:11.440\r\n'
-        'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner\r\n'
-        '\r\n'
-        '4\r\n'
-        '00:00:11.440 --> 00:00:14.930\r\n'
-        'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera\r\n'
-        '\r\n'
-        '5\r\n'
-        '00:00:14.930 --> 00:00:16.570\r\n'
-        'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik');
+      subtitleContent,
+      subtitleContentString,
+    );
+  });
+
+  test('Loading remote of WebVtt subtitle file with latin1 codec', () async {
+    subtitleController.subtitleDecoder = SubtitleDecoder.latin1;
+    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      subtitleController: subtitleController,
+    );
+    String subtitleContent = await subtitleDataRepository
+        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    expect(
+      subtitleContent,
+      latin1SubtitleContentString,
+    );
+  });
+
+  test('Loading remote of WebVtt subtitle file with utf8 codec', () async {
+    subtitleController.subtitleDecoder = SubtitleDecoder.utf8;
+    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      subtitleController: subtitleController,
+    );
+    String subtitleContent = await subtitleDataRepository
+        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    expect(
+      subtitleContent,
+      subtitleContentString,
+    );
   });
   test('Parsing remote of WebVtt subtitle file', () async {
+    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      subtitleController: subtitleController,
+    );
     Subtitles subtitles = await subtitleDataRepository.getSubtitles();
     expect(subtitles.subtitles, [
       Subtitle(
