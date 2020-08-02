@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle_bloc.dart';
+import 'package:subtitle_wrapper_package/data/constants/view_keys.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
@@ -11,6 +12,7 @@ class SubtitleTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
     SubtitleBloc subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: (context, state) {
@@ -44,6 +46,7 @@ class SubtitleTextView extends StatelessWidget {
                 Center(
                   child: Text(
                     state.subtitle.text,
+                    key: ViewKeys.SUBTITLE_TEXT_CONTENT,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: subtitleStyle.fontSize,
