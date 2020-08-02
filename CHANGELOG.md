@@ -1,3 +1,10 @@
+## [1.0.1] - 2 august 2020.
+
+* Added unit tests and code coverage to the package.
+* Implemented BLoC pattern for handling subtitles and state changes.
+* Added support for loading local subtitles by using subtitle content on the controller.
+* Added support for srt.
+
 ## [1.0.0] - 1 august 2020.
 
 * Implemented BLoC pattern for handling subtitles and state changes.
