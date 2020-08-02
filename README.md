@@ -1,8 +1,7 @@
 # subtitle_wrapper_package
 
 [![](https://img.shields.io/badge/pub-v1.0.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
-
-Subtitle Wrapper Plugin.
+![flutter test automation](https://github.com/Joran-Dob/flutter_subtitle_wrapper/workflows/flutter%20test%20automation/badge.svg)
 
 ## Features
 
