@@ -1,7 +1,8 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v1.0.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
-![flutter test automation](https://github.com/Joran-Dob/flutter_subtitle_wrapper/workflows/flutter%20test%20automation/badge.svg)
+[![](https://img.shields.io/badge/pub-v1.0.1-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
+[![flutter test automation](https://github.com/Joran-Dob/flutter_subtitle_wrapper/workflows/flutter%20test%20automation/badge.svg)](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions)
+[![codecov](https://codecov.io/gh/Joran-Dob/flutter_subtitle_wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/Joran-Dob/flutter_subtitle_wrapper)
 
 ## Features
 

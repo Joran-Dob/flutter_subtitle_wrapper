@@ -17,83 +17,100 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   SubtitleDataRepository({@required this.subtitleController});
 
+  // Gets the subtitle content type
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
+    // Extracts the subtitle content type from the headers
     Encoding encoding = _encodingForHeaders(headers);
     if (encoding == latin1) {
+      // If encoding type is latin1 return this type
       return SubtitleDecoder.latin1;
     } else {
+      // If encoding type is utf8 return this type
       return SubtitleDecoder.utf8;
     }
   }
 
+  // Extract the encoding type from the headers
   Encoding _encodingForHeaders(Map<String, String> headers) =>
       encodingForCharset(_contentTypeForHeaders(headers).parameters['charset']);
 
+  // Gets the content type from the headers and returns it as a media type
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
     var contentType = headers['content-type'];
     if (contentType != null) return MediaType.parse(contentType);
     return MediaType('application', 'octet-stream');
   }
 
+  // Gets the encoding type for the charset string with a fall back to utf8
   Encoding encodingForCharset(String charset, [Encoding fallback = utf8]) {
+    // If the charset is empty we use the encoding fallback
     if (charset == null) return fallback;
+    // If the charset is not empty we will return the encoding type for this charset
     return Encoding.getByName(charset) ?? fallback;
   }
 
+  // Handles the subtitle loading, parsing.
   @override
   Future<Subtitles> getSubtitles() async {
     String subtitlesContent = subtitleController.subtitlesContent;
     String subtitleUrl = subtitleController.subtitleUrl;
 
+    // If the subtitle content parameter is empty we will load the subtitle from the specified url
     if (subtitlesContent == null && subtitleUrl != null) {
+      // Lets load the subtitle content from the url
       subtitlesContent = await loadRemoteSubtitleContent(
         subtitleUrl,
       );
     }
+    // Tries parsing the subtitle data
     try {
-      if (subtitleController.subtitleType == SubtitleType.webvtt) {
-        return getSubtitlesData(
-          subtitlesContent,
-          subtitleController.subtitleType,
-        );
-      } else if (subtitleController.subtitleType == SubtitleType.srt) {
-        return getSubtitlesData(
-          subtitlesContent,
-          subtitleController.subtitleType,
-        );
-      } else {
-        throw "Incorrect subtitle type";
-      }
+      // Lets try to parse the subtitle content with the specified subtitle type
+      return getSubtitlesData(
+        subtitlesContent,
+        subtitleController.subtitleType,
+      );
     } catch (e) {
+      // Subtitle parsing has failed
       throw "Error parsing subtitles $e";
     }
   }
 
+  // Loads the remote subtitle content
   Future<String> loadRemoteSubtitleContent(subtitleUrl) async {
     SubtitleDecoder subtitleDecoder = subtitleController.subtitleDecoder;
     String subtitlesContent;
+    // Try loading the subtitle content with http.get
     try {
       http.Response response = await http.get(subtitleUrl);
+      // Lets check if the request was succesfull
       if (response.statusCode == 200) {
+        // If the subtitle decoder type is utf8 lets decode it with utf8
         if (subtitleDecoder == SubtitleDecoder.utf8) {
           subtitlesContent = utf8.decode(
             response.bodyBytes,
             allowMalformed: true,
           );
-        } else if (subtitleDecoder == SubtitleDecoder.latin1) {
+        }
+        // If the subtitle decoder type is latin1 lets decode it with latin1
+        else if (subtitleDecoder == SubtitleDecoder.latin1) {
           subtitlesContent = latin1.decode(
             response.bodyBytes,
             allowInvalid: true,
           );
-        } else {
+        }
+        // The  subtitle decoder was not defined so we will extract it from the response headers send from the server
+        else {
           SubtitleDecoder subtitleServerDecoder =
               requestContentType(response.headers);
+          // If the subtitle decoder type is utf8 lets decode it with utf8
           if (subtitleServerDecoder == SubtitleDecoder.utf8) {
             subtitlesContent = utf8.decode(
               response.bodyBytes,
               allowMalformed: true,
             );
-          } else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
+          }
+          // If the subtitle decoder type is latin1 lets decode it with latin1
+          else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
             subtitlesContent = latin1.decode(
               response.bodyBytes,
               allowInvalid: true,
@@ -101,8 +118,10 @@ class SubtitleDataRepository extends SubtitleRepository {
           }
         }
       }
+      // Return the subtitle content
       return subtitlesContent;
     } catch (e) {
+      // Something went wrong when parsing the content
       throw ("Failed loading subtitle content $e");
     }
   }
