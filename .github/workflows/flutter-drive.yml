@@ -1,10 +1,9 @@
 #The name of your workflow.
-name:  Test, build and deploy
+name: Test, build and deploy
 # Trigger the workflow on push or pull request
-on: [push,pull_request]
+on: [pull_request]
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
-
   test:
     #The type of machine to run the job on. [windows,macos, ubuntu , self-hosted]
     runs-on: macos-latest
@@ -17,7 +16,7 @@ jobs:
       # https://github.com/marketplace/actions/flutter-action
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'stable'
+          channel: "stable"
       - run: flutter pub get
       # run static analys code
       - run: flutter  analyze
