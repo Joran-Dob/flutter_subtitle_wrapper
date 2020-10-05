@@ -9,11 +9,6 @@ void main() {
   const subtitleLatin1Url =
       "https://run.mocky.io/v3/eed857c2-4d26-4c12-8951-f84fb2ac0a1a";
 
-  SubtitleController subtitleController = SubtitleController(
-    subtitleType: SubtitleType.webvtt,
-    subtitleUrl: subtitleUtf8Url,
-  );
-
   const subtitleContentString = 'WEBVTT\r\n'
       '\r\n'
       '1\r\n'
@@ -220,7 +215,10 @@ void main() {
   ];
 
   test('Loading remote of WebVtt subtitle file', () async {
-    subtitleController.subtitleUrl = subtitleUtf8Url;
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
@@ -235,8 +233,11 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with latin1 codec', () async {
-    subtitleController.subtitleUrl = subtitleUtf8Url;
-    subtitleController.subtitleDecoder = SubtitleDecoder.latin1;
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+      subtitleDecoder: SubtitleDecoder.latin1,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
@@ -249,9 +250,11 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with utf8 codec', () async {
-    subtitleController.subtitleDecoder = SubtitleDecoder.utf8;
-    subtitleController.subtitleUrl = subtitleUtf8Url;
-
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+      subtitleDecoder: SubtitleDecoder.utf8,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
@@ -265,8 +268,11 @@ void main() {
   test(
     'Parsing remote of WebVtt with latin1 encoding',
     () async {
-      subtitleController.subtitleUrl = subtitleUtf8Url;
-      subtitleController.subtitleDecoder = SubtitleDecoder.latin1;
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleUtf8Url,
+        subtitleDecoder: SubtitleDecoder.latin1,
+      );
       SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
@@ -281,7 +287,10 @@ void main() {
   test(
     'Parsing remote of WebVtt with automatic latin1 encoding',
     () async {
-      subtitleController.subtitleUrl = subtitleLatin1Url;
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleLatin1Url,
+      );
       SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
@@ -302,8 +311,11 @@ void main() {
   test(
     'Parsing remote of WebVtt subtitle file with utf8 encoding',
     () async {
-      subtitleController.subtitleUrl = subtitleUtf8Url;
-      subtitleController.subtitleDecoder = SubtitleDecoder.utf8;
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleUtf8Url,
+        subtitleDecoder: SubtitleDecoder.utf8,
+      );
       SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
