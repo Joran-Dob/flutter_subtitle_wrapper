@@ -1,7 +1,7 @@
 #The name of your workflow.
 name: Test and (dry-run) publish package
 # Trigger the workflow on push or pull request
-on: [push]
+on: [pull_request]
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
   test:

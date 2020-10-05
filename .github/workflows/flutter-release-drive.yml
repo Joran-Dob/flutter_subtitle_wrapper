@@ -2,10 +2,9 @@
 name: Test and publish package
 # Trigger the workflow on push or pull request
 on:
-  [push]
-  # release:
-  #   types: # This configuration does not affect the page_build event above
-  #     - created
+  release:
+    types: # This configuration does not affect the page_build event above
+      - created
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
   test:
