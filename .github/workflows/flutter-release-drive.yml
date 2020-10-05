@@ -1,7 +1,10 @@
-#The name of your workflow.
-name: Test and (dry-run) publish package
+# The name of your workflow.
+name: Test and publish package
 # Trigger the workflow on push or pull request
-on: [pull_request]
+on: [push]
+  # release:
+  #   types: # This configuration does not affect the page_build event above
+  #     - created
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
   test:
@@ -35,4 +38,10 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: coverage/lcov.info
-      - run: flutter pub publish --dry-run
+      - name: Publish
+        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        with:
+          credential: ${{ secrets.PUBSPEC_CREDENTIALS }}
+          flutter_package: true
+          skip_test: false
+          dry_run: true
