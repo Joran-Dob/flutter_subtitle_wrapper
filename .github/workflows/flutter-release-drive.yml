@@ -1,7 +1,8 @@
 # The name of your workflow.
 name: Test and publish package
 # Trigger the workflow on push or pull request
-on: [push]
+on:
+  [push]
   # release:
   #   types: # This configuration does not affect the page_build event above
   #     - created
@@ -43,5 +44,5 @@ jobs:
         with:
           credential: ${{ secrets.PUBSPEC_CREDENTIALS }}
           flutter_package: true
-          skip_test: false
+          skip_test: true
           dry_run: true
