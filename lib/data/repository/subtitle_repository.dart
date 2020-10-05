@@ -32,7 +32,9 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Extract the encoding type from the headers
   Encoding _encodingForHeaders(Map<String, String> headers) =>
-      encodingForCharset(_contentTypeForHeaders(headers).parameters['charset']);
+      encodingForCharset(
+        _contentTypeForHeaders(headers).parameters['charset'],
+      );
 
   // Gets the content type from the headers and returns it as a media type
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
@@ -93,8 +95,9 @@ class SubtitleDataRepository extends SubtitleRepository {
       }
       // The  subtitle decoder was not defined so we will extract it from the response headers send from the server
       else {
-        SubtitleDecoder subtitleServerDecoder =
-            requestContentType(response.headers);
+        SubtitleDecoder subtitleServerDecoder = requestContentType(
+          response.headers,
+        );
         // If the subtitle decoder type is utf8 lets decode it with utf8
         if (subtitleServerDecoder == SubtitleDecoder.utf8) {
           subtitlesContent = utf8.decode(
