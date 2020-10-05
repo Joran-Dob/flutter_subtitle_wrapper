@@ -5,10 +5,9 @@ import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dar
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 void main() {
-  SubtitleController subtitleController = SubtitleController(
-    subtitleType: SubtitleType.webvtt,
-    subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK",
-  );
+  const subtitleUtf8Url = "https://pastebin.com/raw/ZWWAL7fK";
+  const subtitleLatin1Url =
+      "https://run.mocky.io/v3/eed857c2-4d26-4c12-8951-f84fb2ac0a1a";
 
   const subtitleContentString = 'WEBVTT\r\n'
       '\r\n'
@@ -54,12 +53,179 @@ void main() {
       '00:00:14.930 --> 00:00:16.570\r\n'
       'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik';
 
+  List<Subtitle> utf8SubtitleItems = [
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 420,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 3,
+        milliseconds: 510,
+      ),
+      text:
+          'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 3,
+        milliseconds: 510,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 7,
+        milliseconds: 531,
+      ),
+      text:
+          'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 7,
+        milliseconds: 531,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 11,
+        milliseconds: 440,
+      ),
+      text:
+          'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 11,
+        milliseconds: 440,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 14,
+        milliseconds: 930,
+      ),
+      text:
+          'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 14,
+        milliseconds: 930,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 16,
+        milliseconds: 570,
+      ),
+      text:
+          'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
+    ),
+  ];
+
+  List<Subtitle> latin1SubtitleItems = [
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 420,
+      ),
+      endTime: Duration(hours: 0, minutes: 0, seconds: 3, milliseconds: 510),
+      text:
+          'LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 3,
+        milliseconds: 510,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 7,
+        milliseconds: 531,
+      ),
+      text:
+          'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 7,
+        milliseconds: 531,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 11,
+        milliseconds: 440,
+      ),
+      text:
+          'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 11,
+        milliseconds: 440,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 14,
+        milliseconds: 930,
+      ),
+      text:
+          'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera',
+    ),
+    Subtitle(
+      startTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 14,
+        milliseconds: 930,
+      ),
+      endTime: Duration(
+        hours: 0,
+        minutes: 0,
+        seconds: 16,
+        milliseconds: 570,
+      ),
+      text:
+          'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik',
+    ),
+  ];
+
   test('Loading remote of WebVtt subtitle file', () async {
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
-        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    String subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
+      subtitleController.subtitleUrl,
+    );
     expect(
       subtitleContent,
       subtitleContentString,
@@ -67,7 +233,11 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with latin1 codec', () async {
-    subtitleController.subtitleDecoder = SubtitleDecoder.latin1;
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+      subtitleDecoder: SubtitleDecoder.latin1,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
@@ -80,7 +250,11 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with utf8 codec', () async {
-    subtitleController.subtitleDecoder = SubtitleDecoder.utf8;
+    SubtitleController subtitleController = SubtitleController(
+      subtitleType: SubtitleType.webvtt,
+      subtitleUrl: subtitleUtf8Url,
+      subtitleDecoder: SubtitleDecoder.utf8,
+    );
     SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
@@ -91,87 +265,65 @@ void main() {
       subtitleContentString,
     );
   });
-  test('Parsing remote of WebVtt subtitle file', () async {
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
-      subtitleController: subtitleController,
-    );
-    Subtitles subtitles = await subtitleDataRepository.getSubtitles();
-    expect(subtitles.subtitles, [
-      Subtitle(
-        startTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-          milliseconds: 420,
+  test(
+    'Parsing remote of WebVtt with latin1 encoding',
+    () async {
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleUtf8Url,
+        subtitleDecoder: SubtitleDecoder.latin1,
+      );
+      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+        subtitleController: subtitleController,
+      );
+      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      expect(
+        subtitles.subtitles,
+        latin1SubtitleItems,
+      );
+    },
+  );
+
+  test(
+    'Parsing remote of WebVtt with automatic latin1 encoding',
+    () async {
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleLatin1Url,
+      );
+      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+        subtitleController: subtitleController,
+      );
+      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      expect(
+        subtitles.subtitles.sublist(
+          0,
+          3,
         ),
-        endTime: Duration(hours: 0, minutes: 0, seconds: 3, milliseconds: 510),
-        text:
-            'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
-      ),
-      Subtitle(
-        startTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 3,
-          milliseconds: 510,
+        latin1SubtitleItems.sublist(
+          0,
+          3,
         ),
-        endTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 7,
-          milliseconds: 531,
-        ),
-        text:
-            'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
-      ),
-      Subtitle(
-        startTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 7,
-          milliseconds: 531,
-        ),
-        endTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 11,
-          milliseconds: 440,
-        ),
-        text:
-            'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
-      ),
-      Subtitle(
-        startTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 11,
-          milliseconds: 440,
-        ),
-        endTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 14,
-          milliseconds: 930,
-        ),
-        text:
-            'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
-      ),
-      Subtitle(
-        startTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 14,
-          milliseconds: 930,
-        ),
-        endTime: Duration(
-          hours: 0,
-          minutes: 0,
-          seconds: 16,
-          milliseconds: 570,
-        ),
-        text:
-            'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
-      ),
-    ]);
-  });
+      );
+    },
+  );
+
+  test(
+    'Parsing remote of WebVtt subtitle file with utf8 encoding',
+    () async {
+      SubtitleController subtitleController = SubtitleController(
+        subtitleType: SubtitleType.webvtt,
+        subtitleUrl: subtitleUtf8Url,
+        subtitleDecoder: SubtitleDecoder.utf8,
+      );
+      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+        subtitleController: subtitleController,
+      );
+      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      expect(
+        subtitles.subtitles,
+        utf8SubtitleItems,
+      );
+    },
+  );
 }
