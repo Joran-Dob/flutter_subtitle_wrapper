@@ -1,3 +1,9 @@
+## [1.0.3] - 6 october 2020.
+
+* Added more tests and completer coverage.
+* Added option to dynamically update the subtitles during playback. 
+* Updated the readme to provide some better information.
+
 ## [1.0.2] - 2 august 2020.
 
 * Added unit tests and code coverage to the package.
