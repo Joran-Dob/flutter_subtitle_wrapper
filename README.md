@@ -11,7 +11,7 @@ Subtitle playback for the 2 most widely used subtitle formats are supported curr
 The package is nearly completely unit tested and widget tests are in progress.
 
 | Function  | Description| Implemented |
-|---|---|---|---|---|
+|---|---|---|
 | Parse WebVTT  | Parsing of WebVtt subtitles. | :heavy_check_mark: |
 | Parse SubRip (.srt)  | Parsing of SubRip subtitles. | :heavy_check_mark: |
 | Remote loading utf8 encoded subtitles  | The parsing of subtitle files with the utf8 encoding from an url.| :heavy_check_mark: |
