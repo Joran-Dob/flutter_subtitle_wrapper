@@ -46,17 +46,24 @@ class MyHomePage extends StatefulWidget {
 
   @override
   _MyHomePageState createState() => _MyHomePageState(
-      "https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4",
-      "https://pastebin.com/raw/ZWWAL7fK");
+        "https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4",
+      );
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
   final String link;
-  final String subtitleUrl;
+  final SubtitleController subtitleController = SubtitleController(
+    subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK",
+    showSubtitles: true,
+    subtitleDecoder: SubtitleDecoder.utf8,
+    subtitleType: SubtitleType.webvtt,
+  );
 
-  _MyHomePageState(this.link, this.subtitleUrl);
+  _MyHomePageState(
+    this.link,
+  );
 
   VideoPlayerController getVideoPlayerController() {
     if (videoPlayerController == null) {
@@ -77,6 +84,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return chewieController;
   }
 
+  void updateSubtitleUrl() {
+    subtitleController.updateSubtitleUrl(
+      url:
+          'https://raw.githubusercontent.com/brenopolanski/html5-video-webvtt-example/master/MIB2-subtitles-pt-BR.vtt',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ChewieController chewieController = getChewieController();
@@ -90,12 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               elevation: 2.0,
               child: SubTitleWrapper(
                 videoPlayerController: chewieController.videoPlayerController,
-                subtitleController: SubtitleController(
-                  subtitleUrl: subtitleUrl,
-                  showSubtitles: true,
-                  subtitleDecoder: SubtitleDecoder.utf8,
-                  subtitleType: SubtitleType.webvtt,
-                ),
+                subtitleController: subtitleController,
                 subtitleStyle: SubtitleStyle(
                   textColor: Colors.white,
                   hasBorder: true,
@@ -105,6 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+          ),
+          RaisedButton(
+            onPressed: updateSubtitleUrl,
+            child: Text("Update Subtitle Url"),
           ),
         ],
       ),
