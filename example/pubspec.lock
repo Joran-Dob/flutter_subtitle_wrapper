@@ -155,7 +155,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0+1"
+    version: "1.10.0-nullsafety.1"
   provider:
     dependency: transitive
     description:
