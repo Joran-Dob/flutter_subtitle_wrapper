@@ -2,7 +2,7 @@ library subtitle_wrapper_package;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:subtitle_wrapper_package/bloc/subtitle_bloc.dart';
+import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
@@ -15,13 +15,13 @@ class SubTitleWrapper extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
 
-  SubTitleWrapper(
-      {Key key,
-      @required this.videoChild,
-      @required this.subtitleController,
-      @required this.videoPlayerController,
-      this.subtitleStyle = const SubtitleStyle()})
-      : super(key: key);
+  SubTitleWrapper({
+    Key key,
+    @required this.videoChild,
+    @required this.subtitleController,
+    @required this.videoPlayerController,
+    this.subtitleStyle = const SubtitleStyle(),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class SubTitleWrapper extends StatelessWidget {
                     subtitleRepository: SubtitleDataRepository(
                       subtitleController: subtitleController,
                     ),
+                    subtitleController: subtitleController,
                   )..add(
                       InitSubtitles(
                         subtitleController: subtitleController,

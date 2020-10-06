@@ -15,13 +15,17 @@ part 'subtitle_state.dart';
 class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   final VideoPlayerController videoPlayerController;
   final SubtitleRepository subtitleRepository;
+  final SubtitleController subtitleController;
 
   Subtitles subtitles;
 
   SubtitleBloc({
-    this.videoPlayerController,
-    this.subtitleRepository,
-  }) : super(SubtitleInitial());
+    @required this.videoPlayerController,
+    @required this.subtitleRepository,
+    @required this.subtitleController,
+  }) : super(SubtitleInitial()) {
+    subtitleController.attach(this);
+  }
 
   @override
   Stream<SubtitleState> mapEventToState(
@@ -57,5 +61,11 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
         }
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    subtitleController.detach();
+    return super.close();
   }
 }
