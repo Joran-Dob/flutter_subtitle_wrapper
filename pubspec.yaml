@@ -23,6 +23,7 @@ dev_dependencies:
     sdk: flutter
   bloc_test: ^7.0.6
   mockito: ^4.1.2
+  pedantic: ^1.9.0
 
 # The following section is specific to Flutter.
 flutter:

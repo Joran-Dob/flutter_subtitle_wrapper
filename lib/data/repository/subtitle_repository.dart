@@ -20,7 +20,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Gets the subtitle content type
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
     // Extracts the subtitle content type from the headers
-    Encoding encoding = _encodingForHeaders(headers);
+    var encoding = _encodingForHeaders(headers);
     if (encoding == latin1) {
       // If encoding type is latin1 return this type
       return SubtitleDecoder.latin1;
@@ -53,8 +53,8 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Handles the subtitle loading, parsing.
   @override
   Future<Subtitles> getSubtitles() async {
-    String subtitlesContent = subtitleController.subtitlesContent;
-    String subtitleUrl = subtitleController.subtitleUrl;
+    var subtitlesContent = subtitleController.subtitlesContent;
+    var subtitleUrl = subtitleController.subtitleUrl;
 
     // If the subtitle content parameter is empty we will load the subtitle from the specified url
     if (subtitlesContent == null && subtitleUrl != null) {
@@ -73,10 +73,10 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Loads the remote subtitle content
   Future<String> loadRemoteSubtitleContent(subtitleUrl) async {
-    SubtitleDecoder subtitleDecoder = subtitleController.subtitleDecoder;
+    var subtitleDecoder = subtitleController.subtitleDecoder;
     String subtitlesContent;
     // Try loading the subtitle content with http.get
-    http.Response response = await http.get(subtitleUrl);
+    var response = await http.get(subtitleUrl);
     // Lets check if the request was succesfull
     if (response.statusCode == 200) {
       // If the subtitle decoder type is utf8 lets decode it with utf8
@@ -95,7 +95,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       }
       // The  subtitle decoder was not defined so we will extract it from the response headers send from the server
       else {
-        SubtitleDecoder subtitleServerDecoder = requestContentType(
+        var subtitleServerDecoder = requestContentType(
           response.headers,
         );
         // If the subtitle decoder type is utf8 lets decode it with utf8
@@ -122,42 +122,42 @@ class SubtitleDataRepository extends SubtitleRepository {
       String subtitlesContent, SubtitleType subtitleType) {
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
-      regExp = new RegExp(
-        r"((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
+      regExp = RegExp(
+        r'((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
     } else if (subtitleType == SubtitleType.srt) {
-      regExp = new RegExp(
-        r"((\d{2}):(\d{2}):(\d{2})\,(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\,(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))",
+      regExp = RegExp(
+        r'((\d{2}):(\d{2}):(\d{2})\,(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\,(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
     } else {
-      throw ("Incorrect subtitle type");
+      throw ('Incorrect subtitle type');
     }
 
-    List<RegExpMatch> matches = regExp.allMatches(subtitlesContent).toList();
-    List<Subtitle> subtitleList = List();
+    var matches = regExp.allMatches(subtitlesContent).toList();
+    var subtitleList = [];
 
     matches.forEach((RegExpMatch regExpMatch) {
-      int startTimeHours = int.parse(regExpMatch.group(2));
-      int startTimeMinutes = int.parse(regExpMatch.group(3));
-      int startTimeSeconds = int.parse(regExpMatch.group(4));
-      int startTimeMilliseconds = int.parse(regExpMatch.group(5));
+      var startTimeHours = int.parse(regExpMatch.group(2));
+      var startTimeMinutes = int.parse(regExpMatch.group(3));
+      var startTimeSeconds = int.parse(regExpMatch.group(4));
+      var startTimeMilliseconds = int.parse(regExpMatch.group(5));
 
-      int endTimeHours = int.parse(regExpMatch.group(7));
-      int endTimeMinutes = int.parse(regExpMatch.group(8));
-      int endTimeSeconds = int.parse(regExpMatch.group(9));
-      int endTimeMilliseconds = int.parse(regExpMatch.group(10));
-      String text = removeAllHtmlTags(regExpMatch.group(11));
+      var endTimeHours = int.parse(regExpMatch.group(7));
+      var endTimeMinutes = int.parse(regExpMatch.group(8));
+      var endTimeSeconds = int.parse(regExpMatch.group(9));
+      var endTimeMilliseconds = int.parse(regExpMatch.group(10));
+      var text = removeAllHtmlTags(regExpMatch.group(11));
 
-      Duration startTime = Duration(
+      var startTime = Duration(
           hours: startTimeHours,
           minutes: startTimeMinutes,
           seconds: startTimeSeconds,
           milliseconds: startTimeMilliseconds);
-      Duration endTime = Duration(
+      var endTime = Duration(
           hours: endTimeHours,
           minutes: endTimeMinutes,
           seconds: endTimeSeconds,
@@ -167,15 +167,15 @@ class SubtitleDataRepository extends SubtitleRepository {
           Subtitle(startTime: startTime, endTime: endTime, text: text.trim()));
     });
 
-    Subtitles subtitles = Subtitles(subtitles: subtitleList);
+    var subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
   }
 
   String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(r"(<[^>]*>)", multiLine: true, caseSensitive: true);
-    String newHtmlText = htmlText;
+    var exp = RegExp(r'(<[^>]*>)', multiLine: true, caseSensitive: true);
+    var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach((RegExpMatch regExpMathc) {
-      if (regExpMathc.group(0) == "<br>") {
+      if (regExpMathc.group(0) == '<br>') {
         newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '\n');
       } else {
         newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '');
