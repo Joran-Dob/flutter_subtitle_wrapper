@@ -5,9 +5,10 @@ import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dar
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 void main() {
-  SubtitleController subtitleController = SubtitleController(
-      subtitleType: SubtitleType.srt,
-      subtitleUrl: "https://pastebin.com/raw/1gt7fAHW");
+  var subtitleController = SubtitleController(
+    subtitleType: SubtitleType.srt,
+    subtitleUrl: 'https://pastebin.com/raw/1gt7fAHW',
+  );
 
   const subtitleContentString = '1\r\n'
       '00:00:03,400 --> 00:00:06,177\r\n'
@@ -18,11 +19,13 @@ void main() {
       'one of the most important aspects of finance is interest.';
 
   test('Loading remote of Srt subtitle file', () async {
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
-        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    var subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
+      subtitleController.subtitleUrl,
+    );
     expect(
       subtitleContent,
       subtitleContentString,
@@ -31,11 +34,13 @@ void main() {
 
   test('Loading remote of Srt subtitle file with latin1 codec', () async {
     subtitleController.subtitleDecoder = SubtitleDecoder.latin1;
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
-        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    var subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
+      subtitleController.subtitleUrl,
+    );
     expect(
       subtitleContent,
       subtitleContentString,
@@ -44,11 +49,13 @@ void main() {
 
   test('Loading remote of Srt subtitle file with utf8 codec', () async {
     subtitleController.subtitleDecoder = SubtitleDecoder.utf8;
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
-        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    var subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
+      subtitleController.subtitleUrl,
+    );
     expect(
       subtitleContent,
       subtitleContentString,
@@ -57,10 +64,10 @@ void main() {
   test(
     'Parsing remote of Srt subtitle file',
     () async {
-      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      var subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
-      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      var subtitles = await subtitleDataRepository.getSubtitles() as Subtitles;
       expect(
         subtitles.subtitles,
         [
@@ -92,7 +99,7 @@ void main() {
               seconds: 10,
               milliseconds: 009,
             ),
-            text: "one of the most important aspects of finance is interest.",
+            text: 'one of the most important aspects of finance is interest.',
           ),
         ],
       );

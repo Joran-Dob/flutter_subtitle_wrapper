@@ -46,7 +46,7 @@ class MyHomePage extends StatefulWidget {
 
   @override
   _MyHomePageState createState() => _MyHomePageState(
-        "https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4",
+        'https://d11b76aq44vj33.cloudfront.net/media/720/video/5def7824adbbc.mp4',
       );
 }
 
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ChewieController chewieController;
   final String link;
   final SubtitleController subtitleController = SubtitleController(
-    subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK",
+    subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
     showSubtitles: true,
     subtitleDecoder: SubtitleDecoder.utf8,
     subtitleType: SubtitleType.webvtt,
@@ -66,21 +66,17 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   VideoPlayerController getVideoPlayerController() {
-    if (videoPlayerController == null) {
-      videoPlayerController = new VideoPlayerController.network(link);
-    }
+    videoPlayerController ??= VideoPlayerController.network(link);
     return videoPlayerController;
   }
 
   ChewieController getChewieController() {
-    if (chewieController == null) {
-      chewieController = ChewieController(
-        videoPlayerController: getVideoPlayerController(),
-        aspectRatio: 3 / 2,
-        autoPlay: true,
-        autoInitialize: true,
-      );
-    }
+    chewieController ??= ChewieController(
+      videoPlayerController: getVideoPlayerController(),
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      autoInitialize: true,
+    );
     return chewieController;
   }
 
@@ -93,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ChewieController chewieController = getChewieController();
+    var chewieController = getChewieController();
 
     return Scaffold(
       body: Column(
@@ -117,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           RaisedButton(
             onPressed: updateSubtitleUrl,
-            child: Text("Update Subtitle Url"),
+            child: Text('Update Subtitle Url'),
           ),
         ],
       ),

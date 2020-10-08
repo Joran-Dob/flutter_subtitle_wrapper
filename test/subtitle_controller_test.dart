@@ -8,8 +8,8 @@ import 'package:video_player/video_player.dart';
 class MockVideoPlayerController extends Mock implements VideoPlayerController {}
 
 void main() {
-  SubtitleController _subtitleController = SubtitleController(
-    subtitleUrl: "https://pastebin.com/raw/ZWWAL7fK",
+  var _subtitleController = SubtitleController(
+    subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
     showSubtitles: true,
     subtitleDecoder: SubtitleDecoder.utf8,
     subtitleType: SubtitleType.webvtt,
@@ -40,7 +40,7 @@ void main() {
           videoPlayerController: MockVideoPlayerController(),
         ));
         _subtitleController.updateSubtitleUrl(
-          url: "https://pastebin.com/raw/ZWWAL7fK",
+          url: 'https://pastebin.com/raw/ZWWAL7fK',
         );
       });
 
@@ -66,7 +66,7 @@ void main() {
       test('update subtitle url without attach', () async {
         _subtitleController.detach();
         _subtitleController.updateSubtitleUrl(
-          url: "https://pastebin.com/raw/ZWWAL7fK",
+          url: 'https://pastebin.com/raw/ZWWAL7fK',
         );
       });
     },

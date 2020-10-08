@@ -1,13 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 void main() {
-  const subtitleUtf8Url = "https://pastebin.com/raw/ZWWAL7fK";
+  const subtitleUtf8Url = 'https://pastebin.com/raw/ZWWAL7fK';
   const subtitleLatin1Url =
-      "https://run.mocky.io/v3/eed857c2-4d26-4c12-8951-f84fb2ac0a1a";
+      'https://run.mocky.io/v3/eed857c2-4d26-4c12-8951-f84fb2ac0a1a';
 
   const subtitleContentString = 'WEBVTT\r\n'
       '\r\n'
@@ -53,7 +52,7 @@ void main() {
       '00:00:14.930 --> 00:00:16.570\r\n'
       'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik';
 
-  List<Subtitle> utf8SubtitleItems = [
+  var utf8SubtitleItems = [
     Subtitle(
       startTime: Duration(
         hours: 0,
@@ -136,7 +135,7 @@ void main() {
     ),
   ];
 
-  List<Subtitle> latin1SubtitleItems = [
+  var latin1SubtitleItems = [
     Subtitle(
       startTime: Duration(
         hours: 0,
@@ -215,14 +214,14 @@ void main() {
   ];
 
   test('Loading remote of WebVtt subtitle file', () async {
-    SubtitleController subtitleController = SubtitleController(
+    var subtitleController = SubtitleController(
       subtitleType: SubtitleType.webvtt,
       subtitleUrl: subtitleUtf8Url,
     );
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent =
+    var subtitleContent =
         await subtitleDataRepository.loadRemoteSubtitleContent(
       subtitleController.subtitleUrl,
     );
@@ -233,16 +232,18 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with latin1 codec', () async {
-    SubtitleController subtitleController = SubtitleController(
+    var subtitleController = SubtitleController(
       subtitleType: SubtitleType.webvtt,
       subtitleUrl: subtitleUtf8Url,
       subtitleDecoder: SubtitleDecoder.latin1,
     );
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
-        .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
+    var subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
+      subtitleController.subtitleUrl,
+    );
     expect(
       subtitleContent,
       latin1SubtitleContentString,
@@ -250,15 +251,15 @@ void main() {
   });
 
   test('Loading remote of WebVtt subtitle file with utf8 codec', () async {
-    SubtitleController subtitleController = SubtitleController(
+    var subtitleController = SubtitleController(
       subtitleType: SubtitleType.webvtt,
       subtitleUrl: subtitleUtf8Url,
       subtitleDecoder: SubtitleDecoder.utf8,
     );
-    SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+    var subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    String subtitleContent = await subtitleDataRepository
+    var subtitleContent = await subtitleDataRepository
         .loadRemoteSubtitleContent(subtitleController.subtitleUrl);
     expect(
       subtitleContent,
@@ -268,15 +269,15 @@ void main() {
   test(
     'Parsing remote of WebVtt with latin1 encoding',
     () async {
-      SubtitleController subtitleController = SubtitleController(
+      var subtitleController = SubtitleController(
         subtitleType: SubtitleType.webvtt,
         subtitleUrl: subtitleUtf8Url,
         subtitleDecoder: SubtitleDecoder.latin1,
       );
-      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      var subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
-      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      var subtitles = await subtitleDataRepository.getSubtitles();
       expect(
         subtitles.subtitles,
         latin1SubtitleItems,
@@ -287,14 +288,14 @@ void main() {
   test(
     'Parsing remote of WebVtt with automatic latin1 encoding',
     () async {
-      SubtitleController subtitleController = SubtitleController(
+      var subtitleController = SubtitleController(
         subtitleType: SubtitleType.webvtt,
         subtitleUrl: subtitleLatin1Url,
       );
-      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      var subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
-      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      var subtitles = await subtitleDataRepository.getSubtitles();
       expect(
         subtitles.subtitles.sublist(
           0,
@@ -311,15 +312,15 @@ void main() {
   test(
     'Parsing remote of WebVtt subtitle file with utf8 encoding',
     () async {
-      SubtitleController subtitleController = SubtitleController(
+      var subtitleController = SubtitleController(
         subtitleType: SubtitleType.webvtt,
         subtitleUrl: subtitleUtf8Url,
         subtitleDecoder: SubtitleDecoder.utf8,
       );
-      SubtitleDataRepository subtitleDataRepository = SubtitleDataRepository(
+      var subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
-      Subtitles subtitles = await subtitleDataRepository.getSubtitles();
+      var subtitles = await subtitleDataRepository.getSubtitles();
       expect(
         subtitles.subtitles,
         utf8SubtitleItems,

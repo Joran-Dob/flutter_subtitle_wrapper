@@ -35,7 +35,7 @@ class SubtitleController {
     @required url,
   }) {
     if (_attached) {
-      this.subtitleUrl = url;
+      subtitleUrl = url;
       _subtitleBloc.add(
         InitSubtitles(
           subtitleController: this,
@@ -50,7 +50,7 @@ class SubtitleController {
     @required content,
   }) {
     if (_attached) {
-      this.subtitlesContent = content;
+      subtitlesContent = content;
       _subtitleBloc.add(
         InitSubtitles(
           subtitleController: this,

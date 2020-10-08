@@ -9,8 +9,8 @@ class Subtitle extends Equatable {
 
   @override
   List<Object> get props => [
-        this.startTime,
-        this.endTime,
-        this.text,
+        startTime,
+        endTime,
+        text,
       ];
 }
