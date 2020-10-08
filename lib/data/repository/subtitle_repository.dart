@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 abstract class SubtitleRepository {
-  Future<Subtitles> getSubtitles();
+  Future<dynamic> getSubtitles();
 }
 
 class SubtitleDataRepository extends SubtitleRepository {
@@ -52,7 +52,7 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Handles the subtitle loading, parsing.
   @override
-  Future<Subtitles> getSubtitles() async {
+  Future<dynamic> getSubtitles() async {
     var subtitlesContent = subtitleController.subtitlesContent;
     var subtitleUrl = subtitleController.subtitleUrl;
 
