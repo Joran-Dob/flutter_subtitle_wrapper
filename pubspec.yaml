@@ -9,21 +9,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  video_player: ^0.10.2+1
-  http: ^0.12.0+2
-  equatable: ^1.2.0
-  http_parser: ^3.1.4
-  bloc: ^6.0.0
-  flutter_bloc: ^6.0.0
+  video_player: ^2.0.0-nullsafety.2
+  http: ^0.12.2
+  equatable: ^2.0.0-nullsafety.0
+  http_parser: ^4.0.0-nullsafety
+  bloc: ^7.0.0-nullsafety.0
+  flutter_bloc: ^7.0.0-dev.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  bloc_test: ^7.0.6
+  bloc_test: ^7.1.0
   mockito: ^4.1.2
-  pedantic: ^1.9.0
+  pedantic: ^1.10.0-nullsafety.2
 
 # The following section is specific to Flutter.
 flutter:
