@@ -38,8 +38,21 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Gets the content type from the headers and returns it as a media type
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
-    var contentType = headers['content-type'];
-    return MediaType.parse(contentType);
+    var _contentType = headers['content-type'];
+    if (_hasSemiColonEnding(_contentType)) {
+      _contentType = _fixSemiColonEnding(_contentType);
+    }
+    return MediaType.parse(_contentType);
+  }
+
+  // Check if the string is ending with a semicolon.
+  bool _hasSemiColonEnding(String _string) {
+    return _string.substring(_string.length - 1, _string.length) == ';';
+  }
+
+  // Remove ending semicolon from string.
+  String _fixSemiColonEnding(String _string) {
+    return _string.substring(0, _string.length - 1);
   }
 
   // Gets the encoding type for the charset string with a fall back to utf8
