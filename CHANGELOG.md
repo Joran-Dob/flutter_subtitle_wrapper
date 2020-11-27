@@ -1,3 +1,8 @@
+## [1.0.4] - 27 november 2020.
+
+* Added a check to see if content-types end with a semicolon 👀.  
+* Added a fix for content-types that end with a semicolon 👨‍🔧.
+
 ## [1.0.3] - 6 october 2020.
 
 * Added more tests and completer coverage.
