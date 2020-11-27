@@ -23,6 +23,6 @@ dev_dependencies:
   bloc_test: ^7.1.0
   mockito: ^4.1.2
   pedantic: ^1.10.0-nullsafety.2
-  video_player: ^2.0.0-nullsafety.2
+  video_player: ^1.0.1
 
 flutter:
