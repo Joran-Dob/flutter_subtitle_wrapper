@@ -1,3 +1,8 @@
+## [2.0.0-nullsafety.0] - 3/02/2021.
+
+* Migrated to sound null safety.
+* Fixed some deprecation issues.
+
 ## [1.0.4] - 27 november 2020.
 
 * Added a check to see if content-types end with a semicolon 👀.  
