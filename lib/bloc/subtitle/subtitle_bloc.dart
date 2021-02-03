@@ -7,13 +7,12 @@ import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
-import 'package:video_player/video_player.dart';
 
 part 'subtitle_event.dart';
 part 'subtitle_state.dart';
 
 class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
-  final VideoPlayerController videoPlayerController;
+  final dynamic videoPlayerController;
   final SubtitleRepository subtitleRepository;
   final SubtitleController subtitleController;
 

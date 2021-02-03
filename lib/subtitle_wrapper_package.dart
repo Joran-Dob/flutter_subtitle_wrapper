@@ -7,12 +7,11 @@ import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_text_view.dart';
-import 'package:video_player/video_player.dart';
 
 class SubTitleWrapper extends StatelessWidget {
   final Widget videoChild;
   final SubtitleController subtitleController;
-  final VideoPlayerController videoPlayerController;
+  final dynamic videoPlayerController;
   final SubtitleStyle subtitleStyle;
 
   SubTitleWrapper({

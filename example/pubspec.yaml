@@ -21,16 +21,13 @@ dependencies:
     sdk: flutter
   chewie: ^0.9.10
   video_player: ^0.10.9+1
-  subtitle_wrapper_package:
-    path: ../
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  subtitle_wrapper_package:
+    path: ../
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
