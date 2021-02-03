@@ -160,11 +160,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
@@ -173,11 +179,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 child: Text('Switch to 🇬🇧'),
                               ),
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
@@ -186,11 +198,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 child: Text('Switch to 🇪🇸'),
                               ),
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(

@@ -1,1 +1,6 @@
 include: package:pedantic/analysis_options.yaml
+
+linter:
+  rules:
+    close_sinks: true
+    package_api_docs: true
