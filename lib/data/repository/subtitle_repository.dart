@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
@@ -9,18 +8,18 @@ import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 abstract class SubtitleRepository {
-  Future<dynamic> getSubtitles();
+  Future<Subtitles> getSubtitles();
 }
 
 class SubtitleDataRepository extends SubtitleRepository {
   final SubtitleController subtitleController;
 
-  SubtitleDataRepository({@required this.subtitleController});
+  SubtitleDataRepository({required this.subtitleController});
 
   // Gets the subtitle content type
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
     // Extracts the subtitle content type from the headers
-    var encoding = _encodingForHeaders(headers);
+    var encoding = _encodingForHeaders(headers as Map<String, String>);
     if (encoding == latin1) {
       // If encoding type is latin1 return this type
       return SubtitleDecoder.latin1;
@@ -38,7 +37,7 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Gets the content type from the headers and returns it as a media type
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
-    var _contentType = headers['content-type'];
+    var _contentType = headers['content-type']!;
     if (_hasSemiColonEnding(_contentType)) {
       _contentType = _fixSemiColonEnding(_contentType);
     }
@@ -56,7 +55,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Gets the encoding type for the charset string with a fall back to utf8
-  Encoding encodingForCharset(String charset, [Encoding fallback = utf8]) {
+  Encoding encodingForCharset(String? charset, [Encoding fallback = utf8]) {
     // If the charset is empty we use the encoding fallback
     if (charset == null) return fallback;
     // If the charset is not empty we will return the encoding type for this charset
@@ -65,7 +64,7 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Handles the subtitle loading, parsing.
   @override
-  Future<dynamic> getSubtitles() async {
+  Future<Subtitles> getSubtitles() async {
     var subtitlesContent = subtitleController.subtitlesContent;
     var subtitleUrl = subtitleController.subtitleUrl;
 
@@ -79,17 +78,19 @@ class SubtitleDataRepository extends SubtitleRepository {
     // Tries parsing the subtitle data
     // Lets try to parse the subtitle content with the specified subtitle type
     return getSubtitlesData(
-      subtitlesContent,
+      subtitlesContent!,
       subtitleController.subtitleType,
     );
   }
 
   // Loads the remote subtitle content
-  Future<String> loadRemoteSubtitleContent(subtitleUrl) async {
+  Future<String?> loadRemoteSubtitleContent(subtitleUrl) async {
     var subtitleDecoder = subtitleController.subtitleDecoder;
-    String subtitlesContent;
+    String? subtitlesContent;
     // Try loading the subtitle content with http.get
-    var response = await http.get(subtitleUrl);
+    var response = await http.get(
+      Uri.parse(subtitleUrl),
+    );
     // Lets check if the request was succesfull
     if (response.statusCode == 200) {
       // If the subtitle decoder type is utf8 lets decode it with utf8
@@ -154,16 +155,16 @@ class SubtitleDataRepository extends SubtitleRepository {
     var subtitleList = [];
 
     matches.forEach((RegExpMatch regExpMatch) {
-      var startTimeHours = int.parse(regExpMatch.group(2));
-      var startTimeMinutes = int.parse(regExpMatch.group(3));
-      var startTimeSeconds = int.parse(regExpMatch.group(4));
-      var startTimeMilliseconds = int.parse(regExpMatch.group(5));
+      var startTimeHours = int.parse(regExpMatch.group(2)!);
+      var startTimeMinutes = int.parse(regExpMatch.group(3)!);
+      var startTimeSeconds = int.parse(regExpMatch.group(4)!);
+      var startTimeMilliseconds = int.parse(regExpMatch.group(5)!);
 
-      var endTimeHours = int.parse(regExpMatch.group(7));
-      var endTimeMinutes = int.parse(regExpMatch.group(8));
-      var endTimeSeconds = int.parse(regExpMatch.group(9));
-      var endTimeMilliseconds = int.parse(regExpMatch.group(10));
-      var text = removeAllHtmlTags(regExpMatch.group(11));
+      var endTimeHours = int.parse(regExpMatch.group(7)!);
+      var endTimeMinutes = int.parse(regExpMatch.group(8)!);
+      var endTimeSeconds = int.parse(regExpMatch.group(9)!);
+      var endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
+      var text = removeAllHtmlTags(regExpMatch.group(11)!);
 
       var startTime = Duration(
           hours: startTimeHours,
@@ -189,9 +190,9 @@ class SubtitleDataRepository extends SubtitleRepository {
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach((RegExpMatch regExpMathc) {
       if (regExpMathc.group(0) == '<br>') {
-        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '\n');
+        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
       } else {
-        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0), '');
+        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
       }
     });
     return newHtmlText;

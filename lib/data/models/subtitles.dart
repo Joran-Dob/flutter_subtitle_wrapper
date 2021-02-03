@@ -1,5 +1,5 @@
 class Subtitles {
-  final List<dynamic> subtitles;
+  final List<dynamic>? subtitles;
 
   Subtitles({this.subtitles});
 }
