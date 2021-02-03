@@ -12,10 +12,13 @@ class SubtitleTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
+    final substitleBloc = BlocProvider.of<SubtitleBloc>(context);
+
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: (context, state) {
         if (state is SubtitleInitialized) {
-          BlocProvider.of<SubtitleBloc>(context).add(LoadSubtitle());
+          substitleBloc.add(LoadSubtitle());
         }
       },
       builder: (context, state) {
