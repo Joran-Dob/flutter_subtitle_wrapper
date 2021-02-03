@@ -95,15 +95,18 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top,
             ),
-            child: SubTitleWrapper(
-              videoPlayerController: chewieController.videoPlayerController,
-              subtitleController: subtitleController,
-              subtitleStyle: SubtitleStyle(
-                textColor: Colors.white,
-                hasBorder: true,
-              ),
-              videoChild: Chewie(
-                controller: chewieController,
+            child: Container(
+              height: 270,
+              child: SubTitleWrapper(
+                videoPlayerController: chewieController.videoPlayerController,
+                subtitleController: subtitleController,
+                subtitleStyle: SubtitleStyle(
+                  textColor: Colors.white,
+                  hasBorder: true,
+                ),
+                videoChild: Chewie(
+                  controller: chewieController,
+                ),
               ),
             ),
           ),

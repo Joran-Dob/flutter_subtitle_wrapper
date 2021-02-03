@@ -15,10 +15,10 @@ class SubTitleWrapper extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
 
   SubTitleWrapper({
-    Key key,
-    @required this.videoChild,
-    @required this.subtitleController,
-    @required this.videoPlayerController,
+    Key? key,
+    required this.videoChild,
+    required this.subtitleController,
+    required this.videoPlayerController,
     this.subtitleStyle = const SubtitleStyle(),
   }) : super(key: key);
 

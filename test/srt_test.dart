@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
@@ -67,7 +66,7 @@ void main() {
       var subtitleDataRepository = SubtitleDataRepository(
         subtitleController: subtitleController,
       );
-      var subtitles = await subtitleDataRepository.getSubtitles() as Subtitles;
+      var subtitles = await subtitleDataRepository.getSubtitles();
       expect(
         subtitles.subtitles,
         [
@@ -84,7 +83,7 @@ void main() {
               seconds: 6,
               milliseconds: 177,
             ),
-            text: subtitles.subtitles[0].text,
+            text: subtitles.subtitles![0].text,
           ),
           Subtitle(
             startTime: Duration(

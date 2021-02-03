@@ -29,12 +29,12 @@ void main() {
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
-        act: (bloc) => bloc.add(
+        act: (dynamic bloc) => bloc.add(
           InitSubtitles(
             subtitleController: _subtitleController,
           ),
         ),
-        expect: [
+        expect: () => [
           SubtitleInitializating(),
           SubtitleInitialized(),
         ],
@@ -48,7 +48,7 @@ void main() {
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
-        act: (bloc) => bloc.add(
+        act: (dynamic bloc) => bloc.add(
           UpdateLoadedSubtitle(
             subtitle: Subtitle(
               startTime: Duration(
@@ -61,7 +61,7 @@ void main() {
             ),
           ),
         ),
-        expect: [
+        expect: () => [
           LoadedSubtitle(
             Subtitle(
               startTime: Duration(
@@ -91,7 +91,7 @@ void main() {
             LoadSubtitle(),
           );
         },
-        expect: [
+        expect: () => [
           LoadingSubtitle(),
         ],
       );

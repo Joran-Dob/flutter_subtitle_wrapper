@@ -42,14 +42,16 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.0"
+    version: "7.0.0-nullsafety.1"
   bloc_test:
     dependency: "direct dev"
     description:
-      name: bloc_test
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.1.0"
+      path: "packages/bloc_test/"
+      ref: null_safety
+      resolved-ref: "4b25752416190b2734548f34ba2a9138cd4877aa"
+      url: "https://github.com/felangel/bloc.git"
+    source: git
+    version: "8.0.0-nullsafety.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -161,7 +163,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.5"
+    version: "2.0.0-nullsafety.1"
   fake_async:
     dependency: transitive
     description:
@@ -194,7 +196,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "7.0.0-nullsafety.1"
   flutter_driver:
     dependency: "direct dev"
     description: flutter
@@ -235,7 +237,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.2"
+    version: "0.13.0-nullsafety.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -249,7 +251,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.4"
+    version: "4.0.0-nullsafety"
   io:
     dependency: transitive
     description:
@@ -305,14 +307,21 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.2"
+    version: "5.0.0-nullsafety.5"
+  mocktail:
+    dependency: transitive
+    description:
+      name: mocktail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1-dev.10"
   nested:
     dependency: transitive
     description:
       name: nested
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.5-nullsafety.1"
   node_interop:
     dependency: transitive
     description:
@@ -382,7 +391,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.2+2"
+    version: "5.0.0-nullsafety.3"
   pub_semver:
     dependency: transitive
     description:
@@ -403,28 +412,28 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.9"
+    version: "1.0.0-nullsafety.0"
   shelf_packages_handler:
     dependency: transitive
     description:
       name: shelf_packages_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   shelf_static:
     dependency: transitive
     description:
       name: shelf_static
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.8"
+    version: "0.2.9+2"
   shelf_web_socket:
     dependency: transitive
     description:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -499,7 +508,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.16.0-nullsafety.12"
+    version: "1.16.0-nullsafety.17"
   test_api:
     dependency: transitive
     description:
@@ -513,7 +522,7 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.12-nullsafety.11"
+    version: "0.3.12-nullsafety.15"
   typed_data:
     dependency: transitive
     description:

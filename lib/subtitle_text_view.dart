@@ -7,7 +7,7 @@ import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
 
-  const SubtitleTextView({Key key, @required this.subtitleStyle})
+  const SubtitleTextView({Key? key, required this.subtitleStyle})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class SubtitleTextView extends StatelessWidget {
                 subtitleStyle.hasBorder
                     ? Center(
                         child: Text(
-                          state.subtitle.text,
+                          state.subtitle!.text!,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: subtitleStyle.fontSize,
@@ -46,7 +46,7 @@ class SubtitleTextView extends StatelessWidget {
                       ),
                 Center(
                   child: Text(
-                    state.subtitle.text,
+                    state.subtitle!.text!,
                     key: ViewKeys.SUBTITLE_TEXT_CONTENT,
                     textAlign: TextAlign.center,
                     style: TextStyle(

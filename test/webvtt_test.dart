@@ -297,7 +297,7 @@ void main() {
       );
       var subtitles = await subtitleDataRepository.getSubtitles();
       expect(
-        subtitles.subtitles.sublist(
+        subtitles.subtitles?.sublist(
           0,
           3,
         ),
