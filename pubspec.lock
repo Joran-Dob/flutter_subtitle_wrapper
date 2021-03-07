@@ -276,12 +276,12 @@ packages:
     source: hosted
     version: "5.0.0"
   mocktail:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: mocktail
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2-dev.2"
+    version: "0.0.1-dev.12"
   nested:
     dependency: transitive
     description:

@@ -39,7 +39,7 @@ class SubtitleController {
         ),
       );
     } else {
-      throw 'Seems that the controller is not correctly attached.';
+      throw Exception('Seems that the controller is not correctly attached.');
     }
   }
 
@@ -54,7 +54,7 @@ class SubtitleController {
         ),
       );
     } else {
-      throw 'Seems that the controller is not correctly attached.';
+      throw Exception('Seems that the controller is not correctly attached.');
     }
   }
 }

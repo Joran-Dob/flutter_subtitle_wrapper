@@ -18,7 +18,7 @@ void main() {
   group(
     'Subtitle BLoC',
     () {
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle init',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,
@@ -27,7 +27,7 @@ void main() {
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
-        act: (dynamic bloc) => bloc.add(
+        act: (SubtitleBloc bloc) => bloc.add(
           InitSubtitles(
             subtitleController: _subtitleController,
           ),
@@ -37,7 +37,7 @@ void main() {
           SubtitleInitialized(),
         ],
       );
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle update',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,
@@ -70,7 +70,7 @@ void main() {
         ],
       );
 
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle load',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,

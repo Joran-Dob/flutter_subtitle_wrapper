@@ -55,16 +55,30 @@ void main() {
         );
       });
 
-      test('update subtitle content without attach', () async {
-        _subtitleController.detach();
-        _subtitleController.updateSubtitleContent(
-          content: '',
-        );
-      });
-      test('update subtitle url without attach', () async {
-        _subtitleController.detach();
-        _subtitleController.updateSubtitleUrl(
-          url: 'https://pastebin.com/raw/ZWWAL7fK',
+      test(
+        'update subtitle content without attach',
+        () {
+          expect(
+            () {
+              _subtitleController.detach();
+              _subtitleController.updateSubtitleContent(
+                content: '',
+              );
+            },
+            throwsException,
+          );
+        },
+      );
+
+      test('update subtitle url without attach', () {
+        expect(
+          () {
+            _subtitleController.detach();
+            _subtitleController.updateSubtitleUrl(
+              url: 'https://pastebin.com/raw/ZWWAL7fK',
+            );
+          },
+          throwsException,
         );
       });
     },
