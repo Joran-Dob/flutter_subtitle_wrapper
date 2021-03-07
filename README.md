@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/pub-v2.0.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
-![Test and publish package](https://github.com/Joran-Dob/flutter_subtitle_wrapper/workflows/Test%20and%20publish%20package/badge.svg?branch=master)
+[![Test and (dry-run) publish package](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml/badge.svg)](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml)
 
 [![codecov](https://codecov.io/gh/Joran-Dob/flutter_subtitle_wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/Joran-Dob/flutter_subtitle_wrapper)
 [![licence](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/IamTobi/spotify_sdk/blob/master/LICENSE)
