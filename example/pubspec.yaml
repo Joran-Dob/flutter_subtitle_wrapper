@@ -17,11 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  chewie: ^0.12.2
+  chewie: ^1.0.0
   cupertino_icons: ^1.0.0
   flutter:
     sdk: flutter
-  video_player: ^1.0.0
+  video_player: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -276,7 +276,7 @@ packages:
     source: hosted
     version: "5.0.0"
   mocktail:
-    dependency: "direct overridden"
+    dependency: "direct dev"
     description:
       name: mocktail
       url: "https://pub.dartlang.org"
@@ -470,7 +470,7 @@ packages:
     source: hosted
     version: "2.1.0"
   video_player:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: video_player
       url: "https://pub.dartlang.org"
