@@ -10,17 +10,15 @@ import 'package:video_player/video_player.dart';
 class MockVideoPlayerController extends Mock implements VideoPlayerController {}
 
 void main() {
-  var _subtitleController = SubtitleController(
+  final _subtitleController = SubtitleController(
     subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
-    showSubtitles: true,
     subtitleDecoder: SubtitleDecoder.utf8,
-    subtitleType: SubtitleType.webvtt,
   );
 
   group(
     'Subtitle BLoC',
     () {
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle init',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,
@@ -29,7 +27,7 @@ void main() {
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
-        act: (dynamic bloc) => bloc.add(
+        act: (SubtitleBloc bloc) => bloc.add(
           InitSubtitles(
             subtitleController: _subtitleController,
           ),
@@ -39,7 +37,7 @@ void main() {
           SubtitleInitialized(),
         ],
       );
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle update',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,
@@ -50,10 +48,8 @@ void main() {
         ),
         act: (dynamic bloc) => bloc.add(
           UpdateLoadedSubtitle(
-            subtitle: Subtitle(
-              startTime: Duration(
-                seconds: 0,
-              ),
+            subtitle: const Subtitle(
+              startTime: Duration(),
               endTime: Duration(
                 seconds: 10,
               ),
@@ -62,11 +58,9 @@ void main() {
           ),
         ),
         expect: () => [
-          LoadedSubtitle(
+          const LoadedSubtitle(
             Subtitle(
-              startTime: Duration(
-                seconds: 0,
-              ),
+              startTime: Duration(),
               endTime: Duration(
                 seconds: 10,
               ),
@@ -76,7 +70,7 @@ void main() {
         ],
       );
 
-      blocTest(
+      blocTest<SubtitleBloc, SubtitleState>(
         'subtitle load',
         build: () => SubtitleBloc(
           subtitleController: _subtitleController,

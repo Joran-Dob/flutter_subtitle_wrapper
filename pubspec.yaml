@@ -1,32 +1,28 @@
 name: subtitle_wrapper_package
 description: A Subtitle Wrapper package, this subtitle wrapper package displays subtitles for a video player.
-version: 2.0.0-nullsafety.0
+version: 2.0.0
 homepage: https://github.com/Joran-Dob/flutter_subtitle_wrapper
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
+  bloc: ^7.0.0-nullsafety.3
+  equatable: ^2.0.0
   flutter:
     sdk: flutter
-  http: ^0.13.0-nullsafety.0
-  http_parser: ^4.0.0-nullsafety
-  equatable: ^2.0.0-nullsafety.1
-  bloc: ^7.0.0-nullsafety.1
-  flutter_bloc: ^7.0.0-nullsafety.1
+  flutter_bloc: ^7.0.0-nullsafety.3
+  http: ^0.13.0
+  http_parser: ^4.0.0
+  video_player: ^2.0.0
 
 dev_dependencies:
+  bloc_test: ^8.0.0-nullsafety.1
   flutter_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
-  bloc_test:
-    git:
-      url: https://github.com/felangel/bloc.git
-      path: packages/bloc_test/
-      ref: null_safety
-  mockito: ^5.0.0-nullsafety.5
-  pedantic: ^1.10.0-nullsafety.2
-  video_player: ^2.0.0-nullsafety.2
+  lint: ^1.5.3
+  mockito: ^5.0.0
+  mocktail: 0.0.1-dev.12
+
 
 flutter:

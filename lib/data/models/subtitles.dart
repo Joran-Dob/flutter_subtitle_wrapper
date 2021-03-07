@@ -1,5 +1,9 @@
-class Subtitles {
-  final List<dynamic>? subtitles;
+import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 
-  Subtitles({this.subtitles});
+class Subtitles {
+  final List<Subtitle> subtitles;
+
+  Subtitles({
+    required this.subtitles,
+  });
 }
