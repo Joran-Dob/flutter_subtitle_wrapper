@@ -23,40 +23,36 @@ class SubtitleTextView extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is LoadedSubtitle) {
-          return Container(
-            child: Stack(
-              children: <Widget>[
-                subtitleStyle.hasBorder
-                    ? Center(
-                        child: Text(
-                          state.subtitle!.text!,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: subtitleStyle.fontSize,
-                            foreground: Paint()
-                              ..style = subtitleStyle.borderStyle.style
-                              ..strokeWidth =
-                                  subtitleStyle.borderStyle.strokeWidth
-                              ..color = subtitleStyle.borderStyle.color,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        child: null,
-                      ),
+          return Stack(
+            children: <Widget>[
+              if (subtitleStyle.hasBorder)
                 Center(
                   child: Text(
-                    state.subtitle!.text!,
-                    key: ViewKeys.SUBTITLE_TEXT_CONTENT,
+                    state.subtitle!.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: subtitleStyle.fontSize,
-                      color: subtitleStyle.textColor,
+                      foreground: Paint()
+                        ..style = subtitleStyle.borderStyle.style
+                        ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
+                        ..color = subtitleStyle.borderStyle.color,
                     ),
                   ),
+                )
+              else
+                Container(),
+              Center(
+                child: Text(
+                  state.subtitle!.text,
+                  key: ViewKeys.subtitleTextContent,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: subtitleStyle.fontSize,
+                    color: subtitleStyle.textColor,
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         } else {
           return Container();

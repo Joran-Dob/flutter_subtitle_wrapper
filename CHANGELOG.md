@@ -1,3 +1,10 @@
+## [2.0.0] - 7/03/2021.
+
+* Migrated to sound null safety.
+* Cleaned up null safety code and typing.
+* Fixed some deprecation issues.
+* Changed linting rules to be stricter.
+
 ## [2.0.0-nullsafety.0] - 3/02/2021.
 
 * Migrated to sound null safety.

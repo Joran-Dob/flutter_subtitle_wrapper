@@ -8,11 +8,9 @@ import 'package:video_player/video_player.dart';
 class MockVideoPlayerController extends Mock implements VideoPlayerController {}
 
 void main() {
-  var _subtitleController = SubtitleController(
+  final _subtitleController = SubtitleController(
     subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
-    showSubtitles: true,
     subtitleDecoder: SubtitleDecoder.utf8,
-    subtitleType: SubtitleType.webvtt,
   );
 
   group(

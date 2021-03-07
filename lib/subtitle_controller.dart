@@ -29,7 +29,7 @@ class SubtitleController {
   }
 
   void updateSubtitleUrl({
-    required url,
+    required String url,
   }) {
     if (_attached) {
       subtitleUrl = url;
@@ -39,12 +39,12 @@ class SubtitleController {
         ),
       );
     } else {
-      print('Seems that the controller is not correctly attached.');
+      throw 'Seems that the controller is not correctly attached.';
     }
   }
 
   void updateSubtitleContent({
-    required content,
+    required String content,
   }) {
     if (_attached) {
       subtitlesContent = content;
@@ -54,7 +54,7 @@ class SubtitleController {
         ),
       );
     } else {
-      print('Seems that the controller is not correctly attached.');
+      throw 'Seems that the controller is not correctly attached.';
     }
   }
 }
