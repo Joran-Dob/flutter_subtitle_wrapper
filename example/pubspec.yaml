@@ -17,15 +17,16 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  chewie: ^0.12.2
+  cupertino_icons: ^1.0.0
   flutter:
     sdk: flutter
-  chewie: ^0.12.2
   video_player: ^1.0.0
-  cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  lint: ^1.5.3
   subtitle_wrapper_package:
     path: ../
 
@@ -34,7 +35,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
