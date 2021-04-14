@@ -136,9 +136,10 @@ class SubtitleDataRepository extends SubtitleRepository {
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
-        r'((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
+        r'((\d{2}):(\d{2}):(\d{2})\.(\d{3})) *--> *((\d{2}):(\d{2}):(\d{2})\.(\d{3}))(.+?)(?=(\d{2}:\d{2}:\d{2}\.\d{3}|$))',
         caseSensitive: false,
-        multiLine: true,
+        multiLine: false,
+        dotAll: true,
       );
     } else if (subtitleType == SubtitleType.srt) {
       regExp = RegExp(
