@@ -7,54 +7,52 @@ import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
 
-  const SubtitleTextView({Key key, @required this.subtitleStyle})
+  const SubtitleTextView({Key? key, required this.subtitleStyle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
+    // ignore: close_sinks
+    final substitleBloc = BlocProvider.of<SubtitleBloc>(context);
+
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: (context, state) {
         if (state is SubtitleInitialized) {
-          subtitleBloc.add(LoadSubtitle());
+          substitleBloc.add(LoadSubtitle());
         }
       },
       builder: (context, state) {
         if (state is LoadedSubtitle) {
-          return Container(
-            child: Stack(
-              children: <Widget>[
-                subtitleStyle.hasBorder
-                    ? Center(
-                        child: Text(
-                          state.subtitle.text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: subtitleStyle.fontSize,
-                            foreground: Paint()
-                              ..style = subtitleStyle.borderStyle.style
-                              ..strokeWidth =
-                                  subtitleStyle.borderStyle.strokeWidth
-                              ..color = subtitleStyle.borderStyle.color,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        child: null,
-                      ),
+          return Stack(
+            children: <Widget>[
+              if (subtitleStyle.hasBorder)
                 Center(
                   child: Text(
-                    state.subtitle.text,
-                    key: ViewKeys.SUBTITLE_TEXT_CONTENT,
+                    state.subtitle!.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: subtitleStyle.fontSize,
-                      color: subtitleStyle.textColor,
+                      foreground: Paint()
+                        ..style = subtitleStyle.borderStyle.style
+                        ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
+                        ..color = subtitleStyle.borderStyle.color,
                     ),
                   ),
+                )
+              else
+                Container(),
+              Center(
+                child: Text(
+                  state.subtitle!.text,
+                  key: ViewKeys.subtitleTextContent,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: subtitleStyle.fontSize,
+                    color: subtitleStyle.textColor,
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         } else {
           return Container();

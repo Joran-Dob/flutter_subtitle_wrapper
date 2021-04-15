@@ -1,3 +1,19 @@
+## [2.0.1] - 15/04/2021.
+
+* Changed all pre-release package versions to release ones.
+
+## [2.0.0] - 7/03/2021.
+
+* Migrated to sound null safety.
+* Cleaned up null safety code and typing.
+* Fixed some deprecation issues.
+* Changed linting rules to be stricter.
+
+## [2.0.0-nullsafety.0] - 3/02/2021.
+
+* Migrated to sound null safety.
+* Fixed some deprecation issues.
+
 ## [1.0.4] - 27 november 2020.
 
 * Added a check to see if content-types end with a semicolon 👀.  

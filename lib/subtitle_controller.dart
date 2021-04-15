@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 
 class SubtitleController {
-  String subtitlesContent;
-  String subtitleUrl;
+  String? subtitlesContent;
+  String? subtitleUrl;
   final bool showSubtitles;
-  SubtitleDecoder subtitleDecoder;
+  SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
   //
   bool _attached = false;
-  SubtitleBloc _subtitleBloc;
+  SubtitleBloc? _subtitleBloc;
 
   SubtitleController({
     this.subtitleUrl,
@@ -20,10 +19,8 @@ class SubtitleController {
   });
 
   void attach(SubtitleBloc subtitleBloc) {
-    if (subtitleBloc != null) {
-      _subtitleBloc = subtitleBloc;
-      _attached = true;
-    }
+    _subtitleBloc = subtitleBloc;
+    _attached = true;
   }
 
   void detach() {
@@ -32,32 +29,32 @@ class SubtitleController {
   }
 
   void updateSubtitleUrl({
-    @required url,
+    required String url,
   }) {
     if (_attached) {
       subtitleUrl = url;
-      _subtitleBloc.add(
+      _subtitleBloc!.add(
         InitSubtitles(
           subtitleController: this,
         ),
       );
     } else {
-      print('Seems that the controller is not correctly attached.');
+      throw Exception('Seems that the controller is not correctly attached.');
     }
   }
 
   void updateSubtitleContent({
-    @required content,
+    required String content,
   }) {
     if (_attached) {
       subtitlesContent = content;
-      _subtitleBloc.add(
+      _subtitleBloc!.add(
         InitSubtitles(
           subtitleController: this,
         ),
       );
     } else {
-      print('Seems that the controller is not correctly attached.');
+      throw Exception('Seems that the controller is not correctly attached.');
     }
   }
 }

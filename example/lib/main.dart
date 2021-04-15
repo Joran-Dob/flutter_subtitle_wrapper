@@ -12,52 +12,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     Key key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState(
-        SwConstants.videoUrl,
-      );
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  VideoPlayerController videoPlayerController;
-  ChewieController chewieController;
-  final String link;
+  final String link = SwConstants.videoUrl;
   final SubtitleController subtitleController = SubtitleController(
     subtitleUrl: SwConstants.enSubtitle,
-    showSubtitles: true,
     subtitleDecoder: SubtitleDecoder.utf8,
-    subtitleType: SubtitleType.webvtt,
   );
 
-  _MyHomePageState(
-    this.link,
-  );
-
-  VideoPlayerController getVideoPlayerController() {
-    videoPlayerController ??= VideoPlayerController.network(link);
-    return videoPlayerController;
+  VideoPlayerController get videoPlayerController {
+    return VideoPlayerController.network(link);
   }
 
-  ChewieController getChewieController() {
-    chewieController ??= ChewieController(
-      videoPlayerController: getVideoPlayerController(),
+  ChewieController get chewieController {
+    return ChewieController(
+      videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
       autoPlay: true,
       autoInitialize: true,
       allowFullScreen: false,
     );
-    return chewieController;
   }
 
   void updateSubtitleUrl({
@@ -85,31 +73,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var chewieController = getChewieController();
+    final localChewieController = chewieController;
 
     return Scaffold(
-      backgroundColor: Color(0xff0b090a),
+      backgroundColor: const Color(0xff0b090a),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top,
             ),
-            child: SubTitleWrapper(
-              videoPlayerController: chewieController.videoPlayerController,
-              subtitleController: subtitleController,
-              subtitleStyle: SubtitleStyle(
-                textColor: Colors.white,
-                hasBorder: true,
-              ),
-              videoChild: Chewie(
-                controller: chewieController,
+            child: SizedBox(
+              height: 270,
+              child: SubTitleWrapper(
+                videoPlayerController:
+                    localChewieController.videoPlayerController,
+                subtitleController: subtitleController,
+                subtitleStyle: const SubtitleStyle(
+                  textColor: Colors.white,
+                  hasBorder: true,
+                ),
+                videoChild: Chewie(
+                  controller: localChewieController,
+                ),
               ),
             ),
           ),
           Expanded(
             child: Container(
-              color: Color(
+              color: const Color(
                 0xff161a1d,
               ),
               child: Row(
@@ -154,50 +146,68 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                           ),
-                          Divider(
+                          const Divider(
                             color: Colors.grey,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
                                   subtitleLanguage:
                                       ExampleSubtitleLanguage.english,
                                 ),
-                                child: Text('Switch to 🇬🇧'),
+                                child: const Text('Switch to 🇬🇧'),
                               ),
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
                                   subtitleLanguage:
                                       ExampleSubtitleLanguage.spanish,
                                 ),
-                                child: Text('Switch to 🇪🇸'),
+                                child: const Text('Switch to 🇪🇸'),
                               ),
-                              RaisedButton(
-                                elevation: 6.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    8.0,
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation:
+                                      MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
                                   subtitleLanguage:
                                       ExampleSubtitleLanguage.dutch,
                                 ),
-                                child: Text('Switch to 🇳🇱'),
+                                child: const Text('Switch to 🇳🇱'),
                               ),
                             ],
                           ),
