@@ -1,3 +1,7 @@
+## [2.0.1] - 15/04/2021.
+
+* Changed all pre-release package versions to release ones.
+
 ## [2.0.0] - 7/03/2021.
 
 * Migrated to sound null safety.

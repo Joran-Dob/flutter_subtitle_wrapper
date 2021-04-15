@@ -1,6 +1,6 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v2.0.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
+[![](https://img.shields.io/badge/pub-v2.0.1-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
 [![Test and (dry-run) publish package](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml/badge.svg)](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml)
 
