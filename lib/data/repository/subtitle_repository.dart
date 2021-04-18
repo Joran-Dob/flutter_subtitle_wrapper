@@ -143,7 +143,6 @@ class SubtitleDataRepository extends SubtitleRepository {
       regExp = RegExp(
         r'((\d{2}):(\d{2}):(\d{2})\.(\d{3})) *--> *((\d{2}):(\d{2}):(\d{2})\.(\d{3}))(.+?)(?=(\d{2}:\d{2}:\d{2}\.\d{3}|$))',
         caseSensitive: false,
-        multiLine: false,
         dotAll: true,
       );
     } else if (subtitleType == SubtitleType.srt) {
