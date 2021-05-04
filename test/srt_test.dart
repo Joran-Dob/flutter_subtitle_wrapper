@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
+import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
@@ -80,17 +82,40 @@ void main() {
               milliseconds: 177,
             ),
             text: subtitles.subtitles[0].text,
+            subtitleTokens: subtitles.subtitles[0].text
+                .trim()
+                .split(" ")
+                .map((e) => SubtitleToken(
+                    token: e,
+                    tokenStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal),
+                    description: ""))
+                .toList(),
           ),
-          const Subtitle(
-            startTime: Duration(
+          Subtitle(
+            startTime: const Duration(
               seconds: 6,
               milliseconds: 177,
             ),
-            endTime: Duration(
+            endTime: const Duration(
               seconds: 10,
               milliseconds: 009,
             ),
             text: 'one of the most important aspects of finance is interest.',
+            subtitleTokens:
+                'one of the most important aspects of finance is interest.'
+                    .trim()
+                    .split(" ")
+                    .map((e) => SubtitleToken(
+                        token: e,
+                        tokenStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FontStyle.normal),
+                        description: ""))
+                    .toList(),
           ),
         ],
       );

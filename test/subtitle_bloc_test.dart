@@ -1,8 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
+import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:video_player/video_player.dart';
@@ -48,23 +50,45 @@ void main() {
         ),
         act: (dynamic bloc) => bloc.add(
           UpdateLoadedSubtitle(
-            subtitle: const Subtitle(
-              startTime: Duration(),
-              endTime: Duration(
+            subtitle: Subtitle(
+              startTime: const Duration(),
+              endTime: const Duration(
                 seconds: 10,
               ),
               text: 'test',
+              subtitleTokens: 'test'
+                  .trim()
+                  .split(" ")
+                  .map((e) => SubtitleToken(
+                      token: e,
+                      tokenStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.normal),
+                      description: ""))
+                  .toList(),
             ),
           ),
         ),
         expect: () => [
-          const LoadedSubtitle(
+          LoadedSubtitle(
             Subtitle(
-              startTime: Duration(),
-              endTime: Duration(
+              startTime: const Duration(),
+              endTime: const Duration(
                 seconds: 10,
               ),
               text: 'test',
+              subtitleTokens: 'test'
+                  .trim()
+                  .split(" ")
+                  .map((e) => SubtitleToken(
+                      token: e,
+                      tokenStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.normal),
+                      description: ""))
+                  .toList(),
             ),
           ),
         ],

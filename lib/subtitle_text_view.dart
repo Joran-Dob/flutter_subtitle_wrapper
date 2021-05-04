@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
-import 'package:subtitle_wrapper_package/data/constants/view_keys.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
@@ -27,31 +26,45 @@ class SubtitleTextView extends StatelessWidget {
             children: <Widget>[
               if (subtitleStyle.hasBorder)
                 Center(
-                  child: Text(
-                    state.subtitle!.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: subtitleStyle.fontSize,
-                      foreground: Paint()
-                        ..style = subtitleStyle.borderStyle.style
-                        ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
-                        ..color = subtitleStyle.borderStyle.color,
-                    ),
+                  child: Wrap(
+                    children: state.subtitle!.subtitleTokens
+                        .map((e) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 3),
+                              child: Text(
+                                e.token!,
+                                style: e.tokenStyle!.copyWith(
+                                  foreground: Paint()
+                                    ..style = subtitleStyle.borderStyle.style
+                                    ..strokeWidth =
+                                        subtitleStyle.borderStyle.strokeWidth
+                                    ..color = subtitleStyle.borderStyle.color,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ))
+                        .toList(),
                   ),
                 )
               else
                 Container(),
               Center(
-                child: Text(
-                  state.subtitle!.text,
-                  key: ViewKeys.subtitleTextContent,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: subtitleStyle.fontSize,
-                    color: subtitleStyle.textColor,
-                  ),
+                child: Wrap(
+                  children: state.subtitle!.subtitleTokens
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            child: InkWell(
+                              onTap: () {
+                                debugPrint(e.token);
+                              },
+                              child: Text(e.token!,
+                                  style: e.tokenStyle,
+                                  textAlign: TextAlign.center),
+                            ),
+                          ))
+                      .toList(),
                 ),
-              ),
+              )
             ],
           );
         } else {
