@@ -46,9 +46,6 @@ class SubTitleWrapper extends StatelessWidget {
                     subtitleController: subtitleController,
                   ),
                 ),
-              // child: Container(
-              //   color: Colors.red,
-              // ),
               child: SubtitleTextView(
                 subtitleStyle: subtitleStyle,
               ),

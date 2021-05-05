@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               top: MediaQuery.of(context).padding.top,
             ),
             child: SizedBox(
-              height: 270,
+              height: 250,
               child: SubTitleWrapper(
                 videoPlayerController:
                     localChewieController.videoPlayerController,
@@ -194,25 +194,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 child: const Text('Switch to 🇪🇸'),
                               ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.dutch,
-                                ),
-                                child: const Text('Switch to 🇳🇱'),
-                              ),
+                              // ElevatedButton(
+                              //   style: ButtonStyle(
+                              //     elevation:
+                              //         MaterialStateProperty.all<double>(8.0),
+                              //     shape: MaterialStateProperty.all<
+                              //         RoundedRectangleBorder>(
+                              //       RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //           8.0,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   onPressed: () => updateSubtitleUrl(
+                              //     subtitleLanguage:
+                              //         ExampleSubtitleLanguage.dutch,
+                              //   ),
+                              //   child: const Text('Switch to 🇳🇱'),
+                              // ),
                             ],
                           ),
                         ],

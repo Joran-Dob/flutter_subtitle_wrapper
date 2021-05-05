@@ -50,7 +50,46 @@ void main() {
         ),
         act: (dynamic bloc) => bloc.add(
           UpdateLoadedSubtitle(
-            subtitle: Subtitle(
+              subtitle: Subtitle(
+                startTime: const Duration(),
+                endTime: const Duration(
+                  seconds: 10,
+                ),
+                text: 'test',
+                subtitleTokens: 'test'
+                    .trim()
+                    .split(" ")
+                    .map((e) => SubtitleToken(
+                        token: e,
+                        tokenStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FontStyle.normal),
+                        description: ""))
+                    .toList(),
+              ),
+              prevSubtitle: Subtitle(
+                startTime: const Duration(),
+                endTime: const Duration(
+                  seconds: 10,
+                ),
+                text: 'prevTest',
+                subtitleTokens: 'prevTest'
+                    .trim()
+                    .split(" ")
+                    .map((e) => SubtitleToken(
+                        token: e,
+                        tokenStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FontStyle.normal),
+                        description: ""))
+                    .toList(),
+              )),
+        ),
+        expect: () => [
+          LoadedSubtitle(
+            Subtitle(
               startTime: const Duration(),
               endTime: const Duration(
                 seconds: 10,
@@ -68,17 +107,13 @@ void main() {
                       description: ""))
                   .toList(),
             ),
-          ),
-        ),
-        expect: () => [
-          LoadedSubtitle(
             Subtitle(
               startTime: const Duration(),
               endTime: const Duration(
                 seconds: 10,
               ),
-              text: 'test',
-              subtitleTokens: 'test'
+              text: 'prevTest',
+              subtitleTokens: 'prevTest'
                   .trim()
                   .split(" ")
                   .map((e) => SubtitleToken(
