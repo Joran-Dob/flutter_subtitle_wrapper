@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
-import 'package:video_player/video_player.dart';
 
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
