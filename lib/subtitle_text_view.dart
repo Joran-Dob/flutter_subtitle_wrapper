@@ -28,9 +28,8 @@ class SubtitleTextView extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  substitleBloc.add(UpdateLoadedSubtitle(
-                      subtitle: state.prevSubtitle!,
-                      prevSubtitle: state.subtitle!));
+                  substitleBloc.videoPlayerController
+                      .seekTo(state.prevSubtitle!.startTime);
                 },
               ),
             ),
