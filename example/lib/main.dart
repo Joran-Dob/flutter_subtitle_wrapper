@@ -1,9 +1,12 @@
 import 'package:chewie/chewie.dart';
 import 'package:example/data/sw_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:subtitle_wrapper_package/subtitle_controller.dart';
-import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
-import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
+import 'package:subtitle_wrapper_package/subtitle_controller.dart'
+    show SubtitleController, SubtitleDecoder;
+import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart'
+    show SubTitleWrapper;
+import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart'
+    show SubtitleStyle;
 import 'package:video_player/video_player.dart';
 
 void main() => runApp(MyApp());
@@ -35,7 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   VideoPlayerController get videoPlayerController {
-    return VideoPlayerController.network(link);
+    return VideoPlayerController.network(
+        'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
   }
 
   ChewieController get chewieController {
@@ -84,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               top: MediaQuery.of(context).padding.top,
             ),
             child: SizedBox(
-              height: 270,
+              height: 250,
               child: SubTitleWrapper(
                 videoPlayerController:
                     localChewieController.videoPlayerController,
@@ -190,25 +194,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 child: const Text('Switch to 🇪🇸'),
                               ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.dutch,
-                                ),
-                                child: const Text('Switch to 🇳🇱'),
-                              ),
+                              // ElevatedButton(
+                              //   style: ButtonStyle(
+                              //     elevation:
+                              //         MaterialStateProperty.all<double>(8.0),
+                              //     shape: MaterialStateProperty.all<
+                              //         RoundedRectangleBorder>(
+                              //       RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //           8.0,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   onPressed: () => updateSubtitleUrl(
+                              //     subtitleLanguage:
+                              //         ExampleSubtitleLanguage.dutch,
+                              //   ),
+                              //   child: const Text('Switch to 🇳🇱'),
+                              // ),
                             ],
                           ),
                         ],

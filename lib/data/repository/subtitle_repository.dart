@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
+import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 
 import 'package:http/http.dart' as http;
@@ -182,7 +184,21 @@ class SubtitleDataRepository extends SubtitleRepository {
           milliseconds: endTimeMilliseconds);
 
       subtitleList.add(
-        Subtitle(startTime: startTime, endTime: endTime, text: text.trim()),
+        Subtitle(
+            startTime: startTime,
+            endTime: endTime,
+            text: text.trim(),
+            subtitleTokens: text
+                .trim()
+                .split(" ")
+                .map((e) => SubtitleToken(
+                    token: e,
+                    tokenStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal),
+                    description: ""))
+                .toList()),
       );
     }
 

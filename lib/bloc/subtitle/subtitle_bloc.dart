@@ -35,7 +35,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     } else if (event is InitSubtitles) {
       yield* initSubtitles();
     } else if (event is UpdateLoadedSubtitle) {
-      yield LoadedSubtitle(event.subtitle);
+      yield LoadedSubtitle(event.subtitle, event.prevSubtitle);
     }
   }
 
@@ -50,7 +50,9 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
-        for (final Subtitle subtitleItem in subtitles.subtitles) {
+        //TODO binary search
+        for (var i = 0; i < subtitles.subtitles.length; i++) {
+          final subtitleItem = subtitles.subtitles[i];
           final bool validStartTime = videoPlayerPosition.inMilliseconds >
               subtitleItem.startTime.inMilliseconds;
           final bool validEndTime = videoPlayerPosition.inMilliseconds <
@@ -58,8 +60,9 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
           if (validStartTime && validEndTime) {
             add(
               UpdateLoadedSubtitle(
-                subtitle: subtitleItem,
-              ),
+                  subtitle: subtitleItem,
+                  prevSubtitle:
+                      i >= 1 ? subtitles.subtitles[i - 1] : subtitleItem),
             );
           }
         }
