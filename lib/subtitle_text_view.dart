@@ -75,6 +75,40 @@ class SubtitleTextView extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     debugPrint(e.token);
+                                    substitleBloc.videoPlayerController.pause();
+                                    showModalBottomSheet(
+                                        context: context,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30.0),
+                                              topRight: Radius.circular(30.0)),
+                                        ),
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(18.0),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    e.token!,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline5,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "e.description! description goes here and it's all about this word. we all try for you to learn better",
+                                                  textAlign: TextAlign.left,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1,
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        });
                                   },
                                   child: Text(e.token!,
                                       style: e.tokenStyle,
