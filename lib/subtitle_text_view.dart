@@ -29,7 +29,9 @@ class SubtitleTextView extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   substitleBloc.videoPlayerController
-                      .seekTo(state.prevSubtitle!.startTime);
+                      .seekTo(
+                          state.prevSubtitle!.startTime + Duration(seconds: 1))
+                      .then((_) => substitleBloc.videoPlayerController.pause());
                 },
               ),
             ),
