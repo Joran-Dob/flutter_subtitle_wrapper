@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:subtitle_wrapper_package/data/models/HexColor.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
@@ -182,24 +183,41 @@ class SubtitleDataRepository extends SubtitleRepository {
           minutes: endTimeMinutes,
           seconds: endTimeSeconds,
           milliseconds: endTimeMilliseconds);
-
-      subtitleList.add(
-        Subtitle(
-            startTime: startTime,
-            endTime: endTime,
-            text: text.trim(),
-            subtitleTokens: text
-                .trim()
-                .split(" ")
-                .map((e) => SubtitleToken(
-                    token: e,
-                    tokenStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.normal,
-                        fontStyle: FontStyle.normal),
-                    description: ""))
-                .toList()),
+      debugPrint(text);
+      final subtitle = Subtitle(
+          startTime: startTime,
+          endTime: endTime,
+          text: text.trim(),
+          subtitleTokens: text
+              .trim()
+              .split(" ")
+              .map((e) => SubtitleToken(
+                  token: e,
+                  tokenStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                      fontStyle: FontStyle.normal),
+                  description: ""))
+              .toList());
+      final colorExp = RegExp(
+        '(<a[^>]*>)',
+        multiLine: true,
       );
+      colorExp
+          .allMatches(regExpMatch.group(11)!)
+          .toList()
+          .forEach((RegExpMatch regExpMathc) {
+        var tmp = regExpMathc.group(1);
+        tmp = tmp!.replaceAll('<', '');
+        tmp = tmp.replaceAll('>', '');
+        subtitle.getOneToken(tmp.split(' ')[2]).tokenStyle = TextStyle(
+            color: HexColor.fromHex(tmp.split(' ')[1]),
+            fontWeight: FontWeight.normal,
+            fontStyle: FontStyle.normal);
+        print(tmp.split(' ')[2] + ":" + tmp.split(' ')[1]);
+      });
+
+      subtitleList.add(subtitle);
     }
 
     final subtitles = Subtitles(subtitles: subtitleList);
@@ -211,6 +229,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       '(<[^>]*>)',
       multiLine: true,
     );
+
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
