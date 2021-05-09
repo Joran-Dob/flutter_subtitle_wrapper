@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:recursive_regex/recursive_regex.dart';
 import 'package:subtitle_wrapper_package/data/models/HexColor.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
@@ -143,7 +144,6 @@ class SubtitleDataRepository extends SubtitleRepository {
     SubtitleType subtitleType,
   ) {
     debugPrint("getSubtitlesData");
-
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
@@ -174,7 +174,8 @@ class SubtitleDataRepository extends SubtitleRepository {
       final endTimeMinutes = int.parse(regExpMatch.group(8)!);
       final endTimeSeconds = int.parse(regExpMatch.group(9)!);
       final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = regExpMatch.group(11)!;
+      final text = removeAllHtmlTags(
+          regExpMatch.group(11)!); //html tags should be removed
 
       final startTime = Duration(
           hours: startTimeHours,
@@ -190,7 +191,7 @@ class SubtitleDataRepository extends SubtitleRepository {
         startTime: startTime,
         endTime: endTime,
         text: text.trim(),
-        subtitleTokens: genarateTokens(text),
+        subtitleTokens: genarateTokens(regExpMatch.group(11)!),
       ));
     }
 
@@ -205,8 +206,13 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   SubtitleToken genarateToken(String htmlText) {
-    final exp = RegExp(
-      '(<[^>]*>)',
+    //final exp = RegExp('(<[^>]*>)', multiLine: false, unicode: true  );
+    final exp = RecursiveRegex(
+      startDelimiter: RegExp(r'<'),
+      endDelimiter: RegExp(r'>'),
+      global: true,
+      unicode: true,
+      caseSensitive: false,
       multiLine: true,
     );
     var tokenStyle = TextStyle(
@@ -216,21 +222,48 @@ class SubtitleDataRepository extends SubtitleRepository {
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
-        debugPrint(regExpMathc.group(0));
         if (regExpMathc.group(0) == '<br>') {
           newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
-        } else if (regExpMathc.group(0)!.contains("<a")) {
+        } else if (regExpMathc.group(0)!.contains("(<a[^>]*>)")) {
           String tmp = regExpMathc.group(0)!;
-          tmp = tmp.replaceAll('<a ', '');
+          tmp = tmp.replaceAll('<a', '');
           tmp = tmp.replaceAll('>', '');
           tokenStyle =
               tokenStyle.copyWith(color: HexColor.fromHex(tmp.split(' ')[0]));
           newHtmlText =
               newHtmlText.replaceAll(regExpMathc.group(0)!, tmp.split(' ')[1]);
+        } else {
+          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
         }
       },
     );
     return SubtitleToken(
         token: newHtmlText, tokenStyle: tokenStyle, description: "");
+  }
+
+  String removeAllHtmlTags(String htmlText) {
+    // final exp = RegExp(
+    //   '(<[^>]*>)',
+    //   multiLine: true,
+    // );
+    final exp = RecursiveRegex(
+      startDelimiter: RegExp(r'<'),
+      endDelimiter: RegExp(r'>'),
+      global: true,
+      unicode: true,
+      caseSensitive: false,
+      multiLine: true,
+    );
+    var newHtmlText = htmlText;
+    exp.allMatches(htmlText).toList().forEach(
+      (RegExpMatch regExpMathc) {
+        if (regExpMathc.group(0) == '<br>') {
+          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
+        } else {
+          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
+        }
+      },
+    );
+    return newHtmlText;
   }
 }
