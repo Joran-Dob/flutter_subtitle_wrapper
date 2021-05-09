@@ -50,6 +50,15 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
+        if (subtitles.subtitles.last.endTime <
+            videoPlayerController.value.duration)
+          subtitles.subtitles.add(
+            Subtitle(
+                startTime: subtitles.subtitles.last.endTime,
+                endTime: videoPlayerController.value.duration,
+                text: "",
+                subtitleTokens: []),
+          );
         //TODO binary search
         for (var i = 0; i < subtitles.subtitles.length; i++) {
           final subtitleItem = subtitles.subtitles[i];
