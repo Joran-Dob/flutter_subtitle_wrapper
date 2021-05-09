@@ -68,6 +68,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Handles the subtitle loading, parsing.
   @override
   Future<Subtitles> getSubtitles() async {
+    debugPrint("getSubtitles");
     var subtitlesContent = subtitleController.subtitlesContent;
     final subtitleUrl = subtitleController.subtitleUrl;
 
@@ -141,6 +142,8 @@ class SubtitleDataRepository extends SubtitleRepository {
     String subtitlesContent,
     SubtitleType subtitleType,
   ) {
+    debugPrint("getSubtitlesData");
+
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
@@ -159,7 +162,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     }
 
     final matches = regExp.allMatches(subtitlesContent).toList();
-    final List<Subtitle> subtitleList = [];
+    final List<Subtitle> subtitleList = <Subtitle>[];
 
     for (final RegExpMatch regExpMatch in matches) {
       final startTimeHours = int.parse(regExpMatch.group(2)!);
@@ -171,7 +174,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       final endTimeMinutes = int.parse(regExpMatch.group(8)!);
       final endTimeSeconds = int.parse(regExpMatch.group(9)!);
       final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = removeAllHtmlTags(regExpMatch.group(11)!);
+      final text = regExpMatch.group(11)!;
 
       final startTime = Duration(
           hours: startTimeHours,
@@ -183,63 +186,51 @@ class SubtitleDataRepository extends SubtitleRepository {
           minutes: endTimeMinutes,
           seconds: endTimeSeconds,
           milliseconds: endTimeMilliseconds);
-      debugPrint(text);
-      final subtitle = Subtitle(
-          startTime: startTime,
-          endTime: endTime,
-          text: text.trim(),
-          subtitleTokens: text
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList());
-      final colorExp = RegExp(
-        '(<a[^>]*>)',
-        multiLine: true,
-      );
-      colorExp
-          .allMatches(regExpMatch.group(11)!)
-          .toList()
-          .forEach((RegExpMatch regExpMathc) {
-        var tmp = regExpMathc.group(1);
-        tmp = tmp!.replaceAll('<', '');
-        tmp = tmp.replaceAll('>', '');
-        subtitle.getOneToken(tmp.split(' ')[2]).tokenStyle = TextStyle(
-            color: HexColor.fromHex(tmp.split(' ')[1]),
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal);
-        print(tmp.split(' ')[2] + ":" + tmp.split(' ')[1]);
-      });
-
-      subtitleList.add(subtitle);
+      subtitleList.add(Subtitle(
+        startTime: startTime,
+        endTime: endTime,
+        text: text.trim(),
+        subtitleTokens: genarateTokens(text),
+      ));
     }
 
     final subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
   }
 
-  String removeAllHtmlTags(String htmlText) {
+  genarateTokens(String text) {
+    return text.trim().split(" ").map((e) {
+      return genarateToken(e);
+    }).toList();
+  }
+
+  SubtitleToken genarateToken(String htmlText) {
     final exp = RegExp(
       '(<[^>]*>)',
       multiLine: true,
     );
-
+    var tokenStyle = TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.normal,
+        fontStyle: FontStyle.normal);
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
+        debugPrint(regExpMathc.group(0));
         if (regExpMathc.group(0) == '<br>') {
           newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
-        } else {
-          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
+        } else if (regExpMathc.group(0)!.contains("<a")) {
+          String tmp = regExpMathc.group(0)!;
+          tmp = tmp.replaceAll('<a ', '');
+          tmp = tmp.replaceAll('>', '');
+          tokenStyle =
+              tokenStyle.copyWith(color: HexColor.fromHex(tmp.split(' ')[0]));
+          newHtmlText =
+              newHtmlText.replaceAll(regExpMathc.group(0)!, tmp.split(' ')[1]);
         }
       },
     );
-    return newHtmlText;
+    return SubtitleToken(
+        token: newHtmlText, tokenStyle: tokenStyle, description: "");
   }
 }

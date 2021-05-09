@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart' show Equatable;
+import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 
 class Subtitle extends Equatable {
@@ -14,25 +15,22 @@ class Subtitle extends Equatable {
       required this.text,
       required this.subtitleTokens});
 
-  List<SubtitleToken> getNTokens(List<String> tokens) {
-    final tmp = subtitleTokens;
-    tmp.sort((a, b) => a.token!.compareTo(b.token!));
-    final res = <SubtitleToken>[];
+  List<int> getNTokensIndexes(List<String> tokens) {
+    final res = <int>[];
     for (final item in tokens) {
-      final foundIndex = _binarySearch(tmp.map((e) => e.token!).toList(), item);
-      if (foundIndex != -1) {
-        res.add(tmp[foundIndex]);
-      }
+      final foundIndex =
+          _binarySearch(subtitleTokens.map((e) => e.token!).toList(), item);
+      //if (foundIndex != -1) {
+      res.add(foundIndex);
+      // }
     }
     return res;
   }
 
-  SubtitleToken getOneToken(String token) {
-    final tmp = subtitleTokens;
-    tmp.sort((a, b) => a.token!.compareTo(b.token!));
-    final foundIndex = _binarySearch(tmp.map((e) => e.token!).toList(), token);
-    if (foundIndex != -1) return subtitleTokens[foundIndex];
-    return SubtitleToken();
+  int getOneTokenIndex(String token) {
+    final foundIndex =
+        _binarySearch(subtitleTokens.map((e) => e.token!).toList(), token);
+    return foundIndex;
   }
 
   int _binarySearch(List<String> arr, String x) {
