@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
+import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
+import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
+import 'package:video_player/video_player.dart';
 
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
+  Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
+  Function(VideoPlayerController controller, Subtitle? prevSub)
+      onBackButtonPress;
 
-  const SubtitleTextView({Key? key, required this.subtitleStyle})
+  SubtitleTextView(
+      {Key? key,
+      required this.subtitleStyle,
+      required this.onSubtitleTokenTap,
+      required this.onBackButtonPress})
       : super(key: key);
 
   @override
@@ -27,12 +37,8 @@ class SubtitleTextView extends StatelessWidget {
               width: 20,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  substitleBloc.videoPlayerController
-                      .seekTo(
-                          state.prevSubtitle!.startTime + Duration(seconds: 1))
-                      .then((_) => substitleBloc.videoPlayerController.pause());
-                },
+                onPressed: () => onBackButtonPress(
+                    substitleBloc.videoPlayerController, state.prevSubtitle!),
               ),
             ),
             SizedBox(
@@ -73,43 +79,8 @@ class SubtitleTextView extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 3),
                                 child: InkWell(
-                                  onTap: () {
-                                    debugPrint(e.token);
-                                    substitleBloc.videoPlayerController.pause();
-                                    showModalBottomSheet(
-                                        context: context,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30.0),
-                                              topRight: Radius.circular(30.0)),
-                                        ),
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    e.token!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline5,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "e.description! description goes here and it's all about this word. we all try for you to learn better",
-                                                  textAlign: TextAlign.left,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1,
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                  },
+                                  onTap: () => onSubtitleTokenTap(
+                                      e, substitleBloc.videoPlayerController),
                                   child: Text(e.token!,
                                       style: e.tokenStyle,
                                       softWrap: true,
