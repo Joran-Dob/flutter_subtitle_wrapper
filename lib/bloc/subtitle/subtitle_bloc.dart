@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
@@ -30,9 +31,11 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   Stream<SubtitleState> mapEventToState(
     SubtitleEvent event,
   ) async* {
+    debugPrint("Stream<SubtitleState> mapEventToState");
     if (event is LoadSubtitle) {
       yield* loadSubtitle();
     } else if (event is InitSubtitles) {
+      debugPrint("event is InitSubtitles");
       yield* initSubtitles();
     } else if (event is UpdateLoadedSubtitle) {
       yield LoadedSubtitle(event.subtitle, event.prevSubtitle);
@@ -41,6 +44,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   Stream<SubtitleState> initSubtitles() async* {
     yield SubtitleInitializating();
+    debugPrint("Stream<SubtitleState> initSubtitles()");
     subtitles = await subtitleRepository.getSubtitles();
     yield SubtitleInitialized();
   }
