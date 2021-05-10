@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 //TODO RecursiveRegex
-//define an standard for tag a
+//define an standard for tag <a>
+//fix extra space problem
 abstract class SubtitleRepository {
   Future<Subtitles> getSubtitles();
 }
@@ -218,23 +219,20 @@ class SubtitleDataRepository extends SubtitleRepository {
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
-        if (regExpMathc.group(0) == '<br>') {
-          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
-        } else if (regExpMathc.group(0)!.contains("<a")) {
+        if (regExpMathc.group(0)!.contains("<a")) {
           String tmp = regExpMathc.group(0)!;
           tokenStyle =
               tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
-
           newHtmlText = newHtmlText.replaceAll(
               regExpMathc.group(0)!, tmp.split('_')[2].replaceAll('>', ''));
           newHtmlText = newHtmlText.replaceAll('\n', '');
-        } else {
-          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
         }
       },
     );
     return SubtitleToken(
-        token: newHtmlText, tokenStyle: tokenStyle, description: "");
+        token: removeAllHtmlTags(newHtmlText),
+        tokenStyle: tokenStyle,
+        description: "");
   }
 
   String removeAllHtmlTags(String htmlText) {
