@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:recursive_regex/recursive_regex.dart';
 import 'package:subtitle_wrapper_package/data/models/HexColor.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
@@ -11,6 +10,8 @@ import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
+//TODO RecursiveRegex
+//define an standard for tag a
 abstract class SubtitleRepository {
   Future<Subtitles> getSubtitles();
 }
@@ -206,13 +207,8 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   SubtitleToken genarateToken(String htmlText) {
-    //final exp = RegExp('(<[^>]*>)', multiLine: false, unicode: true  );
-    final exp = RecursiveRegex(
-      startDelimiter: RegExp(r'<'),
-      endDelimiter: RegExp(r'>'),
-      global: true,
-      unicode: true,
-      caseSensitive: false,
+    final exp = RegExp(
+      '(<[^>]*>)',
       multiLine: true,
     );
     var tokenStyle = TextStyle(
@@ -224,14 +220,14 @@ class SubtitleDataRepository extends SubtitleRepository {
       (RegExpMatch regExpMathc) {
         if (regExpMathc.group(0) == '<br>') {
           newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
-        } else if (regExpMathc.group(0)!.contains("(<a[^>]*>)")) {
+        } else if (regExpMathc.group(0)!.contains("<a")) {
           String tmp = regExpMathc.group(0)!;
-          tmp = tmp.replaceAll('<a', '');
-          tmp = tmp.replaceAll('>', '');
           tokenStyle =
-              tokenStyle.copyWith(color: HexColor.fromHex(tmp.split(' ')[0]));
-          newHtmlText =
-              newHtmlText.replaceAll(regExpMathc.group(0)!, tmp.split(' ')[1]);
+              tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
+
+          newHtmlText = newHtmlText.replaceAll(
+              regExpMathc.group(0)!, tmp.split('_')[2].replaceAll('>', ''));
+          newHtmlText = newHtmlText.replaceAll('\n', '');
         } else {
           newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
         }
@@ -242,16 +238,8 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   String removeAllHtmlTags(String htmlText) {
-    // final exp = RegExp(
-    //   '(<[^>]*>)',
-    //   multiLine: true,
-    // );
-    final exp = RecursiveRegex(
-      startDelimiter: RegExp(r'<'),
-      endDelimiter: RegExp(r'>'),
-      global: true,
-      unicode: true,
-      caseSensitive: false,
+    final exp = RegExp(
+      '(<[^>]*>)',
       multiLine: true,
     );
     var newHtmlText = htmlText;
