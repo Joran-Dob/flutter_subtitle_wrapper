@@ -16,7 +16,7 @@ class Tag {
     return Tag(name: "defualt", color: Colors.white, description: "");
   }
 
-  static final List<Tag> tempTags = [
+  static List<Tag> tempTags = [
     Tag(
       name: "essential",
       color: Colors.purple,

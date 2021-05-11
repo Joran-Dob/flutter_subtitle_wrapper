@@ -9,6 +9,7 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_text_view.dart';
 import 'package:video_player/video_player.dart';
 
+import 'data/models/tag.dart';
 import 'data/models/subtitle.dart';
 import 'data/models/subtitle_token.dart';
 
@@ -17,6 +18,7 @@ class SubTitleWrapper extends StatelessWidget {
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
+  final List<Tag> tags;
   Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
   Function(VideoPlayerController controller, Subtitle? prevSub)
       onBackButtonPress;
@@ -28,11 +30,15 @@ class SubTitleWrapper extends StatelessWidget {
     required this.videoPlayerController,
     required this.onSubtitleTokenTap,
     required this.onBackButtonPress,
+    this.tags = const <Tag>[],
     this.subtitleStyle = const SubtitleStyle(),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (tags.length > 0) {
+      Tag.tempTags = tags;
+    }
     return Stack(
       children: <Widget>[
         videoChild,

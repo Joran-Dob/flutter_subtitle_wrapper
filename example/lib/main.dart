@@ -7,6 +7,7 @@ import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart'
     show SubTitleWrapper;
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart'
     show SubtitleStyle;
+import 'package:subtitle_wrapper_package/data/models/tag.dart' show Tag;
 import 'package:video_player/video_player.dart';
 
 void main() => runApp(MyApp());
@@ -90,6 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SizedBox(
               height: 250,
               child: SubTitleWrapper(
+                tags: [
+                  Tag(
+                    name: "504",
+                    color: Colors.orange,
+                    description: "from 504 words",
+                  )
+                ],
                 videoPlayerController:
                     localChewieController.videoPlayerController,
                 subtitleController: subtitleController,
