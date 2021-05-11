@@ -106,6 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       .then((_) => controller.pause());
                 },
                 onSubtitleTokenTap: (e, videoPlayerController) {
+                  if (e.description == "") {
+                    return;
+                  }
                   debugPrint(e.token);
                   videoPlayerController.pause();
                   showModalBottomSheet(
@@ -128,7 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                               Text(
-                                "e.description! description goes here and it's all about this word. we all try for you to learn better",
+                                e.description +
+                                    " description goes here and it's all about this word. we all try for you to learn better",
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context).textTheme.bodyText1,
                               )

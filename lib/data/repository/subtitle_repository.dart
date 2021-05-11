@@ -8,6 +8,7 @@ import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:subtitle_wrapper_package/data/models/tag.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 //TODO RecursiveRegex
@@ -217,12 +218,17 @@ class SubtitleDataRepository extends SubtitleRepository {
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal);
     var newHtmlText = htmlText;
+    var description = "";
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
         if (regExpMathc.group(0)!.contains("<a")) {
           String tmp = regExpMathc.group(0)!;
-          tokenStyle =
-              tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
+          var tagName = tmp.split('_')[1];
+          Tag tag = Tag.getTagByName(tagName);
+          tokenStyle = tokenStyle.apply(color: tag.color);
+          description = tag.description;
+          // tokenStyle =
+          //     tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
           newHtmlText = newHtmlText.replaceAll(
               regExpMathc.group(0)!, tmp.split('_')[2].replaceAll('>', ''));
           newHtmlText = newHtmlText.replaceAll('\n', '');
@@ -232,7 +238,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     return SubtitleToken(
         token: removeAllHtmlTags(newHtmlText),
         tokenStyle: tokenStyle,
-        description: "");
+        description: description);
   }
 
   String removeAllHtmlTags(String htmlText) {
