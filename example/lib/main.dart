@@ -92,11 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 250,
               child: SubTitleWrapper(
                 tags: [
-                  Tag(
-                    name: "504",
-                    color: Colors.orange,
-                    description: "from 504 words",
-                  )
+                  // Tag(
+                  //   id: "a",
+                  //   name: "504",
+                  //   color: Colors.orange,
+                  //   description: "from 504 words",
+                  // )
                 ],
                 videoPlayerController:
                     localChewieController.videoPlayerController,

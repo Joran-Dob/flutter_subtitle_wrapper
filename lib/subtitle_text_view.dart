@@ -53,9 +53,9 @@ class SubtitleTextView extends StatelessWidget {
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 3),
                                   child: Text(
-                                    e.token!,
+                                    e.token,
                                     softWrap: true,
-                                    style: e.tokenStyle!.copyWith(
+                                    style: e.tokenStyle.copyWith(
                                       foreground: Paint()
                                         ..style =
                                             subtitleStyle.borderStyle.style
@@ -81,7 +81,7 @@ class SubtitleTextView extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () => onSubtitleTokenTap(
                                       e, substitleBloc.videoPlayerController),
-                                  child: Text(e.token!,
+                                  child: Text(e.token,
                                       style: e.tokenStyle,
                                       softWrap: true,
                                       textAlign: TextAlign.center),

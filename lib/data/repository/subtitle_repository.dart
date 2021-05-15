@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:subtitle_wrapper_package/data/models/HexColor.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
@@ -177,9 +176,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       final endTimeMinutes = int.parse(regExpMatch.group(8)!);
       final endTimeSeconds = int.parse(regExpMatch.group(9)!);
       final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = removeAllHtmlTags(
-          regExpMatch.group(11)!); //html tags should be removed
-
+      final text = (regExpMatch.group(11)!);
       final startTime = Duration(
           hours: startTimeHours,
           minutes: startTimeMinutes,
@@ -191,54 +188,56 @@ class SubtitleDataRepository extends SubtitleRepository {
           seconds: endTimeSeconds,
           milliseconds: endTimeMilliseconds);
       subtitleList.add(Subtitle(
-        startTime: startTime,
-        endTime: endTime,
-        text: text.trim(),
-        subtitleTokens: genarateTokens(regExpMatch.group(11)!),
-      ));
+          startTime: startTime,
+          endTime: endTime,
+          text: text.trim(),
+          subtitleTokens: genarateTokens(text)));
     }
 
     final subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
   }
 
-  genarateTokens(String text) {
-    return text.trim().split(" ").map((e) {
-      return genarateToken(e);
-    }).toList();
-  }
-
-  SubtitleToken genarateToken(String htmlText) {
+  List<SubtitleToken> genarateTokens(String htmlText) {
+    List<SubtitleToken> res = [];
     final exp = RegExp(
-      '(<[^>]*>)',
+      r'(<([A-Z][A-Z0-9]*)\b[^>]*>(.*?)<\/\2>)',
       multiLine: true,
+      caseSensitive: false,
+      unicode: true,
     );
-    var tokenStyle = TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.normal,
-        fontStyle: FontStyle.normal);
-    var newHtmlText = htmlText;
-    var description = "";
+    var checked = '';
+    //throw htmlText;
+    // throw exp.allMatches(htmlText).toList().map((e) => e.group(2)).toList();
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
-        if (regExpMathc.group(0)!.contains("<a")) {
-          String tmp = regExpMathc.group(0)!;
-          var tagName = tmp.split('_')[1];
-          Tag tag = Tag.getTagByName(tagName);
-          tokenStyle = tokenStyle.apply(color: tag.color);
-          description = tag.description;
-          // tokenStyle =
-          //     tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
-          newHtmlText = newHtmlText.replaceAll(
-              regExpMathc.group(0)!, tmp.split('_')[2].replaceAll('>', ''));
-          newHtmlText = newHtmlText.replaceAll('\n', '');
-        }
+        var tokenStyle = TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.normal,
+            fontStyle: FontStyle.normal);
+        var description = "";
+        var tokenText = '';
+        var tagStr = regExpMathc.group(2)!;
+        Tag tag = Tag.getTag(tagStr);
+        tokenStyle = tokenStyle.apply(color: tag.color);
+        description = tag.description;
+        tokenText = regExpMathc.group(3)!;
+        tokenText = tokenText.replaceAll('\n', '');
+        checked += regExpMathc.group(1)!;
+        var subtitleToken = SubtitleToken(
+            token: tokenText, tokenStyle: tokenStyle, description: description);
+        res.add(subtitleToken);
+        htmlText = htmlText.replaceAll(checked, ''); //TODO remove problem
       },
     );
-    return SubtitleToken(
-        token: removeAllHtmlTags(newHtmlText),
-        tokenStyle: tokenStyle,
-        description: description);
+    res.addAll(htmlText.split(' ').map((e) => SubtitleToken(
+        token: e,
+        tokenStyle: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.normal,
+            fontStyle: FontStyle.normal),
+        description: '')));
+    return res;
   }
 
   String removeAllHtmlTags(String htmlText) {

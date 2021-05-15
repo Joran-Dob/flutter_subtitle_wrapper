@@ -37,7 +37,7 @@ class SubTitleWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tags.length > 0) {
-      Tag.tempTags = tags;
+      tempTags = tags;
     }
     return Stack(
       children: <Widget>[

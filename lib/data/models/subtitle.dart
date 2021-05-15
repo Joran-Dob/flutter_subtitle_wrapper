@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart' show Equatable;
-import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 
 class Subtitle extends Equatable {
@@ -19,7 +18,7 @@ class Subtitle extends Equatable {
     final res = <int>[];
     for (final item in tokens) {
       final foundIndex =
-          _binarySearch(subtitleTokens.map((e) => e.token!).toList(), item);
+          _binarySearch(subtitleTokens.map((e) => e.token).toList(), item);
       //if (foundIndex != -1) {
       res.add(foundIndex);
       // }
@@ -29,7 +28,7 @@ class Subtitle extends Equatable {
 
   int getOneTokenIndex(String token) {
     final foundIndex =
-        _binarySearch(subtitleTokens.map((e) => e.token!).toList(), token);
+        _binarySearch(subtitleTokens.map((e) => e.token).toList(), token);
     return foundIndex;
   }
 
