@@ -26,10 +26,9 @@ class LoadingSubtitle extends SubtitleState {
 
 class LoadedSubtitle extends SubtitleState {
   final Subtitle? subtitle;
-  final Subtitle? prevSubtitle;
 
-  const LoadedSubtitle(this.subtitle, this.prevSubtitle);
+  const LoadedSubtitle(this.subtitle);
 
   @override
-  List<Object?> get props => [subtitle, prevSubtitle];
+  List<Object?> get props => [subtitle];
 }

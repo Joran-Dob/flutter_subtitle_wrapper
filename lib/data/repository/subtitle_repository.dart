@@ -1,18 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:subtitle_wrapper_package/data/models/HexColor.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
-//TODO RecursiveRegex
-//define an standard for tag <a>
-//fix extra space problem
 abstract class SubtitleRepository {
   Future<Subtitles> getSubtitles();
 }
@@ -71,7 +65,6 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Handles the subtitle loading, parsing.
   @override
   Future<Subtitles> getSubtitles() async {
-    debugPrint("getSubtitles");
     var subtitlesContent = subtitleController.subtitlesContent;
     final subtitleUrl = subtitleController.subtitleUrl;
 
@@ -145,7 +138,6 @@ class SubtitleDataRepository extends SubtitleRepository {
     String subtitlesContent,
     SubtitleType subtitleType,
   ) {
-    debugPrint("getSubtitlesData");
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
@@ -164,7 +156,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     }
 
     final matches = regExp.allMatches(subtitlesContent).toList();
-    final List<Subtitle> subtitleList = <Subtitle>[];
+    final List<Subtitle> subtitleList = [];
 
     for (final RegExpMatch regExpMatch in matches) {
       final startTimeHours = int.parse(regExpMatch.group(2)!);
@@ -176,8 +168,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       final endTimeMinutes = int.parse(regExpMatch.group(8)!);
       final endTimeSeconds = int.parse(regExpMatch.group(9)!);
       final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = removeAllHtmlTags(
-          regExpMatch.group(11)!); //html tags should be removed
+      final text = removeAllHtmlTags(regExpMatch.group(11)!);
 
       final startTime = Duration(
           hours: startTimeHours,
@@ -189,50 +180,14 @@ class SubtitleDataRepository extends SubtitleRepository {
           minutes: endTimeMinutes,
           seconds: endTimeSeconds,
           milliseconds: endTimeMilliseconds);
-      subtitleList.add(Subtitle(
-        startTime: startTime,
-        endTime: endTime,
-        text: text.trim(),
-        subtitleTokens: genarateTokens(regExpMatch.group(11)!),
-      ));
+
+      subtitleList.add(
+        Subtitle(startTime: startTime, endTime: endTime, text: text.trim()),
+      );
     }
 
     final subtitles = Subtitles(subtitles: subtitleList);
     return subtitles;
-  }
-
-  genarateTokens(String text) {
-    return text.trim().split(" ").map((e) {
-      return genarateToken(e);
-    }).toList();
-  }
-
-  SubtitleToken genarateToken(String htmlText) {
-    final exp = RegExp(
-      '(<[^>]*>)',
-      multiLine: true,
-    );
-    var tokenStyle = TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.normal,
-        fontStyle: FontStyle.normal);
-    var newHtmlText = htmlText;
-    exp.allMatches(htmlText).toList().forEach(
-      (RegExpMatch regExpMathc) {
-        if (regExpMathc.group(0)!.contains("<a")) {
-          String tmp = regExpMathc.group(0)!;
-          tokenStyle =
-              tokenStyle.apply(color: HexColor.fromHex(tmp.split('_')[1]));
-          newHtmlText = newHtmlText.replaceAll(
-              regExpMathc.group(0)!, tmp.split('_')[2].replaceAll('>', ''));
-          newHtmlText = newHtmlText.replaceAll('\n', '');
-        }
-      },
-    );
-    return SubtitleToken(
-        token: removeAllHtmlTags(newHtmlText),
-        tokenStyle: tokenStyle,
-        description: "");
   }
 
   String removeAllHtmlTags(String htmlText) {

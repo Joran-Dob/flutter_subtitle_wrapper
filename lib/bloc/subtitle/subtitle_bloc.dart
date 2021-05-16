@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
@@ -31,20 +30,17 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   Stream<SubtitleState> mapEventToState(
     SubtitleEvent event,
   ) async* {
-    debugPrint("Stream<SubtitleState> mapEventToState");
     if (event is LoadSubtitle) {
       yield* loadSubtitle();
     } else if (event is InitSubtitles) {
-      debugPrint("event is InitSubtitles");
       yield* initSubtitles();
     } else if (event is UpdateLoadedSubtitle) {
-      yield LoadedSubtitle(event.subtitle, event.prevSubtitle);
+      yield LoadedSubtitle(event.subtitle);
     }
   }
 
   Stream<SubtitleState> initSubtitles() async* {
     yield SubtitleInitializating();
-    debugPrint("Stream<SubtitleState> initSubtitles()");
     subtitles = await subtitleRepository.getSubtitles();
     yield SubtitleInitialized();
   }
@@ -54,18 +50,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
-        if (subtitles.subtitles.last.endTime <
-            videoPlayerController.value.duration)
-          subtitles.subtitles.add(
-            Subtitle(
-                startTime: subtitles.subtitles.last.endTime,
-                endTime: videoPlayerController.value.duration,
-                text: "",
-                subtitleTokens: []),
-          );
-        //TODO binary search
-        for (var i = 0; i < subtitles.subtitles.length; i++) {
-          final subtitleItem = subtitles.subtitles[i];
+        for (final Subtitle subtitleItem in subtitles.subtitles) {
           final bool validStartTime = videoPlayerPosition.inMilliseconds >
               subtitleItem.startTime.inMilliseconds;
           final bool validEndTime = videoPlayerPosition.inMilliseconds <
@@ -73,9 +58,8 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
           if (validStartTime && validEndTime) {
             add(
               UpdateLoadedSubtitle(
-                  subtitle: subtitleItem,
-                  prevSubtitle:
-                      i >= 1 ? subtitles.subtitles[i - 1] : subtitleItem),
+                subtitle: subtitleItem,
+              ),
             );
           }
         }

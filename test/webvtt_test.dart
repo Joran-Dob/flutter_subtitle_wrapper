@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
@@ -55,246 +53,126 @@ void main() {
       'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik';
 
   final utf8SubtitleItems = [
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         milliseconds: 420,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 3,
         milliseconds: 510,
       ),
       text:
           'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
-      subtitleTokens:
-          'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 3,
         milliseconds: 510,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 7,
         milliseconds: 531,
       ),
       text:
           'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
-      subtitleTokens:
-          'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 7,
         milliseconds: 531,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 11,
         milliseconds: 440,
       ),
       text:
           'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
-      subtitleTokens:
-          'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 11,
         milliseconds: 440,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 14,
         milliseconds: 930,
       ),
       text:
           'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
-      subtitleTokens:
-          'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 14,
         milliseconds: 930,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 16,
         milliseconds: 570,
       ),
       text:
           'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
-      subtitleTokens:
-          'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
   ];
 
   final latin1SubtitleItems = [
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         milliseconds: 420,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 3,
         milliseconds: 510,
       ),
       text:
           'LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma',
-      subtitleTokens:
-          'LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 3,
         milliseconds: 510,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 7,
         milliseconds: 531,
       ),
       text:
           'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela',
-      subtitleTokens:
-          'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 7,
         milliseconds: 531,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 11,
         milliseconds: 440,
       ),
       text:
           'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner',
-      subtitleTokens:
-          'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 11,
         milliseconds: 440,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 14,
         milliseconds: 930,
       ),
       text:
           'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera',
-      subtitleTokens:
-          'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
-    Subtitle(
-      startTime: const Duration(
+    const Subtitle(
+      startTime: Duration(
         seconds: 14,
         milliseconds: 930,
       ),
-      endTime: const Duration(
+      endTime: Duration(
         seconds: 16,
         milliseconds: 570,
       ),
       text:
           'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik',
-      subtitleTokens:
-          'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik'
-              .trim()
-              .split(" ")
-              .map((e) => SubtitleToken(
-                  token: e,
-                  tokenStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.normal),
-                  description: ""))
-              .toList(),
     ),
   ];
 
