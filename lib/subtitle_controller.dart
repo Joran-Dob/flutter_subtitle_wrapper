@@ -6,7 +6,6 @@ class SubtitleController {
   final bool showSubtitles;
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
-  //
   bool _attached = false;
   SubtitleBloc? _subtitleBloc;
 
