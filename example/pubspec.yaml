@@ -26,7 +26,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # lint: ^1.5.3
+  lint: ^1.5.3
   subtitle_wrapper_package:
     path: ../
 

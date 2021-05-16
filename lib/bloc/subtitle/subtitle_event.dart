@@ -14,7 +14,6 @@ class LoadSubtitle extends SubtitleEvent {}
 
 class UpdateLoadedSubtitle extends SubtitleEvent {
   final Subtitle subtitle;
-  final Subtitle prevSubtitle;
 
-  UpdateLoadedSubtitle({required this.subtitle, required this.prevSubtitle});
+  UpdateLoadedSubtitle({required this.subtitle});
 }

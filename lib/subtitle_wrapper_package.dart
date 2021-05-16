@@ -9,25 +9,17 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_text_view.dart';
 import 'package:video_player/video_player.dart';
 
-import 'data/models/subtitle.dart';
-import 'data/models/subtitle_token.dart';
-
 class SubTitleWrapper extends StatelessWidget {
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
-  Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
-  Function(VideoPlayerController controller, Subtitle? prevSub)
-      onBackButtonPress;
 
-  SubTitleWrapper({
+  const SubTitleWrapper({
     Key? key,
     required this.videoChild,
     required this.subtitleController,
     required this.videoPlayerController,
-    required this.onSubtitleTokenTap,
-    required this.onBackButtonPress,
     this.subtitleStyle = const SubtitleStyle(),
   }) : super(key: key);
 
@@ -56,8 +48,6 @@ class SubTitleWrapper extends StatelessWidget {
                 ),
               child: SubtitleTextView(
                 subtitleStyle: subtitleStyle,
-                onSubtitleTokenTap: onSubtitleTokenTap,
-                onBackButtonPress: onBackButtonPress,
               ),
             ),
           )
