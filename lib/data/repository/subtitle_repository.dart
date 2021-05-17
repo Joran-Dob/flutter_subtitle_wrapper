@@ -206,9 +206,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       caseSensitive: false,
       unicode: true,
     );
-    var checked = '';
-    //throw htmlText;
-    // throw exp.allMatches(htmlText).toList().map((e) => e.group(2)).toList();
+    var checked = Map<String, SubtitleToken>();
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
         var tokenStyle = TextStyle(
@@ -223,20 +221,32 @@ class SubtitleDataRepository extends SubtitleRepository {
         description = tag.description;
         tokenText = regExpMathc.group(3)!;
         tokenText = tokenText.replaceAll('\n', '');
-        checked += regExpMathc.group(1)!;
         var subtitleToken = SubtitleToken(
             token: tokenText, tokenStyle: tokenStyle, description: description);
-        res.add(subtitleToken);
-        htmlText = htmlText.replaceAll(checked, ''); //TODO remove problem
+        checked.addEntries([MapEntry(tokenText, subtitleToken)]);
       },
     );
-    res.addAll(htmlText.split(' ').map((e) => SubtitleToken(
-        token: e,
-        tokenStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal),
-        description: '')));
+    int i = 0;
+    var tmp = htmlText.split(' ');
+    for (var j = 0; j < tmp.length;) {
+      if (i < (checked.keys).toList().length &&
+          (checked.keys).toList()[i].contains(tmp[j])) {
+        var key = (checked.keys).toList()[i];
+        i++;
+        j += key.split(" ").length - 1;
+        res.add(checked[key]!);
+        continue;
+      } else {
+        res.add(SubtitleToken(
+            token: removeAllHtmlTags(tmp[j]),
+            tokenStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.normal),
+            description: ''));
+        j++;
+      }
+    }
     return res;
   }
 
