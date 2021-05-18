@@ -8,13 +8,13 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 void main() {
   final subtitleController = SubtitleController(
       subtitleType: SubtitleType.srt,
-      subtitleUrl: 'https://pastebin.com/raw/dXEdh7Xd'
+      subtitleUrl: 'https://pastebin.com/raw/Jt07EBKK' //with tag
       //subtitleUrl: 'https://pastebin.com/raw/1gt7fAHW',
       );
 
   const subtitleContentString = '1\r\n'
       '00:00:03,400 --> 00:00:06,177\r\n'
-      "In this lesson, <a #7D6FFF we're> <br> going to be talking about finance. And\r\n"
+      "In this lesson, we're <br> <a> going to </a> be talking about finance. And\r\n"
       '\r\n'
       '2\r\n'
       '00:00:06,177 --> 00:00:10,009\r\n'
@@ -71,56 +71,8 @@ void main() {
         subtitleController: subtitleController,
       );
       final subtitles = await subtitleDataRepository.getSubtitles();
-      expect(
-        subtitles.subtitles,
-        [
-          Subtitle(
-            startTime: const Duration(
-              seconds: 3,
-              milliseconds: 400,
-            ),
-            endTime: const Duration(
-              seconds: 6,
-              milliseconds: 177,
-            ),
-            text: subtitles.subtitles[0].text,
-            subtitleTokens: subtitles.subtitles[0].text
-                .trim()
-                .split(" ")
-                .map((e) => SubtitleToken(
-                    token: e,
-                    tokenStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.normal,
-                        fontStyle: FontStyle.normal),
-                    description: ""))
-                .toList(),
-          ),
-          Subtitle(
-            startTime: const Duration(
-              seconds: 6,
-              milliseconds: 177,
-            ),
-            endTime: const Duration(
-              seconds: 10,
-              milliseconds: 009,
-            ),
-            text: 'one of the most important aspects of finance is interest.',
-            subtitleTokens:
-                'one of the most important aspects of finance is interest.'
-                    .trim()
-                    .split(" ")
-                    .map((e) => SubtitleToken(
-                        token: e,
-                        tokenStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                            fontStyle: FontStyle.normal),
-                        description: ""))
-                    .toList(),
-          ),
-        ],
-      );
+      expect(subtitles.subtitles[0].subtitleTokens.toString(),
+          "[In:Color(0xffffffff), this:Color(0xffffffff), lesson,:Color(0xffffffff), we\'re:Color(0xffffffff),  going to :MaterialColor(primary value: Color(0xff9c27b0)), be:Color(0xffffffff), talking:Color(0xffffffff), about:Color(0xffffffff), finance.:Color(0xffffffff), And:Color(0xffffffff)]");
     },
   );
 }

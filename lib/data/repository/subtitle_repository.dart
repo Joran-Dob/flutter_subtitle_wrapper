@@ -71,7 +71,6 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Handles the subtitle loading, parsing.
   @override
   Future<Subtitles> getSubtitles() async {
-    debugPrint("getSubtitles");
     var subtitlesContent = subtitleController.subtitlesContent;
     final subtitleUrl = subtitleController.subtitleUrl;
 
@@ -145,7 +144,6 @@ class SubtitleDataRepository extends SubtitleRepository {
     String subtitlesContent,
     SubtitleType subtitleType,
   ) {
-    debugPrint("getSubtitlesData");
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
@@ -223,6 +221,7 @@ class SubtitleDataRepository extends SubtitleRepository {
         tokenText = tokenText.replaceAll('\n', '');
         var subtitleToken = SubtitleToken(
             token: tokenText, tokenStyle: tokenStyle, description: description);
+
         checked.addEntries([MapEntry(tokenText, subtitleToken)]);
       },
     );
@@ -234,16 +233,18 @@ class SubtitleDataRepository extends SubtitleRepository {
         var key = (checked.keys).toList()[i];
         i++;
         j += key.split(" ").length - 1;
-        res.add(checked[key]!);
+        if (checked[key]!.token != '') res.add(checked[key]!);
         continue;
       } else {
-        res.add(SubtitleToken(
-            token: removeAllHtmlTags(tmp[j]),
-            tokenStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontStyle: FontStyle.normal),
-            description: ''));
+        var token = removeAllHtmlTags(tmp[j]);
+        if (token != "" && token != '\n') //TODO handel \n 's
+          res.add(SubtitleToken(
+              token: token.trim(),
+              tokenStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                  fontStyle: FontStyle.normal),
+              description: ''));
         j++;
       }
     }

@@ -10,6 +10,6 @@ class SubtitleToken {
       required this.description});
   @override
   String toString() {
-    return this.token + this.tokenStyle.color.toString();
+    return this.token + ':' + this.tokenStyle.color.toString();
   }
 }

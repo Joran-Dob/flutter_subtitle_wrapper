@@ -54,5 +54,16 @@ class Subtitle extends Equatable {
   }
 
   @override
+  String toString() {
+    var res = text + ',tokens:[';
+    subtitleTokens.forEach((element) => res +=
+        element.toString() + element.token != subtitleTokens.last.token
+            ? ","
+            : '');
+    res += ']';
+    return res;
+  }
+
+  @override
   List<Object?> get props => [startTime, endTime, text];
 }
