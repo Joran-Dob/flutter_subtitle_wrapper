@@ -13,6 +13,7 @@ import 'data/models/tag.dart';
 import 'data/models/subtitle.dart';
 import 'data/models/subtitle_token.dart';
 
+// ignore: must_be_immutable
 class SubTitleWrapper extends StatelessWidget {
   final Widget videoChild;
   final SubtitleController subtitleController;
