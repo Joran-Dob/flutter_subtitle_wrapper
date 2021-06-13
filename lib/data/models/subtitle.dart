@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart' show Equatable;
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 
+// ignore: must_be_immutable
 class Subtitle extends Equatable {
   final Duration startTime;
   final Duration endTime;
@@ -66,4 +67,6 @@ class Subtitle extends Equatable {
 
   @override
   List<Object?> get props => [startTime, endTime, text];
+
+  bool compareTo(Subtitle arr) => this.startTime==(arr.startTime)&&this.endTime==(arr.endTime);
 }

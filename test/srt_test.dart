@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
