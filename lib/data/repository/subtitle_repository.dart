@@ -9,10 +9,6 @@ import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/data/models/tag.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
-
-//TODO RecursiveRegex
-//define an standard for tag <a>
-//fix extra space problem
 abstract class SubtitleRepository {
   Future<Subtitles> getSubtitles();
 }
@@ -237,7 +233,7 @@ class SubtitleDataRepository extends SubtitleRepository {
         continue;
       } else {
         var token = removeAllHtmlTags(tmp[j]);
-        if (token != "" && token != '\n') //TODO handel \n 's
+        if (token != "" && token != '\n') 
           res.add(SubtitleToken(
               token: token.trim(),
               tokenStyle: TextStyle(

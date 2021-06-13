@@ -7,7 +7,6 @@ import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart'
     show SubTitleWrapper;
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart'
     show SubtitleStyle;
-import 'package:subtitle_wrapper_package/data/models/tag.dart' show Tag;
 import 'package:video_player/video_player.dart';
 
 void main() => runApp(MyApp());

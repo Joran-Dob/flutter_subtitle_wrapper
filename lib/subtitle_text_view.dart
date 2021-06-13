@@ -6,6 +6,7 @@ import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle_token.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
   Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
