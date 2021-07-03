@@ -34,12 +34,14 @@ class SubtitleTextView extends StatelessWidget {
       builder: (context, state) {
         if (state is LoadedSubtitle) {
           return Row(children: [
-            SizedBox(
-              width: 20,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => onBackButtonPress(
-                    substitleBloc.videoPlayerController, state.prevSubtitle!),
+            Center(
+              child: SizedBox(
+                width: 25,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => onBackButtonPress(
+                      substitleBloc.videoPlayerController, state.prevSubtitle!),
+                ),
               ),
             ),
             SizedBox(
