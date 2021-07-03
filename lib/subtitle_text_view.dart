@@ -33,70 +33,74 @@ class SubtitleTextView extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is LoadedSubtitle) {
-          return Row(children: [
-            Center(
-              child: SizedBox(
-                width: 25,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () => onBackButtonPress(
-                      substitleBloc.videoPlayerController, state.prevSubtitle!),
+          return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Center(
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => onBackButtonPress(
+                        substitleBloc.videoPlayerController,
+                        state.prevSubtitle!),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: 250,
-              child: Stack(
-                children: <Widget>[
-                  if (subtitleStyle.hasBorder)
-                    Center(
-                      child: Wrap(
-                        children: state.subtitle!.subtitleTokens
-                            .map((e) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                  child: Text(
-                                    e.token,
-                                    softWrap: true,
-                                    style: e.tokenStyle.copyWith(
-                                      foreground: Paint()
-                                        ..style =
-                                            subtitleStyle.borderStyle.style
-                                        ..strokeWidth = subtitleStyle
-                                            .borderStyle.strokeWidth
-                                        ..color =
-                                            subtitleStyle.borderStyle.color,
+                SizedBox(
+                  width: MediaQuery.of(context).size.shortestSide * 0.8,
+                  child: Stack(
+                    children: <Widget>[
+                      if (subtitleStyle.hasBorder)
+                        Center(
+                          child: Wrap(
+                            children: state.subtitle!.subtitleTokens
+                                .map((e) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3),
+                                      child: Text(
+                                        e.token,
+                                        softWrap: true,
+                                        style: e.tokenStyle.copyWith(
+                                          fontSize: subtitleStyle.fontSize,
+                                          foreground: Paint()
+                                            ..style =
+                                                subtitleStyle.borderStyle.style
+                                            ..strokeWidth = subtitleStyle
+                                                .borderStyle.strokeWidth
+                                            ..color =
+                                                subtitleStyle.borderStyle.color,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                        )
+                      else
+                        Container(),
+                      Center(
+                        child: Wrap(
+                          children: state.subtitle!.subtitleTokens
+                              .map((e) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 3),
+                                    child: InkWell(
+                                      onTap: () => onSubtitleTokenTap(e,
+                                          substitleBloc.videoPlayerController),
+                                      child: Text(e.token,
+                                          style: e.tokenStyle.copyWith(
+                                            fontSize: subtitleStyle.fontSize,
+                                          ),
+                                          softWrap: true,
+                                          textAlign: TextAlign.center),
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    )
-                  else
-                    Container(),
-                  Center(
-                    child: Wrap(
-                      children: state.subtitle!.subtitleTokens
-                          .map((e) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 3),
-                                child: InkWell(
-                                  onTap: () => onSubtitleTokenTap(
-                                      e, substitleBloc.videoPlayerController),
-                                  child: Text(e.token,
-                                      style: e.tokenStyle,
-                                      softWrap: true,
-                                      textAlign: TextAlign.center),
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ]);
+                                  ))
+                              .toList(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ]);
         } else {
           return Container();
         }
