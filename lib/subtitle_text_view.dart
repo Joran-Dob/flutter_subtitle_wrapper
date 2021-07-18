@@ -39,7 +39,7 @@ class SubtitleTextView extends StatelessWidget {
               children: [
                 Center(
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: Icon(Icons.arrow_back,color: Theme.of(context).accentColor,),
                     onPressed: () => onBackButtonPress(
                         substitleBloc.videoPlayerController,
                         state.prevSubtitle!),
