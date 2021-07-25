@@ -90,14 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SizedBox(
               height: 250,
               child: SubTitleWrapper(
-                tags: [
-                  // Tag(
-                  //   id: "a",
-                  //   name: "504",
-                  //   color: Colors.orange,
-                  //   description: "from 504 words",
-                  // )
-                ],
+                tags: [],
                 videoPlayerController:
                     localChewieController.videoPlayerController,
                 subtitleController: subtitleController,
@@ -243,25 +236,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 child: const Text('Switch to 🇪🇸'),
                               ),
-                              // ElevatedButton(
-                              //   style: ButtonStyle(
-                              //     elevation:
-                              //         MaterialStateProperty.all<double>(8.0),
-                              //     shape: MaterialStateProperty.all<
-                              //         RoundedRectangleBorder>(
-                              //       RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(
-                              //           8.0,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   onPressed: () => updateSubtitleUrl(
-                              //     subtitleLanguage:
-                              //         ExampleSubtitleLanguage.dutch,
-                              //   ),
-                              //   child: const Text('Switch to 🇳🇱'),
-                              // ),
                             ],
                           ),
                         ],

@@ -20,9 +20,7 @@ class Subtitle extends Equatable {
     for (final item in tokens) {
       final foundIndex =
           _binarySearch(subtitleTokens.map((e) => e.token).toList(), item);
-      //if (foundIndex != -1) {
       res.add(foundIndex);
-      // }
     }
     return res;
   }
@@ -68,5 +66,6 @@ class Subtitle extends Equatable {
   @override
   List<Object?> get props => [startTime, endTime, text];
 
-  bool compareTo(Subtitle arr) => this.startTime==(arr.startTime)&&this.endTime==(arr.endTime);
+  bool compareTo(Subtitle arr) =>
+      this.startTime == (arr.startTime) && this.endTime == (arr.endTime);
 }

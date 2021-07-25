@@ -21,7 +21,6 @@ void main() {
     final subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    // debugPrint((await subtitleDataRepository.getSubtitles()).subtitles[0].text);
     final subtitleContent =
         await subtitleDataRepository.loadRemoteSubtitleContent(
       subtitleUrl: subtitleController.subtitleUrl!,
