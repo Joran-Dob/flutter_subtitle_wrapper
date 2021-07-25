@@ -20,8 +20,8 @@ class SubTitleWrapper extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
   final List<Tag> tags;
-  Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
-  Function(VideoPlayerController controller, Subtitle? prevSub)
+  Function(SubtitleToken, VideoPlayerController)? onSubtitleTokenTap;
+  Function(VideoPlayerController controller, Subtitle? prevSub)?
       onBackButtonPress;
 
   SubTitleWrapper({
@@ -29,8 +29,8 @@ class SubTitleWrapper extends StatelessWidget {
     required this.videoChild,
     required this.subtitleController,
     required this.videoPlayerController,
-    required this.onSubtitleTokenTap,
-    required this.onBackButtonPress,
+    this.onSubtitleTokenTap,
+    this.onBackButtonPress,
     this.tags = const <Tag>[],
     this.subtitleStyle = const SubtitleStyle(),
   }) : super(key: key);

@@ -9,8 +9,8 @@ import 'package:video_player/video_player.dart';
 // ignore: must_be_immutable
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
-  Function(SubtitleToken, VideoPlayerController) onSubtitleTokenTap;
-  Function(VideoPlayerController controller, Subtitle? prevSub)
+  Function(SubtitleToken, VideoPlayerController)? onSubtitleTokenTap;
+  Function(VideoPlayerController controller, Subtitle? prevSub)?
       onBackButtonPress;
 
   SubtitleTextView(
@@ -37,14 +37,18 @@ class SubtitleTextView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Center(
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back,color: Theme.of(context).accentColor,),
-                    onPressed: () => onBackButtonPress(
-                        substitleBloc.videoPlayerController,
-                        state.prevSubtitle!),
+                if (onBackButtonPress != null)
+                  Center(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      onPressed: () => onBackButtonPress!(
+                          substitleBloc.videoPlayerController,
+                          state.prevSubtitle!),
+                    ),
                   ),
-                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.shortestSide * 0.8,
                   child: Stack(
@@ -83,16 +87,15 @@ class SubtitleTextView extends StatelessWidget {
                               .map((e) => Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 3),
-                                    child: InkWell(
-                                      onTap: () => onSubtitleTokenTap(e,
-                                          substitleBloc.videoPlayerController),
-                                      child: Text(e.token,
-                                          style: e.tokenStyle.copyWith(
-                                            fontSize: subtitleStyle.fontSize,
-                                          ),
-                                          softWrap: true,
-                                          textAlign: TextAlign.center),
-                                    ),
+                                    child: onSubtitleTokenTap != null
+                                        ? InkWell(
+                                            onTap: () => onSubtitleTokenTap!(
+                                                e,
+                                                substitleBloc
+                                                    .videoPlayerController),
+                                            child: tokenText(e),
+                                          )
+                                        : tokenText(e),
                                   ))
                               .toList(),
                         ),
@@ -106,5 +109,14 @@ class SubtitleTextView extends StatelessWidget {
         }
       },
     );
+  }
+
+  Widget tokenText(SubtitleToken subtitleToken) {
+    return Text(subtitleToken.token,
+        style: subtitleToken.tokenStyle.copyWith(
+          fontSize: subtitleStyle.fontSize,
+        ),
+        softWrap: true,
+        textAlign: TextAlign.center);
   }
 }
