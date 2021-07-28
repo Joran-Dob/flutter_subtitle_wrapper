@@ -18,8 +18,7 @@ class Tag {
         return item;
       }
     }
-    return Tag(
-        id: 'defualt', name: "defualt", color: Colors.white, description: "");
+    return Tag(id: '', name: "", color: Colors.white, description: "");
   }
 
   @override

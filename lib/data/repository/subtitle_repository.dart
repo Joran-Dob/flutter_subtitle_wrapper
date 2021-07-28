@@ -9,6 +9,7 @@ import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
 import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/data/models/tag.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
+
 abstract class SubtitleRepository {
   Future<Subtitles> getSubtitles();
 }
@@ -170,7 +171,7 @@ class SubtitleDataRepository extends SubtitleRepository {
       final endTimeMinutes = int.parse(regExpMatch.group(8)!);
       final endTimeSeconds = int.parse(regExpMatch.group(9)!);
       final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = (regExpMatch.group(11)!);
+      final text = regExpMatch.group(11)!;
       final startTime = Duration(
           hours: startTimeHours,
           minutes: startTimeMinutes,
@@ -193,58 +194,61 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   List<SubtitleToken> genarateTokens(String htmlText) {
-    List<SubtitleToken> res = [];
+
     final exp = RegExp(
       r'(<([A-Z][A-Z0-9]*)\b[^>]*>(.*?)<\/\2>)',
       multiLine: true,
       caseSensitive: false,
       unicode: true,
     );
-    var checked = Map<String, SubtitleToken>();
+    var customTokenTexts = Map<String, SubtitleToken>();
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
-        var tokenStyle = TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal);
-        var description = "";
-        var tokenText = '';
-        var tagStr = regExpMathc.group(2)!;
-        Tag tag = Tag.getTag(tagStr);
-        tokenStyle = tokenStyle.apply(color: tag.color);
-        description = tag.description;
-        tokenText = regExpMathc.group(3)!;
-        tokenText = tokenText.replaceAll('\n', '');
-        var subtitleToken = SubtitleToken(
-            token: tokenText, tokenStyle: tokenStyle, description: description);
+        Tag tag = Tag.getTag(regExpMathc.group(2)!);
+        TextStyle tokenStyle = TextStyle(color: tag.color);
+        String tokenText = regExpMathc.group(3)!;
+        SubtitleToken subtitleToken = SubtitleToken(
+            token: tokenText,
+            tokenStyle: tokenStyle,
+            description: tag.description);
 
-        checked.addEntries([MapEntry(tokenText, subtitleToken)]);
+        customTokenTexts.addAll({tokenText: subtitleToken});
       },
     );
+    List<String> rawTexts = htmlText.split(' ');
+    bool customTokenTextsKeyContaines(item, index) {
+      List<String> splittedKey =
+          customTokenTexts.keys.toList()[index].split(' ');
+      return splittedKey.contains(item);
+    }
+
     int i = 0;
-    var tmp = htmlText.split(' ');
-    for (var j = 0; j < tmp.length;) {
-      if (i < (checked.keys).toList().length &&
-          (checked.keys).toList()[i].contains(tmp[j])) {
-        var key = (checked.keys).toList()[i];
+    List<SubtitleToken> result = [];
+    for (int j = 0; j < rawTexts.length;) {
+      if (i < customTokenTexts.length &&
+          customTokenTextsKeyContaines(rawTexts[j], i)) {
+        String key = customTokenTexts.keys.elementAt(i);
         i++;
-        j += key.split(" ").length - 1;
-        if (checked[key]!.token != '') res.add(checked[key]!);
-        continue;
+        j += key.split(" ").length;
+        customTokenTexts[key]!.token = customTokenTexts[key]!.token
+          ..replaceAll('\n', '')
+          ..replaceAll('\t', '');
+        if (customTokenTexts[key]!.token != '') {
+          result.add(customTokenTexts[key]!);
+        }
       } else {
-        var token = removeAllHtmlTags(tmp[j]);
-        if (token != "" && token != '\n') 
-          res.add(SubtitleToken(
+        String token = removeAllHtmlTags(rawTexts[j]);
+        if (token != "" && token != '\n' && token != '\t') {
+          result.add(SubtitleToken(
               token: token.trim(),
-              tokenStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal),
+              tokenStyle: TextStyle(color: Colors.white),
               description: ''));
+        }
         j++;
       }
     }
-    return res;
+
+    return result;
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -255,11 +259,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     var newHtmlText = htmlText;
     exp.allMatches(htmlText).toList().forEach(
       (RegExpMatch regExpMathc) {
-        if (regExpMathc.group(0) == '<br>') {
-          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '\n');
-        } else {
-          newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
-        }
+        newHtmlText = newHtmlText.replaceAll(regExpMathc.group(0)!, '');
       },
     );
     return newHtmlText;
