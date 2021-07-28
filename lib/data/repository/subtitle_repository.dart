@@ -194,7 +194,6 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   List<SubtitleToken> genarateTokens(String htmlText) {
-
     final exp = RegExp(
       r'(<([A-Z][A-Z0-9]*)\b[^>]*>(.*?)<\/\2>)',
       multiLine: true,
@@ -229,7 +228,7 @@ class SubtitleDataRepository extends SubtitleRepository {
           customTokenTextsKeyContaines(rawTexts[j], i)) {
         String key = customTokenTexts.keys.elementAt(i);
         i++;
-        j += key.split(" ").length;
+        j += key.split(" ").length + 1;
         customTokenTexts[key]!.token = customTokenTexts[key]!.token
           ..replaceAll('\n', '')
           ..replaceAll('\t', '');
