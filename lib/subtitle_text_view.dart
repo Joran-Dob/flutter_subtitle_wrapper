@@ -87,7 +87,7 @@ class SubtitleTextView extends StatelessWidget {
                               .map((e) => Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 3),
-                                    child: onSubtitleTokenTap != null
+                                    child: onSubtitleTokenTap != null&&e.description!=""
                                         ? InkWell(
                                             onTap: () => onSubtitleTokenTap!(
                                                 e,
@@ -112,7 +112,7 @@ class SubtitleTextView extends StatelessWidget {
   }
 
   Widget tokenText(SubtitleToken subtitleToken) {
-    return Text(subtitleToken.token,
+    return Text(subtitleToken.token.trim(),
         style: subtitleToken.tokenStyle.copyWith(
           fontSize: subtitleStyle.fontSize,
         ),
