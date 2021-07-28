@@ -38,8 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   VideoPlayerController get videoPlayerController {
-    return VideoPlayerController.network(
-        'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
+    return VideoPlayerController.network(SwConstants.videoUrl);
   }
 
   ChewieController get chewieController {
