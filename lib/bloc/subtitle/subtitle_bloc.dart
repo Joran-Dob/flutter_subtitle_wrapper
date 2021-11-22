@@ -55,11 +55,13 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
           final bool validEndTime = videoPlayerPosition.inMilliseconds <
               subtitleItem.endTime.inMilliseconds;
           if (validStartTime && validEndTime) {
-            add(
-              UpdateLoadedSubtitle(
-                subtitle: subtitleItem,
-              ),
-            );
+            if (!isClosed) {
+              add(
+                UpdateLoadedSubtitle(
+                  subtitle: subtitleItem,
+                ),
+              );
+            }
           }
         }
       },
