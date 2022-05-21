@@ -1,6 +1,6 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v2.0.1-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
+[![](https://img.shields.io/badge/pub-v2.0.3-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
 [![Test and (dry-run) publish package](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml/badge.svg)](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml)
 
@@ -21,7 +21,7 @@ The package is nearly completely unit tested and widget tests are in progress.
 | Remote loading latin1 encoded subtitles  |The parsing of subtitle files with the latin1 encoding from an url. | ✔ |
 | Dynamic updating of subtitle  | Update subtitle content during playback. | ✔ |
 | Standard subtitle styling  | Standard styling of subtitle items. | ✔ |
-| Advance subtitle styling  | Advance styling of subtitle items. Like custom fonts.| 🚧 |
+| Advance subtitle styling  | Advance styling of subtitle items. Like custom fonts.| ✔ |
 
 ## Installation
 

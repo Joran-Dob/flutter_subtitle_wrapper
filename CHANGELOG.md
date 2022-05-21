@@ -1,3 +1,8 @@
+## [2.0.3] - 21/05/2022.
+
+* Added possibility to add background color to the text.
+* After the last subtitle item the text will be removed.
+
 ## [2.0.2] - 21/05/2022.
 
 * Updated dependencies. 
