@@ -32,3 +32,8 @@ class LoadedSubtitle extends SubtitleState {
   @override
   List<Object?> get props => [subtitle];
 }
+
+class CompletedSubtitle extends SubtitleState {
+  @override
+  List<Object> get props => [];
+}
