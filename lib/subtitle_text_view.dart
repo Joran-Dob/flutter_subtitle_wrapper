@@ -8,9 +8,11 @@ class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
 
-  const SubtitleTextView(
-      {Key? key, required this.subtitleStyle, this.backgroundColor})
-      : super(key: key);
+  const SubtitleTextView({
+    Key? key,
+    required this.subtitleStyle,
+    this.backgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
