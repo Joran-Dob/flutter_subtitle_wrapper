@@ -26,7 +26,8 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     subtitleController.attach(this);
     on<LoadSubtitle>((event, emit) => loadSubtitle(emit: emit));
     on<InitSubtitles>((event, emit) => initSubtitles(emit: emit));
-    on<UpdateLoadedSubtitle>((event, emit) => emit(LoadedSubtitle(event.subtitle)));
+    on<UpdateLoadedSubtitle>(
+        (event, emit) => emit(LoadedSubtitle(event.subtitle)));
   }
 
   Future<void> initSubtitles({
@@ -45,10 +46,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
         for (final Subtitle subtitleItem in subtitles.subtitles) {
-          final bool validStartTime =
-              videoPlayerPosition.inMilliseconds > subtitleItem.startTime.inMilliseconds;
-          final bool validEndTime =
-              videoPlayerPosition.inMilliseconds < subtitleItem.endTime.inMilliseconds;
+          final bool validStartTime = videoPlayerPosition.inMilliseconds >
+              subtitleItem.startTime.inMilliseconds;
+          final bool validEndTime = videoPlayerPosition.inMilliseconds <
+              subtitleItem.endTime.inMilliseconds;
           if (validStartTime && validEndTime) {
             add(
               UpdateLoadedSubtitle(
