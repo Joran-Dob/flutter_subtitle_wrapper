@@ -232,12 +232,12 @@ packages:
     source: hosted
     version: "1.1.0"
   subtitle_wrapper_package:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "2.0.1"
+    version: "2.0.2"
   term_glyph:
     dependency: transitive
     description:
