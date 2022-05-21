@@ -9,7 +9,7 @@ class SubtitleInitial extends SubtitleState {
   List<Object> get props => [];
 }
 
-class SubtitleInitializating extends SubtitleState {
+class SubtitleInitializing extends SubtitleState {
   @override
   List<Object> get props => [];
 }

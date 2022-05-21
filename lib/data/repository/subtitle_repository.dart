@@ -1,10 +1,9 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 abstract class SubtitleRepository {
@@ -30,8 +29,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Extract the encoding type from the headers
-  Encoding _encodingForHeaders(Map<String, String> headers) =>
-      encodingForCharset(
+  Encoding _encodingForHeaders(Map<String, String> headers) => encodingForCharset(
         _contentTypeForHeaders(headers).parameters['charset'],
       );
 
@@ -171,15 +169,17 @@ class SubtitleDataRepository extends SubtitleRepository {
       final text = removeAllHtmlTags(regExpMatch.group(11)!);
 
       final startTime = Duration(
-          hours: startTimeHours,
-          minutes: startTimeMinutes,
-          seconds: startTimeSeconds,
-          milliseconds: startTimeMilliseconds);
+        hours: startTimeHours,
+        minutes: startTimeMinutes,
+        seconds: startTimeSeconds,
+        milliseconds: startTimeMilliseconds,
+      );
       final endTime = Duration(
-          hours: endTimeHours,
-          minutes: endTimeMinutes,
-          seconds: endTimeSeconds,
-          milliseconds: endTimeMilliseconds);
+        hours: endTimeHours,
+        minutes: endTimeMinutes,
+        seconds: endTimeSeconds,
+        milliseconds: endTimeMilliseconds,
+      );
 
       subtitleList.add(
         Subtitle(startTime: startTime, endTime: endTime, text: text.trim()),
