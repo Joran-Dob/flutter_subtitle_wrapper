@@ -1,3 +1,8 @@
+## [2.0.2] - 21/05/2022.
+
+* Updated dependencies. 
+* Resolved minor lint issues.
+
 ## [2.0.1] - 15/04/2021.
 
 * Changed all pre-release package versions to release ones.
