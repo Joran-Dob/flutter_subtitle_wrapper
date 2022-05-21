@@ -29,6 +29,9 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     on<UpdateLoadedSubtitle>(
       (event, emit) => emit(LoadedSubtitle(event.subtitle)),
     );
+    on<CompletedShowingSubtitles>(
+      (event, emit) => emit(CompletedSubtitle()),
+    );
   }
 
   Future<void> initSubtitles({
@@ -46,6 +49,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
+        if (videoPlayerPosition.inMilliseconds >
+            subtitles.subtitles.last.endTime.inMilliseconds) {
+          add(CompletedShowingSubtitles());
+        }
         for (final Subtitle subtitleItem in subtitles.subtitles) {
           final bool validStartTime = videoPlayerPosition.inMilliseconds >
               subtitleItem.startTime.inMilliseconds;
