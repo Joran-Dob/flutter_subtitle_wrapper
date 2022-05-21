@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
 import 'package:subtitle_wrapper_package/subtitle_controller.dart';
@@ -17,39 +17,45 @@ void main() {
     'Subtitle controller',
     () {
       test('attach', () async {
-        _subtitleController.attach(SubtitleBloc(
-          subtitleController: _subtitleController,
-          subtitleRepository: SubtitleDataRepository(
+        _subtitleController.attach(
+          SubtitleBloc(
             subtitleController: _subtitleController,
+            subtitleRepository: SubtitleDataRepository(
+              subtitleController: _subtitleController,
+            ),
+            videoPlayerController: MockVideoPlayerController(),
           ),
-          videoPlayerController: MockVideoPlayerController(),
-        ));
+        );
       });
       test('detach', () async {
         _subtitleController.detach();
       });
 
       test('update subtitle url', () async {
-        _subtitleController.attach(SubtitleBloc(
-          subtitleController: _subtitleController,
-          subtitleRepository: SubtitleDataRepository(
+        _subtitleController.attach(
+          SubtitleBloc(
             subtitleController: _subtitleController,
+            subtitleRepository: SubtitleDataRepository(
+              subtitleController: _subtitleController,
+            ),
+            videoPlayerController: MockVideoPlayerController(),
           ),
-          videoPlayerController: MockVideoPlayerController(),
-        ));
+        );
         _subtitleController.updateSubtitleUrl(
           url: 'https://pastebin.com/raw/ZWWAL7fK',
         );
       });
 
       test('update subtitle content', () async {
-        _subtitleController.attach(SubtitleBloc(
-          subtitleController: _subtitleController,
-          subtitleRepository: SubtitleDataRepository(
+        _subtitleController.attach(
+          SubtitleBloc(
             subtitleController: _subtitleController,
+            subtitleRepository: SubtitleDataRepository(
+              subtitleController: _subtitleController,
+            ),
+            videoPlayerController: MockVideoPlayerController(),
           ),
-          videoPlayerController: MockVideoPlayerController(),
-        ));
+        );
         _subtitleController.updateSubtitleContent(
           content: '',
         );

@@ -24,29 +24,25 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     required this.subtitleController,
   }) : super(SubtitleInitial()) {
     subtitleController.attach(this);
+    on<LoadSubtitle>((event, emit) => loadSubtitle(emit: emit));
+    on<InitSubtitles>((event, emit) => initSubtitles(emit: emit));
+    on<UpdateLoadedSubtitle>(
+      (event, emit) => emit(LoadedSubtitle(event.subtitle)),
+    );
   }
 
-  @override
-  Stream<SubtitleState> mapEventToState(
-    SubtitleEvent event,
-  ) async* {
-    if (event is LoadSubtitle) {
-      yield* loadSubtitle();
-    } else if (event is InitSubtitles) {
-      yield* initSubtitles();
-    } else if (event is UpdateLoadedSubtitle) {
-      yield LoadedSubtitle(event.subtitle);
-    }
-  }
-
-  Stream<SubtitleState> initSubtitles() async* {
-    yield SubtitleInitializating();
+  Future<void> initSubtitles({
+    required Emitter<SubtitleState> emit,
+  }) async {
+    emit(SubtitleInitializing());
     subtitles = await subtitleRepository.getSubtitles();
-    yield SubtitleInitialized();
+    emit(SubtitleInitialized());
   }
 
-  Stream<SubtitleState> loadSubtitle() async* {
-    yield LoadingSubtitle();
+  Future<void> loadSubtitle({
+    required Emitter<SubtitleState> emit,
+  }) async {
+    emit(LoadingSubtitle());
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
