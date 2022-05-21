@@ -39,7 +39,7 @@ jobs:
         with:
           file: coverage/lcov.info
       - name: Publish
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        uses: sakebook/actions-flutter-pub-publisher@v1.4.0
         with:
           credential: ${{ secrets.PUBSPEC_CREDENTIALS }}
           flutter_package: true

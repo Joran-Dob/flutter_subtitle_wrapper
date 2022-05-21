@@ -6,9 +6,13 @@ import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
+  final Color? backgroundColor;
 
-  const SubtitleTextView({Key? key, required this.subtitleStyle})
-      : super(key: key);
+  const SubtitleTextView({
+    Key? key,
+    required this.subtitleStyle,
+    this.backgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +31,34 @@ class SubtitleTextView extends StatelessWidget {
             children: <Widget>[
               if (subtitleStyle.hasBorder)
                 Center(
-                  child: Text(
-                    state.subtitle!.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: subtitleStyle.fontSize,
-                      foreground: Paint()
-                        ..style = subtitleStyle.borderStyle.style
-                        ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
-                        ..color = subtitleStyle.borderStyle.color,
+                  child: Container(
+                    color: backgroundColor,
+                    child: Text(
+                      state.subtitle!.text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: subtitleStyle.fontSize,
+                        foreground: Paint()
+                          ..style = subtitleStyle.borderStyle.style
+                          ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
+                          ..color = subtitleStyle.borderStyle.color,
+                      ),
                     ),
                   ),
                 )
               else
                 Container(),
               Center(
-                child: Text(
-                  state.subtitle!.text,
-                  key: ViewKeys.subtitleTextContent,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: subtitleStyle.fontSize,
-                    color: subtitleStyle.textColor,
+                child: Container(
+                  color: backgroundColor,
+                  child: Text(
+                    state.subtitle!.text,
+                    key: ViewKeys.subtitleTextContent,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: subtitleStyle.fontSize,
+                      color: subtitleStyle.textColor,
+                    ),
                   ),
                 ),
               ),
