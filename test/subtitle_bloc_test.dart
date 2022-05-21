@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
 import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
@@ -33,8 +33,7 @@ void main() {
           ),
         ),
         expect: () => [
-          SubtitleInitializating(),
-          SubtitleInitialized(),
+          SubtitleInitializing(),
         ],
       );
       blocTest<SubtitleBloc, SubtitleState>(
@@ -46,10 +45,10 @@ void main() {
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
-        act: (dynamic bloc) => bloc.add(
+        act: (SubtitleBloc bloc) => bloc.add(
           UpdateLoadedSubtitle(
             subtitle: const Subtitle(
-              startTime: Duration(),
+              startTime: Duration.zero,
               endTime: Duration(
                 seconds: 10,
               ),
@@ -60,7 +59,7 @@ void main() {
         expect: () => [
           const LoadedSubtitle(
             Subtitle(
-              startTime: Duration(),
+              startTime: Duration.zero,
               endTime: Duration(
                 seconds: 10,
               ),
