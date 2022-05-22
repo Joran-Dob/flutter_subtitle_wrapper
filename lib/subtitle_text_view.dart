@@ -16,57 +16,56 @@ class SubtitleTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: close_sinks
-    final substitleBloc = BlocProvider.of<SubtitleBloc>(context);
+    final subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
 
     return BlocConsumer<SubtitleBloc, SubtitleState>(
+      // TODO (Joran-Dob), improve this workaround.
+      // ignore: prefer-extracting-callbacks, this is a workaround for the issue
       listener: (context, state) {
         if (state is SubtitleInitialized) {
-          substitleBloc.add(LoadSubtitle());
+          subtitleBloc.add(LoadSubtitle());
         }
       },
       builder: (context, state) {
-        if (state is LoadedSubtitle) {
-          return Stack(
-            children: <Widget>[
-              if (subtitleStyle.hasBorder)
-                Center(
-                  child: Container(
-                    color: backgroundColor,
-                    child: Text(
-                      state.subtitle!.text,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: subtitleStyle.fontSize,
-                        foreground: Paint()
-                          ..style = subtitleStyle.borderStyle.style
-                          ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
-                          ..color = subtitleStyle.borderStyle.color,
+        return state is LoadedSubtitle
+            ? Stack(
+                children: <Widget>[
+                  if (subtitleStyle.hasBorder)
+                    Center(
+                      child: Container(
+                        color: backgroundColor,
+                        child: Text(
+                          state.subtitle!.text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: subtitleStyle.fontSize,
+                            foreground: Paint()
+                              ..style = subtitleStyle.borderStyle.style
+                              ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
+                              ..color = subtitleStyle.borderStyle.color,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    Container(),
+                  Center(
+                    child: Container(
+                      color: backgroundColor,
+                      child: Text(
+                        state.subtitle!.text,
+                        key: ViewKeys.subtitleTextContent,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: subtitleStyle.fontSize,
+                          color: subtitleStyle.textColor,
+                        ),
                       ),
                     ),
                   ),
-                )
-              else
-                Container(),
-              Center(
-                child: Container(
-                  color: backgroundColor,
-                  child: Text(
-                    state.subtitle!.text,
-                    key: ViewKeys.subtitleTextContent,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: subtitleStyle.fontSize,
-                      color: subtitleStyle.textColor,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        } else {
-          return Container();
-        }
+                ],
+              )
+            : Container();
       },
     );
   }

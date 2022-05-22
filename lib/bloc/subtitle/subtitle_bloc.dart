@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitle.dart';
-import 'package:subtitle_wrapper_package/data/models/subtitles.dart';
-import 'package:subtitle_wrapper_package/data/repository/subtitle_repository.dart';
-import 'package:subtitle_wrapper_package/subtitle_controller.dart';
+import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
 import 'package:video_player/video_player.dart';
 
 part 'subtitle_event.dart';
@@ -49,15 +46,14 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
-        if (videoPlayerPosition.inMilliseconds >
-            subtitles.subtitles.last.endTime.inMilliseconds) {
+        if (videoPlayerPosition.inMilliseconds > subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
         for (final Subtitle subtitleItem in subtitles.subtitles) {
-          final bool validStartTime = videoPlayerPosition.inMilliseconds >
-              subtitleItem.startTime.inMilliseconds;
-          final bool validEndTime = videoPlayerPosition.inMilliseconds <
-              subtitleItem.endTime.inMilliseconds;
+          final bool validStartTime =
+              videoPlayerPosition.inMilliseconds > subtitleItem.startTime.inMilliseconds;
+          final bool validEndTime =
+              videoPlayerPosition.inMilliseconds < subtitleItem.endTime.inMilliseconds;
           if (validStartTime && validEndTime) {
             add(
               UpdateLoadedSubtitle(
@@ -73,6 +69,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   @override
   Future<void> close() {
     subtitleController.detach();
+
     return super.close();
   }
 }

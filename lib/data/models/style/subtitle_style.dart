@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:subtitle_wrapper_package/data/models/style/subtitle_border_style.dart';
-import 'package:subtitle_wrapper_package/data/models/style/subtitle_position.dart';
+import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
+
+const _defaultFontSize = 16.0;
 
 class SubtitleStyle {
   final bool hasBorder;
@@ -12,7 +13,7 @@ class SubtitleStyle {
   const SubtitleStyle({
     this.hasBorder = false,
     this.borderStyle = const SubtitleBorderStyle(),
-    this.fontSize = 16,
+    this.fontSize = _defaultFontSize,
     this.textColor = Colors.black,
     this.position = const SubtitlePosition(),
   });
