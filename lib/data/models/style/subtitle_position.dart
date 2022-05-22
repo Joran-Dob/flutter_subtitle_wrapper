@@ -1,3 +1,5 @@
+const _defaultSubtitleBottomPosition = 50.0;
+
 class SubtitlePosition {
   final double left;
   final double right;
@@ -5,9 +7,9 @@ class SubtitlePosition {
   final double bottom;
 
   const SubtitlePosition({
-    this.left = 0,
-    this.right = 0,
+    this.left = 0.0,
+    this.right = 0.0,
     this.top,
-    this.bottom = 50,
+    this.bottom = _defaultSubtitleBottomPosition,
   });
 }

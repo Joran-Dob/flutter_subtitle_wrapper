@@ -1,8 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:example/data/sw_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
-import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
 import 'package:video_player/video_player.dart';
 
@@ -85,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: SizedBox(
               height: 270,
-              child: SubTitleWrapper(
+              child: SubtitleWrapper(
                 videoPlayerController:
                     localChewieController.videoPlayerController,
                 subtitleController: subtitleController,
