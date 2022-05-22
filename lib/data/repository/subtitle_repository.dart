@@ -65,8 +65,8 @@ class SubtitleDataRepository extends SubtitleRepository {
     );
     // Lets check if the request was successful.
     // If the subtitle decoder type is utf8 lets decode it with utf8.
-    if (subtitleDecoder == SubtitleDecoder.utf8) {
-      if (response.statusCode == HttpStatus.ok) {
+    if (response.statusCode == HttpStatus.ok) {
+      if (subtitleDecoder == SubtitleDecoder.utf8) {
         subtitlesContent = utf8.decode(
           response.bodyBytes,
           allowMalformed: true,
@@ -79,7 +79,7 @@ class SubtitleDataRepository extends SubtitleRepository {
           allowInvalid: true,
         );
       }
-      // The  subtitle decoder was not defined so we will extract it from the response headers send from the server.
+      // The subtitle decoder was not defined so we will extract it from the response headers send from the server.
       else {
         final subtitleServerDecoder = requestContentType(
           response.headers,
