@@ -1,4 +1,4 @@
-## [2.0.3] - 22/05/2022.
+## [2.1.0] - 22/05/2022.
 
 * **BREAKING**: Name changed from `SubTitleWrapper` to `SubtitleWrapper`.
 * Code quality improvements and refactoring.
