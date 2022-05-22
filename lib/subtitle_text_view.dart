@@ -14,59 +14,85 @@ class SubtitleTextView extends StatelessWidget {
     this.backgroundColor,
   }) : super(key: key);
 
+  TextStyle get _textStyle {
+    return subtitleStyle.hasBorder
+        ? TextStyle(
+            fontSize: subtitleStyle.fontSize,
+            foreground: Paint()
+              ..style = subtitleStyle.borderStyle.style
+              ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
+              ..color = subtitleStyle.borderStyle.color,
+          )
+        : TextStyle(
+            fontSize: subtitleStyle.fontSize,
+            color: subtitleStyle.textColor,
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     final subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
 
+    // TODO (Joran-Dob), improve this workaround.
+    void _subtitleBlocListener(BuildContext _, SubtitleState state) {
+      if (state is SubtitleInitialized) {
+        subtitleBloc.add(LoadSubtitle());
+      }
+    }
+
     return BlocConsumer<SubtitleBloc, SubtitleState>(
-      // TODO (Joran-Dob), improve this workaround.
-      // ignore: prefer-extracting-callbacks, this is a workaround for the issue
-      listener: (context, state) {
-        if (state is SubtitleInitialized) {
-          subtitleBloc.add(LoadSubtitle());
-        }
-      },
+      listener: _subtitleBlocListener,
       builder: (context, state) {
         return state is LoadedSubtitle
             ? Stack(
                 children: <Widget>[
+                  Center(
+                    child: Container(
+                      color: backgroundColor,
+                      child: _TextContent(
+                        text: state.subtitle!.text,
+                        textStyle: _textStyle,
+                      ),
+                    ),
+                  ),
                   if (subtitleStyle.hasBorder)
                     Center(
                       child: Container(
                         color: backgroundColor,
-                        child: Text(
-                          state.subtitle!.text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                        child: _TextContent(
+                          text: state.subtitle!.text,
+                          textStyle: TextStyle(
+                            color: subtitleStyle.textColor,
                             fontSize: subtitleStyle.fontSize,
-                            foreground: Paint()
-                              ..style = subtitleStyle.borderStyle.style
-                              ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
-                              ..color = subtitleStyle.borderStyle.color,
                           ),
                         ),
                       ),
-                    )
-                  else
-                    Container(),
-                  Center(
-                    child: Container(
-                      color: backgroundColor,
-                      child: Text(
-                        state.subtitle!.text,
-                        key: ViewKeys.subtitleTextContent,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: subtitleStyle.fontSize,
-                          color: subtitleStyle.textColor,
-                        ),
-                      ),
                     ),
-                  ),
                 ],
               )
             : Container();
       },
+    );
+  }
+}
+
+class _TextContent extends StatelessWidget {
+  const _TextContent({
+    Key? key,
+    required this.textStyle,
+    required this.text,
+  }) : super(key: key);
+
+  final TextStyle textStyle;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      key: ViewKeys.subtitleTextContent,
+      textAlign: TextAlign.center,
+      style: textStyle,
     );
   }
 }

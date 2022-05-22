@@ -180,7 +180,8 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Extract the encoding type from the headers.
-  Encoding _encodingForHeaders(Map<String, String> headers) => encodingForCharset(
+  Encoding _encodingForHeaders(Map<String, String> headers) =>
+      encodingForCharset(
         _contentTypeForHeaders(headers).parameters['charset'],
       );
 
