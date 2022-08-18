@@ -44,33 +44,36 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   }) async {
     emit(LoadingSubtitle());
     videoPlayerController.addListener(
-      () {
-        final videoPlayerPosition = videoPlayerController.value.position;
-        if (videoPlayerPosition.inMilliseconds >
-            subtitles.subtitles.last.endTime.inMilliseconds) {
-          add(CompletedShowingSubtitles());
-        }
-        for (final Subtitle subtitleItem in subtitles.subtitles) {
-          final bool validStartTime = videoPlayerPosition.inMilliseconds >
-              subtitleItem.startTime.inMilliseconds;
-          final bool validEndTime = videoPlayerPosition.inMilliseconds <
-              subtitleItem.endTime.inMilliseconds;
-          if (validStartTime && validEndTime) {
-            add(
-              UpdateLoadedSubtitle(
-                subtitle: subtitleItem,
-              ),
-            );
-          }
-        }
-      },
+      _listener,
     );
   }
 
   @override
   Future<void> close() {
     subtitleController.detach();
+    videoPlayerController.removeListener(_listener);
 
     return super.close();
+  }
+
+  void _listener() {
+    final videoPlayerPosition = videoPlayerController.value.position;
+    if (videoPlayerPosition.inMilliseconds >
+        subtitles.subtitles.last.endTime.inMilliseconds) {
+      add(CompletedShowingSubtitles());
+    }
+    for (final Subtitle subtitleItem in subtitles.subtitles) {
+      final bool validStartTime = videoPlayerPosition.inMilliseconds >
+          subtitleItem.startTime.inMilliseconds;
+      final bool validEndTime = videoPlayerPosition.inMilliseconds <
+          subtitleItem.endTime.inMilliseconds;
+      if (validStartTime && validEndTime) {
+        add(
+          UpdateLoadedSubtitle(
+            subtitle: subtitleItem,
+          ),
+        );
+      }
+    }
   }
 }
