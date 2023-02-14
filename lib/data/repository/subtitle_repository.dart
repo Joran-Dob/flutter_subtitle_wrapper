@@ -10,9 +10,8 @@ abstract class SubtitleRepository {
 }
 
 class SubtitleDataRepository extends SubtitleRepository {
-  final SubtitleController subtitleController;
-
   SubtitleDataRepository({required this.subtitleController});
+  final SubtitleController subtitleController;
 
   // Gets the subtitle content type.
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
@@ -123,13 +122,13 @@ class SubtitleDataRepository extends SubtitleRepository {
         multiLine: true,
       );
     } else {
-      throw 'Incorrect subtitle type';
+      throw Exception('Incorrect subtitle type');
     }
 
     final matches = regExp.allMatches(subtitlesContent).toList();
-    final List<Subtitle> subtitleList = [];
+    final subtitleList = <Subtitle>[];
 
-    for (final RegExpMatch regExpMatch in matches) {
+    for (final regExpMatch in matches) {
       final startTimeHours = int.parse(regExpMatch.group(2)!);
       final startTimeMinutes = int.parse(regExpMatch.group(3)!);
       final startTimeSeconds = int.parse(regExpMatch.group(4)!);
@@ -187,21 +186,21 @@ class SubtitleDataRepository extends SubtitleRepository {
 
   // Gets the content type from the headers and returns it as a media type.
   MediaType _contentTypeForHeaders(Map<String, String> headers) {
-    var _contentType = headers['content-type']!;
-    if (_hasSemiColonEnding(_contentType)) {
-      _contentType = _fixSemiColonEnding(_contentType);
+    var contentType = headers['content-type']!;
+    if (_hasSemiColonEnding(contentType)) {
+      contentType = _fixSemiColonEnding(contentType);
     }
 
-    return MediaType.parse(_contentType);
+    return MediaType.parse(contentType);
   }
 
   // Check if the string is ending with a semicolon.
-  bool _hasSemiColonEnding(String _string) {
-    return _string.substring(_string.length - 1, _string.length) == ';';
+  bool _hasSemiColonEnding(String string) {
+    return string.substring(string.length - 1, string.length) == ';';
   }
 
   // Remove ending semicolon from string.
-  String _fixSemiColonEnding(String _string) {
-    return _string.substring(0, _string.length - 1);
+  String _fixSemiColonEnding(String string) {
+    return string.substring(0, string.length - 1);
   }
 }
