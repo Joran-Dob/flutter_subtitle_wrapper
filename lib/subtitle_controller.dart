@@ -1,14 +1,6 @@
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 
 class SubtitleController {
-  String? subtitlesContent;
-  String? subtitleUrl;
-  final bool showSubtitles;
-  SubtitleDecoder? subtitleDecoder;
-  SubtitleType subtitleType;
-  bool _attached = false;
-  SubtitleBloc? _subtitleBloc;
-
   SubtitleController({
     this.subtitleUrl,
     this.subtitlesContent,
@@ -16,6 +8,13 @@ class SubtitleController {
     this.subtitleDecoder,
     this.subtitleType = SubtitleType.webvtt,
   });
+  String? subtitlesContent;
+  String? subtitleUrl;
+  final bool showSubtitles;
+  SubtitleDecoder? subtitleDecoder;
+  SubtitleType subtitleType;
+  bool _attached = false;
+  SubtitleBloc? _subtitleBloc;
 
   void attach(SubtitleBloc subtitleBloc) {
     _subtitleBloc = subtitleBloc;

@@ -9,13 +9,6 @@ part 'subtitle_event.dart';
 part 'subtitle_state.dart';
 
 class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
-  final VideoPlayerController videoPlayerController;
-  final SubtitleRepository subtitleRepository;
-  final SubtitleController subtitleController;
-
-  late Subtitles subtitles;
-  Subtitle? _currentSubtitle;
-
   SubtitleBloc({
     required this.videoPlayerController,
     required this.subtitleRepository,
@@ -31,6 +24,13 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
       (event, emit) => emit(CompletedSubtitle()),
     );
   }
+
+  final VideoPlayerController videoPlayerController;
+  final SubtitleRepository subtitleRepository;
+  final SubtitleController subtitleController;
+
+  late Subtitles subtitles;
+  Subtitle? _currentSubtitle;
 
   Future<void> initSubtitles({
     required Emitter<SubtitleState> emit,
@@ -51,10 +51,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
             subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
-        for (final Subtitle subtitleItem in subtitles.subtitles) {
-          final bool validStartTime = videoPlayerPosition.inMilliseconds >
+        for (final subtitleItem in subtitles.subtitles) {
+          final validStartTime = videoPlayerPosition.inMilliseconds >
               subtitleItem.startTime.inMilliseconds;
-          final bool validEndTime = videoPlayerPosition.inMilliseconds <
+          final validEndTime = videoPlayerPosition.inMilliseconds <
               subtitleItem.endTime.inMilliseconds;
           final subtitle = validStartTime && validEndTime ? subtitleItem : null;
           if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
@@ -83,9 +83,9 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   bool _currentSubtitleIsValid({required int videoPlayerPosition}) {
     if (_currentSubtitle == null) return false;
-    final bool validStartTime =
+    final validStartTime =
         videoPlayerPosition > _currentSubtitle!.startTime.inMilliseconds;
-    final bool validEndTime =
+    final validEndTime =
         videoPlayerPosition < _currentSubtitle!.endTime.inMilliseconds;
 
     return validStartTime && validEndTime;

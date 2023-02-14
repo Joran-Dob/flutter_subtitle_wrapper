@@ -5,17 +5,15 @@ abstract class SubtitleEvent {
 }
 
 class InitSubtitles extends SubtitleEvent {
-  final SubtitleController subtitleController;
-
   InitSubtitles({required this.subtitleController});
+  final SubtitleController subtitleController;
 }
 
 class LoadSubtitle extends SubtitleEvent {}
 
 class UpdateLoadedSubtitle extends SubtitleEvent {
-  final Subtitle? subtitle;
-
   UpdateLoadedSubtitle({this.subtitle});
+  final Subtitle? subtitle;
 }
 
 class CompletedShowingSubtitles extends SubtitleEvent {}
