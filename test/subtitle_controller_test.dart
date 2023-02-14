@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 class MockVideoPlayerController extends Mock implements VideoPlayerController {}
 
 void main() {
-  final _subtitleController = SubtitleController(
+  final subtitleController = SubtitleController(
     subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
     subtitleDecoder: SubtitleDecoder.utf8,
   );
@@ -17,48 +17,50 @@ void main() {
     'Subtitle controller',
     () {
       test('attach', () async {
-        _subtitleController.attach(
+        subtitleController.attach(
           SubtitleBloc(
-            subtitleController: _subtitleController,
+            subtitleController: subtitleController,
             subtitleRepository: SubtitleDataRepository(
-              subtitleController: _subtitleController,
+              subtitleController: subtitleController,
             ),
             videoPlayerController: MockVideoPlayerController(),
           ),
         );
       });
       test('detach', () async {
-        _subtitleController.detach();
+        subtitleController.detach();
       });
 
       test('update subtitle url', () async {
-        _subtitleController.attach(
-          SubtitleBloc(
-            subtitleController: _subtitleController,
-            subtitleRepository: SubtitleDataRepository(
-              subtitleController: _subtitleController,
+        subtitleController
+          ..attach(
+            SubtitleBloc(
+              subtitleController: subtitleController,
+              subtitleRepository: SubtitleDataRepository(
+                subtitleController: subtitleController,
+              ),
+              videoPlayerController: MockVideoPlayerController(),
             ),
-            videoPlayerController: MockVideoPlayerController(),
-          ),
-        );
-        _subtitleController.updateSubtitleUrl(
-          url: 'https://pastebin.com/raw/ZWWAL7fK',
-        );
+          )
+          ..updateSubtitleUrl(
+            url: 'https://pastebin.com/raw/ZWWAL7fK',
+          );
       });
 
       test('update subtitle content', () async {
-        _subtitleController.attach(
-          SubtitleBloc(
-            subtitleController: _subtitleController,
-            subtitleRepository: SubtitleDataRepository(
-              subtitleController: _subtitleController,
+        subtitleController
+          ..attach(
+            SubtitleBloc(
+              subtitleController: subtitleController,
+              subtitleRepository: SubtitleDataRepository(
+                subtitleController: subtitleController,
+              ),
+              videoPlayerController: MockVideoPlayerController(),
             ),
-            videoPlayerController: MockVideoPlayerController(),
-          ),
-        );
-        _subtitleController.updateSubtitleContent(
-          content: '',
-        );
+          )
+          ..updateSubtitleContent(
+            content: '',
+          );
       });
 
       test(
@@ -66,10 +68,11 @@ void main() {
         () {
           expect(
             () {
-              _subtitleController.detach();
-              _subtitleController.updateSubtitleContent(
-                content: '',
-              );
+              subtitleController
+                ..detach()
+                ..updateSubtitleContent(
+                  content: '',
+                );
             },
             throwsException,
           );
@@ -79,10 +82,11 @@ void main() {
       test('update subtitle url without attach', () {
         expect(
           () {
-            _subtitleController.detach();
-            _subtitleController.updateSubtitleUrl(
-              url: 'https://pastebin.com/raw/ZWWAL7fK',
-            );
+            subtitleController
+              ..detach()
+              ..updateSubtitleUrl(
+                url: 'https://pastebin.com/raw/ZWWAL7fK',
+              );
           },
           throwsException,
         );

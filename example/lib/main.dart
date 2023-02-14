@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/subtitle_wrapper_package.dart';
 import 'package:video_player/video_player.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,19 +20,26 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
-    Key key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   final String link = SwConstants.videoUrl;
+  late ChewieController _chewieController;
   final SubtitleController subtitleController = SubtitleController(
     subtitleUrl: SwConstants.enSubtitle,
     subtitleDecoder: SubtitleDecoder.utf8,
   );
+
+  @override
+  void initState() {
+    _chewieController = chewieController;
+    super.initState();
+  }
 
   VideoPlayerController get videoPlayerController {
     return VideoPlayerController.network(link);
@@ -47,9 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateSubtitleUrl({
-    ExampleSubtitleLanguage subtitleLanguage,
+    required ExampleSubtitleLanguage subtitleLanguage,
   }) {
-    String subtitleUrl;
+    String? subtitleUrl;
     switch (subtitleLanguage) {
       case ExampleSubtitleLanguage.english:
         subtitleUrl = SwConstants.enSubtitle;
@@ -60,19 +69,14 @@ class _MyHomePageState extends State<MyHomePage> {
       case ExampleSubtitleLanguage.dutch:
         subtitleUrl = SwConstants.nlSubtitle;
         break;
-      default:
     }
-    if (subtitleUrl != null) {
-      subtitleController.updateSubtitleUrl(
-        url: subtitleUrl,
-      );
-    }
+    subtitleController.updateSubtitleUrl(
+      url: subtitleUrl,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final localChewieController = chewieController;
-
     return Scaffold(
       backgroundColor: const Color(0xff0b090a),
       body: Column(
@@ -84,21 +88,20 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SizedBox(
               height: 270,
               child: SubtitleWrapper(
-                videoPlayerController:
-                    localChewieController.videoPlayerController,
+                videoPlayerController: _chewieController.videoPlayerController,
                 subtitleController: subtitleController,
                 subtitleStyle: const SubtitleStyle(
                   textColor: Colors.white,
                   hasBorder: true,
                 ),
                 videoChild: Chewie(
-                  controller: localChewieController,
+                  controller: _chewieController,
                 ),
               ),
             ),
           ),
           Expanded(
-            child: Container(
+            child: ColoredBox(
               color: const Color(
                 0xff161a1d,
               ),
@@ -225,10 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     super.dispose();
-    if (videoPlayerController != null && chewieController != null) {
-      videoPlayerController?.dispose();
-      chewieController?.dispose();
-    }
+    _chewieController.dispose();
   }
 }
 

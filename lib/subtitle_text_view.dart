@@ -5,14 +5,13 @@ import 'package:subtitle_wrapper_package/data/constants/view_keys.dart';
 import 'package:subtitle_wrapper_package/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
+  const SubtitleTextView({
+    required this.subtitleStyle,
+    super.key,
+    this.backgroundColor,
+  });
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
-
-  const SubtitleTextView({
-    Key? key,
-    required this.subtitleStyle,
-    this.backgroundColor,
-  }) : super(key: key);
 
   TextStyle get _textStyle {
     return subtitleStyle.hasBorder
@@ -33,44 +32,46 @@ class SubtitleTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     final subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
 
-    // TODO (Joran-Dob), improve this workaround.
-    void _subtitleBlocListener(BuildContext _, SubtitleState state) {
+    // TODO(Joran-Dob): improve this workaround.
+    void subtitleBlocListener(BuildContext _, SubtitleState state) {
       if (state is SubtitleInitialized) {
         subtitleBloc.add(LoadSubtitle());
       }
     }
 
     return BlocConsumer<SubtitleBloc, SubtitleState>(
-      listener: _subtitleBlocListener,
+      listener: subtitleBlocListener,
       builder: (context, state) {
-        return state is LoadedSubtitle
-            ? Stack(
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      color: backgroundColor,
-                      child: _TextContent(
-                        text: state.subtitle!.text,
-                        textStyle: _textStyle,
+        if (state is LoadedSubtitle && state.subtitle != null) {
+          return Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  color: backgroundColor,
+                  child: _TextContent(
+                    text: state.subtitle!.text,
+                    textStyle: _textStyle,
+                  ),
+                ),
+              ),
+              if (subtitleStyle.hasBorder)
+                Center(
+                  child: Container(
+                    color: backgroundColor,
+                    child: _TextContent(
+                      text: state.subtitle!.text,
+                      textStyle: TextStyle(
+                        color: subtitleStyle.textColor,
+                        fontSize: subtitleStyle.fontSize,
                       ),
                     ),
                   ),
-                  if (subtitleStyle.hasBorder)
-                    Center(
-                      child: Container(
-                        color: backgroundColor,
-                        child: _TextContent(
-                          text: state.subtitle!.text,
-                          textStyle: TextStyle(
-                            color: subtitleStyle.textColor,
-                            fontSize: subtitleStyle.fontSize,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              )
-            : Container();
+                ),
+            ],
+          );
+        }
+
+        return const SizedBox();
       },
     );
   }
@@ -78,10 +79,9 @@ class SubtitleTextView extends StatelessWidget {
 
 class _TextContent extends StatelessWidget {
   const _TextContent({
-    Key? key,
     required this.textStyle,
     required this.text,
-  }) : super(key: key);
+  });
 
   final TextStyle textStyle;
   final String text;
