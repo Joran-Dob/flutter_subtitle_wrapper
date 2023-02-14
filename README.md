@@ -1,6 +1,6 @@
 # subtitle_wrapper_package
 
-[![](https://img.shields.io/badge/pub-v2.0.3-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
+[![](https://img.shields.io/badge/pub-v2.1.0-brightgreen.svg)](https://pub.dev/packages/subtitle_wrapper_package)
 
 [![Test and (dry-run) publish package](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml/badge.svg)](https://github.com/Joran-Dob/flutter_subtitle_wrapper/actions/workflows/flutter-drive.yml)
 
@@ -9,7 +9,7 @@
 
 ## Features
 
-Subtitle playback for the 2 most widely used subtitle formats are supported currently which can be dynamicly updated during playback from a url of content string. As well as basic styling of the subtitle text item.
+Subtitle playback for the 2 most widely used subtitle formats are supported currently which can be dynamically updated during playback from a url of content string. As well as basic styling of the subtitle text item.
 
 The package is nearly completely unit tested and widget tests are in progress.
 
@@ -37,7 +37,7 @@ After this you need to wrap your video player with the `SubTitleWrapper` and add
     subtitleType: SubtitleType.webvtt,
   );
   
- SubTitleWrapper(
+ SubtitleWrapper(
        videoPlayerController: videoPlayerController,
        subtitleController: subtitleController,
        subtitleStyle: SubtitleStyle(
