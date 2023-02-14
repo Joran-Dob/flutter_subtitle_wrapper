@@ -47,14 +47,15 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
-        if (videoPlayerPosition.inMilliseconds > subtitles.subtitles.last.endTime.inMilliseconds) {
+        if (videoPlayerPosition.inMilliseconds >
+            subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
         for (final Subtitle subtitleItem in subtitles.subtitles) {
-          final bool validStartTime =
-              videoPlayerPosition.inMilliseconds > subtitleItem.startTime.inMilliseconds;
-          final bool validEndTime =
-              videoPlayerPosition.inMilliseconds < subtitleItem.endTime.inMilliseconds;
+          final bool validStartTime = videoPlayerPosition.inMilliseconds >
+              subtitleItem.startTime.inMilliseconds;
+          final bool validEndTime = videoPlayerPosition.inMilliseconds <
+              subtitleItem.endTime.inMilliseconds;
           final subtitle = validStartTime && validEndTime ? subtitleItem : null;
           if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
             _currentSubtitle = subtitle;
@@ -82,8 +83,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   bool _currentSubtitleIsValid({required int videoPlayerPosition}) {
     if (_currentSubtitle == null) return false;
-    final bool validStartTime = videoPlayerPosition > _currentSubtitle!.startTime.inMilliseconds;
-    final bool validEndTime = videoPlayerPosition < _currentSubtitle!.endTime.inMilliseconds;
+    final bool validStartTime =
+        videoPlayerPosition > _currentSubtitle!.startTime.inMilliseconds;
+    final bool validEndTime =
+        videoPlayerPosition < _currentSubtitle!.endTime.inMilliseconds;
 
     return validStartTime && validEndTime;
   }
