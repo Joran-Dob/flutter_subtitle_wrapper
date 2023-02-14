@@ -27,10 +27,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final String link = SwConstants.videoUrl;
+  ChewieController _chewieController;
   final SubtitleController subtitleController = SubtitleController(
     subtitleUrl: SwConstants.enSubtitle,
     subtitleDecoder: SubtitleDecoder.utf8,
   );
+
+  @override
+  void initState() {
+    _chewieController = chewieController;
+    super.initState();
+  }
 
   VideoPlayerController get videoPlayerController {
     return VideoPlayerController.network(link);
@@ -71,8 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final localChewieController = chewieController;
-
     return Scaffold(
       backgroundColor: const Color(0xff0b090a),
       body: Column(
@@ -84,15 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SizedBox(
               height: 270,
               child: SubtitleWrapper(
-                videoPlayerController:
-                    localChewieController.videoPlayerController,
+                videoPlayerController: _chewieController.videoPlayerController,
                 subtitleController: subtitleController,
                 subtitleStyle: const SubtitleStyle(
                   textColor: Colors.white,
                   hasBorder: true,
                 ),
                 videoChild: Chewie(
-                  controller: localChewieController,
+                  controller: _chewieController,
                 ),
               ),
             ),
@@ -152,10 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                         8.0,
@@ -164,17 +166,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.english,
+                                  subtitleLanguage: ExampleSubtitleLanguage.english,
                                 ),
                                 child: const Text('Switch to 🇬🇧'),
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                         8.0,
@@ -183,17 +182,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.spanish,
+                                  subtitleLanguage: ExampleSubtitleLanguage.spanish,
                                 ),
                                 child: const Text('Switch to 🇪🇸'),
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                         8.0,
@@ -202,8 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.dutch,
+                                  subtitleLanguage: ExampleSubtitleLanguage.dutch,
                                 ),
                                 child: const Text('Switch to 🇳🇱'),
                               ),
@@ -225,10 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     super.dispose();
-    if (videoPlayerController != null && chewieController != null) {
-      videoPlayerController?.dispose();
-      chewieController?.dispose();
-    }
+    _chewieController?.dispose();
   }
 }
 

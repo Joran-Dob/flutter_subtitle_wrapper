@@ -43,34 +43,36 @@ class SubtitleTextView extends StatelessWidget {
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: _subtitleBlocListener,
       builder: (context, state) {
-        return state is LoadedSubtitle
-            ? Stack(
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      color: backgroundColor,
-                      child: _TextContent(
-                        text: state.subtitle!.text,
-                        textStyle: _textStyle,
+        if (state is LoadedSubtitle && state.subtitle != null) {
+          return Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  color: backgroundColor,
+                  child: _TextContent(
+                    text: state.subtitle!.text,
+                    textStyle: _textStyle,
+                  ),
+                ),
+              ),
+              if (subtitleStyle.hasBorder)
+                Center(
+                  child: Container(
+                    color: backgroundColor,
+                    child: _TextContent(
+                      text: state.subtitle!.text,
+                      textStyle: TextStyle(
+                        color: subtitleStyle.textColor,
+                        fontSize: subtitleStyle.fontSize,
                       ),
                     ),
                   ),
-                  if (subtitleStyle.hasBorder)
-                    Center(
-                      child: Container(
-                        color: backgroundColor,
-                        child: _TextContent(
-                          text: state.subtitle!.text,
-                          textStyle: TextStyle(
-                            color: subtitleStyle.textColor,
-                            fontSize: subtitleStyle.fontSize,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              )
-            : Container();
+                ),
+            ],
+          );
+        }
+
+        return SizedBox();
       },
     );
   }
