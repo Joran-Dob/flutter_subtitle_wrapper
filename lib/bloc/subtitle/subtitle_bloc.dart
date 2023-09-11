@@ -47,8 +47,9 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
-        if (videoPlayerPosition.inMilliseconds >
-            subtitles.subtitles.last.endTime.inMilliseconds) {
+        if (!subtitles.subtitles.isNotEmpty &&
+            videoPlayerPosition.inMilliseconds >
+                subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
         for (final subtitleItem in subtitles.subtitles) {
