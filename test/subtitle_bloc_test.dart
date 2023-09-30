@@ -10,7 +10,7 @@ import 'package:video_player/video_player.dart';
 class MockVideoPlayerController extends Mock implements VideoPlayerController {}
 
 void main() {
-  final _subtitleController = SubtitleController(
+  final subtitleController = SubtitleController(
     subtitleUrl: 'https://pastebin.com/raw/ZWWAL7fK',
     subtitleDecoder: SubtitleDecoder.utf8,
   );
@@ -21,15 +21,15 @@ void main() {
       blocTest<SubtitleBloc, SubtitleState>(
         'subtitle init',
         build: () => SubtitleBloc(
-          subtitleController: _subtitleController,
+          subtitleController: subtitleController,
           subtitleRepository: SubtitleDataRepository(
-            subtitleController: _subtitleController,
+            subtitleController: subtitleController,
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
         act: (SubtitleBloc bloc) => bloc.add(
           InitSubtitles(
-            subtitleController: _subtitleController,
+            subtitleController: subtitleController,
           ),
         ),
         expect: () => [
@@ -39,9 +39,9 @@ void main() {
       blocTest<SubtitleBloc, SubtitleState>(
         'subtitle update',
         build: () => SubtitleBloc(
-          subtitleController: _subtitleController,
+          subtitleController: subtitleController,
           subtitleRepository: SubtitleDataRepository(
-            subtitleController: _subtitleController,
+            subtitleController: subtitleController,
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
@@ -72,9 +72,9 @@ void main() {
       blocTest<SubtitleBloc, SubtitleState>(
         'subtitle load',
         build: () => SubtitleBloc(
-          subtitleController: _subtitleController,
+          subtitleController: subtitleController,
           subtitleRepository: SubtitleDataRepository(
-            subtitleController: _subtitleController,
+            subtitleController: subtitleController,
           ),
           videoPlayerController: MockVideoPlayerController(),
         ),
