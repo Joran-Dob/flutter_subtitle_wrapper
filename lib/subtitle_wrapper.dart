@@ -18,7 +18,6 @@ class SubtitleWrapper extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
