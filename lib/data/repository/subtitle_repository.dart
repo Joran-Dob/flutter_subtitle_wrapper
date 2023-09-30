@@ -45,11 +45,14 @@ class SubtitleDataRepository extends SubtitleRepository {
     }
     // Tries parsing the subtitle data
     // Lets try to parse the subtitle content with the specified subtitle type
+    if (subtitlesContent != null) {
+      return getSubtitlesData(
+        subtitlesContent,
+        subtitleController.subtitleType,
+      );
+    }
 
-    return getSubtitlesData(
-      subtitlesContent!,
-      subtitleController.subtitleType,
-    );
+    return Subtitles(subtitles: []);
   }
 
   // Loads the remote subtitle content.
@@ -184,8 +187,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Extract the encoding type from the headers.
-  Encoding _encodingForHeaders(Map<String, String> headers) =>
-      encodingForCharset(
+  Encoding _encodingForHeaders(Map<String, String> headers) => encodingForCharset(
         _contentTypeForHeaders(headers).parameters['charset'],
       );
 
