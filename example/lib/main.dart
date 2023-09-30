@@ -93,6 +93,8 @@ class MyHomePageState extends State<MyHomePage> {
                 subtitleStyle: const SubtitleStyle(
                   textColor: Colors.white,
                   hasBorder: true,
+                  fontWeight: FontWeight.bold,
+                
                 ),
                 videoChild: Chewie(
                   controller: _chewieController,

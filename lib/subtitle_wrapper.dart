@@ -12,13 +12,14 @@ class SubtitleWrapper extends StatelessWidget {
     super.key,
     this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
+    this.fontWeight,
   });
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
-
+  final FontWeight? fontWeight;
   @override
   Widget build(BuildContext context) {
     return Stack(

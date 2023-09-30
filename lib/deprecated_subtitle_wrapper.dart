@@ -10,5 +10,6 @@ class SubTitleWrapper extends SubtitleWrapper {
     super.key,
     super.subtitleStyle,
     super.backgroundColor,
+    super.fontWeight
   });
 }
