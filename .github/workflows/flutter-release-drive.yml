@@ -4,7 +4,7 @@ on:
     types:
       - created
 jobs:
-  test:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: 📚 Git Checkout
@@ -40,4 +40,4 @@ jobs:
           credential: ${{ secrets.PUBSPEC_CREDENTIALS }}
           flutter_package: true
           skip_test: true
-          dry_run: false🎁
+          dry_run: false

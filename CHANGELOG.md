@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.2.0] - 30/09/2023.
 
 ### Fixed
--  hide subtitle item when time is not matching
+-  Hide subtitle item when time is not matching
+-  Hide subtitles when there is no subtitle content or subtitle url
 
 
 ## [2.1.0] - 22/05/2022.
