@@ -115,6 +115,18 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              subtitleController.isShowSubtitles =
+                                  !subtitleController.showSubtitles;
+                              setState(() {});
+                            },
+                            child: Text(
+                              subtitleController.isShowSubtitles
+                                  ? 'Turn off'
+                                  : 'Turn on',
+                            ),
+                          ),
                           Text(
                             'Flutter subtitle wrapper package',
                             style: TextStyle(
