@@ -21,36 +21,36 @@ class SubtitleWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        videoChild,
-        if (subtitleController.showSubtitles)
-          Positioned(
-            top: subtitleStyle.position.top,
-            bottom: subtitleStyle.position.bottom,
-            left: subtitleStyle.position.left,
-            right: subtitleStyle.position.right,
-            child: BlocProvider(
-              create: (context) => SubtitleBloc(
-                videoPlayerController: videoPlayerController,
-                subtitleRepository: SubtitleDataRepository(
-                  subtitleController: subtitleController,
-                ),
-                subtitleController: subtitleController,
-              )..add(
-                  InitSubtitles(
-                    subtitleController: subtitleController,
-                  ),
-                ),
+    return BlocProvider(
+      create: (context) => SubtitleBloc(
+        videoPlayerController: videoPlayerController,
+        subtitleRepository: SubtitleDataRepository(
+          subtitleController: subtitleController,
+        ),
+        subtitleController: subtitleController,
+      )..add(
+          InitSubtitles(
+            subtitleController: subtitleController,
+          ),
+        ),
+      child: Stack(
+        children: <Widget>[
+          videoChild,
+          if (subtitleController.isShowSubtitles)
+            Positioned(
+              top: subtitleStyle.position.top,
+              bottom: subtitleStyle.position.bottom,
+              left: subtitleStyle.position.left,
+              right: subtitleStyle.position.right,
               child: SubtitleTextView(
                 subtitleStyle: subtitleStyle,
                 backgroundColor: backgroundColor,
               ),
-            ),
-          )
-        else
-          Container(),
-      ],
+            )
+          else
+            Container(),
+        ],
+      ),
     );
   }
 }

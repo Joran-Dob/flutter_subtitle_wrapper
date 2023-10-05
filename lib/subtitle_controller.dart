@@ -10,7 +10,7 @@ class SubtitleController {
   });
   String? subtitlesContent;
   String? subtitleUrl;
-  final bool showSubtitles;
+  bool showSubtitles;
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
   bool _attached = false;
@@ -24,6 +24,14 @@ class SubtitleController {
   void detach() {
     _attached = false;
     _subtitleBloc = null;
+  }
+
+  // Getter for showSubtitles
+  bool get isShowSubtitles => showSubtitles;
+
+  // Setter for showSubtitles
+  set isShowSubtitles(bool newValue) {
+    showSubtitles = newValue;
   }
 
   void updateSubtitleUrl({
