@@ -47,6 +47,8 @@ class SubtitleTextView extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: double.infinity,
                   color: backgroundColor,
                   child: _TextContent(
                     text: state.subtitle!.text,
