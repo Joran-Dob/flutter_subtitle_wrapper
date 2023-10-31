@@ -12,12 +12,16 @@ class SubtitleWrapper extends StatelessWidget {
     super.key,
     this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
+    this.fullWidth = false,
+    this.padding,
   });
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
+  final bool fullWidth;
+  final double? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,8 @@ class SubtitleWrapper extends StatelessWidget {
               child: SubtitleTextView(
                 subtitleStyle: subtitleStyle,
                 backgroundColor: backgroundColor,
+                fullWidth: fullWidth,
+                padding: padding,
               ),
             ),
           )

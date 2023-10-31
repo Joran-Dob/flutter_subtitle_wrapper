@@ -9,9 +9,13 @@ class SubtitleTextView extends StatelessWidget {
     required this.subtitleStyle,
     super.key,
     this.backgroundColor,
+    this.fullWidth = false,
+    this.padding,
   });
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
+  final bool fullWidth;
+  final double? padding;
 
   TextStyle get _textStyle {
     return subtitleStyle.hasBorder
@@ -47,6 +51,10 @@ class SubtitleTextView extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Container(
+                  padding: padding != null
+                      ? EdgeInsets.all(padding!)
+                      : EdgeInsets.zero,
+                  width: fullWidth ? double.infinity : null,
                   color: backgroundColor,
                   child: _TextContent(
                     text: state.subtitle!.text,
