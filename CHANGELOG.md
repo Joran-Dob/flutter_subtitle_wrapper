@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-dev.1] - 02/04/2024.
+
+- **BREAKING**: Removed `SubTitleWrapper`.
+- **BREAKING**: Removed `SubtitleBorderStyle` and `SubtitleStyle` which are now replaced by `TextStyle`.
+- Added support for passing `TextStyle` to the `SubtitleWrapper`.
+- Added support for using `SubtitleWrapper` with fullscreen Chewie by using `SubtitleRoute`. See the example for more information.
+
 ## [2.2.1] - 02/04/2024.
 
 ### Fixed
