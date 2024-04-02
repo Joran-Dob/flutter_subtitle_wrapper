@@ -45,11 +45,14 @@ class SubtitleDataRepository extends SubtitleRepository {
     }
     // Tries parsing the subtitle data
     // Lets try to parse the subtitle content with the specified subtitle type
+    if (subtitlesContent != null) {
+      return getSubtitlesData(
+        subtitlesContent,
+        subtitleController.subtitleType,
+      );
+    }
 
-    return getSubtitlesData(
-      subtitlesContent!,
-      subtitleController.subtitleType,
-    );
+    return Subtitles(subtitles: []);
   }
 
   // Loads the remote subtitle content.
@@ -59,48 +62,53 @@ class SubtitleDataRepository extends SubtitleRepository {
     final subtitleDecoder = subtitleController.subtitleDecoder;
     String? subtitlesContent;
     // Try loading the subtitle content with http.get.
-    final response = await http.get(
-      Uri.parse(subtitleUrl),
-    );
-    // Lets check if the request was successful.
-    // If the subtitle decoder type is utf8 lets decode it with utf8.
-    if (response.statusCode == HttpStatus.ok) {
-      if (subtitleDecoder == SubtitleDecoder.utf8) {
-        subtitlesContent = utf8.decode(
-          response.bodyBytes,
-          allowMalformed: true,
-        );
-      }
-      // If the subtitle decoder type is latin1 lets decode it with latin1.
-      else if (subtitleDecoder == SubtitleDecoder.latin1) {
-        subtitlesContent = latin1.decode(
-          response.bodyBytes,
-          allowInvalid: true,
-        );
-      }
-      // The subtitle decoder was not defined so we will extract it from the response headers send from the server.
-      else {
-        final subtitleServerDecoder = requestContentType(
-          response.headers,
-        );
-        // If the subtitle decoder type is utf8 lets decode it with utf8.
-        if (subtitleServerDecoder == SubtitleDecoder.utf8) {
+    try {
+      final response = await http.get(
+        Uri.parse(subtitleUrl),
+      );
+
+      // Lets check if the request was successful.
+      // If the subtitle decoder type is utf8 lets decode it with utf8.
+      if (response.statusCode == HttpStatus.ok) {
+        if (subtitleDecoder == SubtitleDecoder.utf8) {
           subtitlesContent = utf8.decode(
             response.bodyBytes,
             allowMalformed: true,
           );
         }
         // If the subtitle decoder type is latin1 lets decode it with latin1.
-        else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
+        else if (subtitleDecoder == SubtitleDecoder.latin1) {
           subtitlesContent = latin1.decode(
             response.bodyBytes,
             allowInvalid: true,
           );
         }
+        // The subtitle decoder was not defined so we will extract it from the response headers send from the server.
+        else {
+          final subtitleServerDecoder = requestContentType(
+            response.headers,
+          );
+          // If the subtitle decoder type is utf8 lets decode it with utf8.
+          if (subtitleServerDecoder == SubtitleDecoder.utf8) {
+            subtitlesContent = utf8.decode(
+              response.bodyBytes,
+              allowMalformed: true,
+            );
+          }
+          // If the subtitle decoder type is latin1 lets decode it with latin1.
+          else if (subtitleServerDecoder == SubtitleDecoder.latin1) {
+            subtitlesContent = latin1.decode(
+              response.bodyBytes,
+              allowInvalid: true,
+            );
+          }
+        }
       }
+    } catch (e) {
+      subtitlesContent = '';
     }
-    // Return the subtitle content.
 
+    // Return the subtitle content.
     return subtitlesContent;
   }
 

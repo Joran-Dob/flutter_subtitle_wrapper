@@ -5,8 +5,7 @@ import 'package:subtitle_wrapper_package/subtitle_controller.dart';
 
 void main() {
   const subtitleUtf8Url = 'https://pastebin.com/raw/ZWWAL7fK';
-  const subtitleLatin1Url =
-      'https://run.mocky.io/v3/eed857c2-4d26-4c12-8951-f84fb2ac0a1a';
+  const subtitleLatin1Url = 'https://pastebin.com/raw/CUUcK90U';
 
   const subtitleContentString = 'WEBVTT\r\n'
       '\r\n'
