@@ -33,6 +33,10 @@ class MyHomePageState extends State<MyHomePage> {
   final SubtitleController subtitleController = SubtitleController(
     subtitleUrl: SwConstants.enSubtitle,
     subtitleDecoder: SubtitleDecoder.utf8,
+    subtitleStyle: const TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
   );
 
   @override
@@ -51,7 +55,15 @@ class MyHomePageState extends State<MyHomePage> {
       aspectRatio: 3 / 2,
       autoPlay: true,
       autoInitialize: true,
-      allowFullScreen: false,
+      routePageBuilder: (context, animation, secondaryAnimation, controllerProvider) {
+        return SubtitleRoutePage(
+          subtitleController: subtitleController,
+          videoPlayerController: controllerProvider.controller.videoPlayerController,
+          videoChild: _VideoChild(
+            chewieController: controllerProvider.controller,
+          ),
+        );
+      },
     );
   }
 
@@ -90,12 +102,8 @@ class MyHomePageState extends State<MyHomePage> {
               child: SubtitleWrapper(
                 videoPlayerController: _chewieController.videoPlayerController,
                 subtitleController: subtitleController,
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                videoChild: Chewie(
-                  controller: _chewieController,
+                videoChild: _VideoChild(
+                  chewieController: _chewieController,
                 ),
               ),
             ),
@@ -225,6 +233,22 @@ class MyHomePageState extends State<MyHomePage> {
   void dispose() {
     super.dispose();
     _chewieController.dispose();
+  }
+}
+
+class _VideoChild extends StatelessWidget {
+  const _VideoChild({
+    required this.chewieController,
+    super.key,
+  });
+
+  final ChewieController chewieController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chewie(
+      controller: chewieController,
+    );
   }
 }
 

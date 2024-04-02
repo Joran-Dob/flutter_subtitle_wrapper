@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 
 class SubtitleController {
@@ -7,12 +8,14 @@ class SubtitleController {
     this.showSubtitles = true,
     this.subtitleDecoder,
     this.subtitleType = SubtitleType.webvtt,
+    this.subtitleStyle,
   });
   String? subtitlesContent;
   String? subtitleUrl;
   final bool showSubtitles;
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
+  TextStyle? subtitleStyle;
   bool _attached = false;
   SubtitleBloc? _subtitleBloc;
 

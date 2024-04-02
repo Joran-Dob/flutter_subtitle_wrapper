@@ -11,14 +11,12 @@ class SubtitleWrapper extends StatelessWidget {
     required this.videoPlayerController,
     this.position = const SubtitlePosition(),
     super.key,
-    this.textStyle,
     this.backgroundColor,
   });
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
   final SubtitlePosition position;
-  final TextStyle? textStyle;
   final Color? backgroundColor;
 
   @override
@@ -45,7 +43,7 @@ class SubtitleWrapper extends StatelessWidget {
                   ),
                 ),
               child: SubtitleTextView(
-                textStyle: textStyle,
+                textStyle: subtitleController.subtitleStyle,
                 backgroundColor: backgroundColor,
               ),
             ),
