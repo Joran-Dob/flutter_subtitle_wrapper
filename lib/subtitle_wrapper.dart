@@ -9,14 +9,16 @@ class SubtitleWrapper extends StatelessWidget {
     required this.videoChild,
     required this.subtitleController,
     required this.videoPlayerController,
+    this.position = const SubtitlePosition(),
     super.key,
-    this.subtitleStyle = const SubtitleStyle(),
+    this.textStyle,
     this.backgroundColor,
   });
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
-  final SubtitleStyle subtitleStyle;
+  final SubtitlePosition position;
+  final TextStyle? textStyle;
   final Color? backgroundColor;
 
   @override
@@ -26,10 +28,10 @@ class SubtitleWrapper extends StatelessWidget {
         videoChild,
         if (subtitleController.showSubtitles)
           Positioned(
-            top: subtitleStyle.position.top,
-            bottom: subtitleStyle.position.bottom,
-            left: subtitleStyle.position.left,
-            right: subtitleStyle.position.right,
+            top: position.top,
+            bottom: position.bottom,
+            left: position.left,
+            right: position.right,
             child: BlocProvider(
               create: (context) => SubtitleBloc(
                 videoPlayerController: videoPlayerController,
@@ -43,7 +45,7 @@ class SubtitleWrapper extends StatelessWidget {
                   ),
                 ),
               child: SubtitleTextView(
-                subtitleStyle: subtitleStyle,
+                textStyle: textStyle,
                 backgroundColor: backgroundColor,
               ),
             ),
