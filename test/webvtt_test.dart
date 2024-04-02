@@ -60,7 +60,8 @@ void main() {
         seconds: 3,
         milliseconds: 510,
       ),
-      text: 'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
+      text:
+          'Löksås ipsum själv vi ännu därmed trevnadens kom, häst kanske dimma',
     ),
     const Subtitle(
       startTime: Duration(
@@ -71,7 +72,8 @@ void main() {
         seconds: 7,
         milliseconds: 531,
       ),
-      text: 'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
+      text:
+          'annat bäckasiner därmed redan gamla, dimmhöljd miljoner groda hela',
     ),
     const Subtitle(
       startTime: Duration(
@@ -82,7 +84,8 @@ void main() {
         seconds: 11,
         milliseconds: 440,
       ),
-      text: 'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
+      text:
+          'mjuka nu. Smultron icke tre ännu varit denna enligt kan häst, del bäckasiner',
     ),
     const Subtitle(
       startTime: Duration(
@@ -93,7 +96,8 @@ void main() {
         seconds: 14,
         milliseconds: 930,
       ),
-      text: 'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
+      text:
+          'som tre rot så rot därmed ingalunda, hela ser genom smultron lax flera',
     ),
     const Subtitle(
       startTime: Duration(
@@ -104,7 +108,8 @@ void main() {
         seconds: 16,
         milliseconds: 570,
       ),
-      text: 'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
+      text:
+          'ordningens. Vi olika del vi samma nya samtidigt vidsträckt dag omfångsrik',
     ),
   ];
 
@@ -117,7 +122,8 @@ void main() {
         seconds: 3,
         milliseconds: 510,
       ),
-      text: 'LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma',
+      text:
+          'LÃ¶ksÃ¥s ipsum sjÃ¤lv vi Ã¤nnu dÃ¤rmed trevnadens kom, hÃ¤st kanske dimma',
     ),
     const Subtitle(
       startTime: Duration(
@@ -128,7 +134,8 @@ void main() {
         seconds: 7,
         milliseconds: 531,
       ),
-      text: 'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela',
+      text:
+          'annat bÃ¤ckasiner dÃ¤rmed redan gamla, dimmhÃ¶ljd miljoner groda hela',
     ),
     const Subtitle(
       startTime: Duration(
@@ -139,7 +146,8 @@ void main() {
         seconds: 11,
         milliseconds: 440,
       ),
-      text: 'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner',
+      text:
+          'mjuka nu. Smultron icke tre Ã¤nnu varit denna enligt kan hÃ¤st, del bÃ¤ckasiner',
     ),
     const Subtitle(
       startTime: Duration(
@@ -150,7 +158,8 @@ void main() {
         seconds: 14,
         milliseconds: 930,
       ),
-      text: 'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera',
+      text:
+          'som tre rot sÃ¥ rot dÃ¤rmed ingalunda, hela ser genom smultron lax flera',
     ),
     const Subtitle(
       startTime: Duration(
@@ -161,7 +170,8 @@ void main() {
         seconds: 16,
         milliseconds: 570,
       ),
-      text: 'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik',
+      text:
+          'ordningens. Vi olika del vi samma nya samtidigt vidstrÃ¤ckt dag omfÃ¥ngsrik',
     ),
   ];
 
@@ -172,7 +182,8 @@ void main() {
     final subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    final subtitleContent = await subtitleDataRepository.loadRemoteSubtitleContent(
+    final subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
       subtitleUrl: subtitleController.subtitleUrl!,
     );
     expect(
@@ -189,7 +200,8 @@ void main() {
     final subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    final subtitleContent = await subtitleDataRepository.loadRemoteSubtitleContent(
+    final subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
       subtitleUrl: subtitleController.subtitleUrl!,
     );
     expect(
@@ -206,7 +218,8 @@ void main() {
     final subtitleDataRepository = SubtitleDataRepository(
       subtitleController: subtitleController,
     );
-    final subtitleContent = await subtitleDataRepository.loadRemoteSubtitleContent(
+    final subtitleContent =
+        await subtitleDataRepository.loadRemoteSubtitleContent(
       subtitleUrl: subtitleController.subtitleUrl!,
     );
     expect(

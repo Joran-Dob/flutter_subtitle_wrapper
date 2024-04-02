@@ -42,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   VideoPlayerController get videoPlayerController {
-    return VideoPlayerController.network(link);
+    return VideoPlayerController.networkUrl(Uri.parse(link));
   }
 
   ChewieController get chewieController {
@@ -150,15 +150,12 @@ class MyHomePageState extends State<MyHomePage> {
                           const Divider(
                             color: Colors.grey,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Wrap(
                             children: [
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                         8.0,
@@ -167,36 +164,17 @@ class MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.english,
+                                  subtitleLanguage: ExampleSubtitleLanguage.english,
                                 ),
                                 child: const Text('Switch to 🇬🇧'),
                               ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.spanish,
-                                ),
-                                child: const Text('Switch to 🇪🇸'),
+                              const SizedBox(
+                                width: 8.0,
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(8.0),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                         8.0,
@@ -205,8 +183,26 @@ class MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.dutch,
+                                  subtitleLanguage: ExampleSubtitleLanguage.spanish,
+                                ),
+                                child: const Text('Switch to 🇪🇸'),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all<double>(8.0),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        8.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () => updateSubtitleUrl(
+                                  subtitleLanguage: ExampleSubtitleLanguage.dutch,
                                 ),
                                 child: const Text('Switch to 🇳🇱'),
                               ),
