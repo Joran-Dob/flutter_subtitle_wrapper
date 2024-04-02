@@ -23,6 +23,7 @@ class SubtitleTextView extends StatelessWidget {
               ..color = subtitleStyle.borderStyle.color,
           )
         : TextStyle(
+            fontWeight: subtitleStyle.fontWeight,
             fontSize: subtitleStyle.fontSize,
             color: subtitleStyle.textColor,
           );
