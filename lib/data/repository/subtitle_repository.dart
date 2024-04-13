@@ -112,20 +112,17 @@ class SubtitleDataRepository extends SubtitleRepository {
     return subtitlesContent;
   }
 
-  Subtitles getSubtitlesData(
-    String subtitlesContent,
-    SubtitleType subtitleType,
-  ) {
+  Subtitles getSubtitlesData(String subtitlesContent, SubtitleType subtitleType) {
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
-        r'((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
+        r'(?:(\d{2}):)?(\d{2}):(\d{2}).(\d{3}) --> (?:(\d{2}):)?(\d{2}):(\d{2}).(\d{3}).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
     } else if (subtitleType == SubtitleType.srt) {
       regExp = RegExp(
-        r'((\d{2}):(\d{2}):(\d{2})\,(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\,(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
+        r'(\d{2}):(\d{2}):(\d{2}),(\d{3}) --> (\d{2}):(\d{2}):(\d{2}),(\d{3}).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
@@ -133,40 +130,34 @@ class SubtitleDataRepository extends SubtitleRepository {
       throw Exception('Incorrect subtitle type');
     }
 
-    final matches = regExp.allMatches(subtitlesContent).toList();
+    final matches = regExp.allMatches(subtitlesContent);
     final subtitleList = <Subtitle>[];
 
-    for (final regExpMatch in matches) {
-      final startTimeHours = int.parse(regExpMatch.group(2)!);
-      final startTimeMinutes = int.parse(regExpMatch.group(3)!);
-      final startTimeSeconds = int.parse(regExpMatch.group(4)!);
-      final startTimeMilliseconds = int.parse(regExpMatch.group(5)!);
+    for (final RegExpMatch regExpMatch in matches) {
+      final startTime = _parseTime(
+          regExpMatch.group(1), regExpMatch.group(2)!, regExpMatch.group(3)!, regExpMatch.group(4)!);
+      final endTime = _parseTime(
+          regExpMatch.group(5), regExpMatch.group(6)!, regExpMatch.group(7)!, regExpMatch.group(8)!);
+      final text = removeAllHtmlTags(regExpMatch.group(9)!);
 
-      final endTimeHours = int.parse(regExpMatch.group(7)!);
-      final endTimeMinutes = int.parse(regExpMatch.group(8)!);
-      final endTimeSeconds = int.parse(regExpMatch.group(9)!);
-      final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = removeAllHtmlTags(regExpMatch.group(11)!);
-
-      final startTime = Duration(
-        hours: startTimeHours,
-        minutes: startTimeMinutes,
-        seconds: startTimeSeconds,
-        milliseconds: startTimeMilliseconds,
-      );
-      final endTime = Duration(
-        hours: endTimeHours,
-        minutes: endTimeMinutes,
-        seconds: endTimeSeconds,
-        milliseconds: endTimeMilliseconds,
-      );
-
-      subtitleList.add(
-        Subtitle(startTime: startTime, endTime: endTime, text: text.trim()),
-      );
+      subtitleList
+          .add(Subtitle(startTime: startTime, endTime: endTime, text: text));
     }
 
     return Subtitles(subtitles: subtitleList);
+  }
+
+  Duration _parseTime(String? hoursStr, String minutesStr, String secondsStr,
+      String millisecondsStr) {
+    final hours = hoursStr != null ? int.parse(hoursStr) : 0;
+    final minutes = int.parse(minutesStr);
+    final seconds = int.parse(secondsStr);
+    final milliseconds = int.parse(millisecondsStr);
+    return Duration(
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        milliseconds: milliseconds);
   }
 
   String removeAllHtmlTags(String htmlText) {
@@ -185,6 +176,8 @@ class SubtitleDataRepository extends SubtitleRepository {
 
     return newHtmlText;
   }
+
+//  final text = removeAllHtmlTags(regExpMatch.group(17)!);
 
   // Extract the encoding type from the headers.
   Encoding _encodingForHeaders(Map<String, String> headers) =>
