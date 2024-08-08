@@ -3,6 +3,7 @@ import 'package:subtitle_wrapper_package/bloc/subtitle/subtitle_bloc.dart';
 class SubtitleController {
   SubtitleController({
     this.subtitleUrl,
+    this.subtitleUrlHeaders,
     this.subtitlesContent,
     this.showSubtitles = true,
     this.subtitleDecoder,
@@ -10,6 +11,7 @@ class SubtitleController {
   });
   String? subtitlesContent;
   String? subtitleUrl;
+  Map<String, String>? subtitleUrlHeaders;
   final bool showSubtitles;
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;

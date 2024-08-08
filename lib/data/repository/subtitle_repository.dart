@@ -11,6 +11,7 @@ abstract class SubtitleRepository {
 
 class SubtitleDataRepository extends SubtitleRepository {
   SubtitleDataRepository({required this.subtitleController});
+
   final SubtitleController subtitleController;
 
   // Gets the subtitle content type.
@@ -35,12 +36,14 @@ class SubtitleDataRepository extends SubtitleRepository {
   Future<Subtitles> getSubtitles() async {
     var subtitlesContent = subtitleController.subtitlesContent;
     final subtitleUrl = subtitleController.subtitleUrl;
+    final headers = subtitleController.subtitleUrlHeaders;
 
     // If the subtitle content parameter is empty we will load the subtitle from the specified url.
     if (subtitlesContent == null && subtitleUrl != null) {
       // Lets load the subtitle content from the url.
       subtitlesContent = await loadRemoteSubtitleContent(
         subtitleUrl: subtitleUrl,
+        headers: headers,
       );
     }
     // Tries parsing the subtitle data
@@ -58,6 +61,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   // Loads the remote subtitle content.
   Future<String?> loadRemoteSubtitleContent({
     required String subtitleUrl,
+    Map<String, String>? headers,
   }) async {
     final subtitleDecoder = subtitleController.subtitleDecoder;
     String? subtitlesContent;
@@ -65,6 +69,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     try {
       final response = await http.get(
         Uri.parse(subtitleUrl),
+        headers: headers,
       );
 
       // Lets check if the request was successful.
@@ -187,8 +192,7 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Extract the encoding type from the headers.
-  Encoding _encodingForHeaders(Map<String, String> headers) =>
-      encodingForCharset(
+  Encoding _encodingForHeaders(Map<String, String> headers) => encodingForCharset(
         _contentTypeForHeaders(headers).parameters['charset'],
       );
 
