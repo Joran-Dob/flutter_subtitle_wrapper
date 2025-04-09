@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 
 class SubtitleWrapper extends StatelessWidget {
   const SubtitleWrapper({
+    this.enabled = true,
     required this.videoChild,
     required this.subtitleController,
     required this.videoPlayerController,
@@ -13,6 +14,7 @@ class SubtitleWrapper extends StatelessWidget {
     this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
   });
+  final bool enabled;
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
@@ -24,7 +26,7 @@ class SubtitleWrapper extends StatelessWidget {
     return Stack(
       children: <Widget>[
         videoChild,
-        if (subtitleController.showSubtitles)
+        if (enabled && subtitleController.showSubtitles)
           Positioned(
             top: subtitleStyle.position.top,
             bottom: subtitleStyle.position.bottom,

@@ -119,13 +119,13 @@ class SubtitleDataRepository extends SubtitleRepository {
     RegExp regExp;
     if (subtitleType == SubtitleType.webvtt) {
       regExp = RegExp(
-        r'((\d{2}):(\d{2}):(\d{2})\.(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\.(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
+        r'((?:(\d{2}):)?(\d{2}):(\d{2})\.(\d+))\s*-->\s*((?:(\d{2}):)?(\d{2}):(\d{2})\.(\d+)).*[\r\n]+\s*((?:(?!\r?\n\r?\n).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
     } else if (subtitleType == SubtitleType.srt) {
       regExp = RegExp(
-        r'((\d{2}):(\d{2}):(\d{2})\,(\d+)) +--> +((\d{2}):(\d{2}):(\d{2})\,(\d{3})).*[\r\n]+\s*((?:(?!\r?\n\r?).)*(\r\n|\r|\n)(?:.*))',
+        r'((?:(\d{2}):)?(\d{2}):(\d{2}),(\d+))\s*-->\s*((?:(\d{2}):)?(\d{2}):(\d{2}),(\d+)).*[\r\n]+\s*((?:(?!\r?\n\r?\n).)*(\r\n|\r|\n)(?:.*))',
         caseSensitive: false,
         multiLine: true,
       );
@@ -136,30 +136,24 @@ class SubtitleDataRepository extends SubtitleRepository {
     final matches = regExp.allMatches(subtitlesContent).toList();
     final subtitleList = <Subtitle>[];
 
-    for (final regExpMatch in matches) {
-      final startTimeHours = int.parse(regExpMatch.group(2)!);
-      final startTimeMinutes = int.parse(regExpMatch.group(3)!);
-      final startTimeSeconds = int.parse(regExpMatch.group(4)!);
-      final startTimeMilliseconds = int.parse(regExpMatch.group(5)!);
-
-      final endTimeHours = int.parse(regExpMatch.group(7)!);
-      final endTimeMinutes = int.parse(regExpMatch.group(8)!);
-      final endTimeSeconds = int.parse(regExpMatch.group(9)!);
-      final endTimeMilliseconds = int.parse(regExpMatch.group(10)!);
-      final text = removeAllHtmlTags(regExpMatch.group(11)!);
-
-      final startTime = Duration(
-        hours: startTimeHours,
-        minutes: startTimeMinutes,
-        seconds: startTimeSeconds,
-        milliseconds: startTimeMilliseconds,
+    for (final match in matches) {
+      // start time
+      final startTime = parseTime(
+        hours: match.group(2),
+        minutes: match.group(3),
+        seconds: match.group(4),
+        millis: match.group(5),
       );
-      final endTime = Duration(
-        hours: endTimeHours,
-        minutes: endTimeMinutes,
-        seconds: endTimeSeconds,
-        milliseconds: endTimeMilliseconds,
+
+      // end time
+      final endTime = parseTime(
+        hours: match.group(7),
+        minutes: match.group(8),
+        seconds: match.group(9),
+        millis: match.group(10),
       );
+
+      final text = removeAllHtmlTags(match.group(11) ?? '');
 
       subtitleList.add(
         Subtitle(startTime: startTime, endTime: endTime, text: text.trim()),
@@ -167,6 +161,21 @@ class SubtitleDataRepository extends SubtitleRepository {
     }
 
     return Subtitles(subtitles: subtitleList);
+  }
+
+  /// 時間文字列を Duration に変換する補助関数
+  Duration parseTime({
+    String? hours,
+    required String? minutes,
+    required String? seconds,
+    required String? millis,
+  }) {
+    return Duration(
+      hours: int.tryParse(hours ?? '0') ?? 0,
+      minutes: int.tryParse(minutes ?? '0') ?? 0,
+      seconds: int.tryParse(seconds ?? '0') ?? 0,
+      milliseconds: int.tryParse(millis ?? '0') ?? 0,
+    );
   }
 
   String removeAllHtmlTags(String htmlText) {
