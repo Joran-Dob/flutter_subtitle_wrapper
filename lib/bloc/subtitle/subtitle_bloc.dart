@@ -18,10 +18,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     on<LoadSubtitle>((event, emit) => loadSubtitle(emit: emit));
     on<InitSubtitles>((event, emit) => initSubtitles(emit: emit));
     on<UpdateLoadedSubtitle>(
-      (event, emit) => emit(LoadedSubtitle(event.subtitle)),
+          (event, emit) => emit(LoadedSubtitle(event.subtitle)),
     );
     on<CompletedShowingSubtitles>(
-      (event, emit) => emit(CompletedSubtitle()),
+          (event, emit) => emit(CompletedSubtitle()),
     );
   }
 
@@ -44,41 +44,41 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     required Emitter<SubtitleState> emit,
   }) async {
     emit(LoadingSubtitle());
-    videoPlayerController.addListener(
-      () {
-        final videoPlayerPosition = videoPlayerController.value.position;
-        if (subtitles.subtitles.isNotEmpty &&
-            videoPlayerPosition.inMilliseconds >
-                subtitles.subtitles.last.endTime.inMilliseconds) {
-          add(CompletedShowingSubtitles());
-        }
-        for (final subtitleItem in subtitles.subtitles) {
-          final validStartTime = videoPlayerPosition.inMilliseconds >
-              subtitleItem.startTime.inMilliseconds;
-          final validEndTime = videoPlayerPosition.inMilliseconds <
-              subtitleItem.endTime.inMilliseconds;
-          final subtitle = validStartTime && validEndTime ? subtitleItem : null;
-          if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
-            _currentSubtitle = subtitle;
-          } else if (!_currentSubtitleIsValid(
-            videoPlayerPosition: videoPlayerPosition.inMilliseconds,
-          )) {
-            _currentSubtitle = null;
-          }
-          add(
-            UpdateLoadedSubtitle(
-              subtitle: _currentSubtitle,
-            ),
-          );
-        }
-      },
-    );
+    videoPlayerController.addListener(_playerListener);
+  }
+
+  void _playerListener() {
+    final videoPlayerPosition = videoPlayerController.value.position;
+    if (subtitles.subtitles.isNotEmpty &&
+        videoPlayerPosition.inMilliseconds >
+            subtitles.subtitles.last.endTime.inMilliseconds) {
+      add(CompletedShowingSubtitles());
+    }
+    for (final subtitleItem in subtitles.subtitles) {
+      final validStartTime = videoPlayerPosition.inMilliseconds >
+          subtitleItem.startTime.inMilliseconds;
+      final validEndTime = videoPlayerPosition.inMilliseconds <
+          subtitleItem.endTime.inMilliseconds;
+      final subtitle = validStartTime && validEndTime ? subtitleItem : null;
+      if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
+        _currentSubtitle = subtitle;
+      } else if (!_currentSubtitleIsValid(
+        videoPlayerPosition: videoPlayerPosition.inMilliseconds,
+      )) {
+        _currentSubtitle = null;
+      }
+      add(
+        UpdateLoadedSubtitle(
+          subtitle: _currentSubtitle,
+        ),
+      );
+    }
   }
 
   @override
   Future<void> close() {
     subtitleController.detach();
-
+    videoPlayerController.removeListener(_playerListener);
     return super.close();
   }
 
@@ -92,3 +92,4 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     return validStartTime && validEndTime;
   }
 }
+
